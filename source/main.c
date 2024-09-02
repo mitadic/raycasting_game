@@ -16,12 +16,12 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 	if (fd < 0)
 		return (error(CANTOPEN, KO));
 	line = getnextline(fd);
-	data->map.max_x = ft_strlen(line);
+	data->map->max_x = ft_strlen(line);
 	while (line)
 	{
-		data->map.max_y += 1;
-		if (ft_strlen(line) > data->map.max_x)
-			data->map.max_x = ft_strlen(line);
+		data->map->max_y += 1;
+		if (ft_strlen(line) > data->map->max_x)
+			data->map->max_x = ft_strlen(line);
 		free(line);
 		line = getnextline(fd);
 	}
@@ -38,11 +38,11 @@ static int	init_values(t_data *data, char *map_filename)
 		printf("malloc fail\n");
 		return (purge(data, KO));
 	}
-	data->pl_pos.x = 0;
-	data->pl_pos.y = 0;
-	data->map.max_x = 0;
-	data->map.max_y = 0;
-	data->map.chars_total = 0;
+	data->pl_pos->x = 0;
+	data->pl_pos->y = 0;
+	data->map->max_x = 0;
+	data->map->max_y = 0;
+	data->map->chars_total = 0;
 	if (set_max_vector_values(data, map_filename) != OK)
 		return (purge(data, KO));
 	// now malloc for char **map using max_vector_values
