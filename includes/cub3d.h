@@ -52,4 +52,7 @@ typedef struct s_data
 int is_valid_map(t_data *data, char *map_filename);
 
 
+//helper_functions.c
+float ft_abs(float number);
+
 #endif
