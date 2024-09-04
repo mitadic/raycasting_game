@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	free_map_copy(char **map_copy, int columns_allocated)
 {

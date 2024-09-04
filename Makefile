@@ -4,23 +4,26 @@ NAME		= cub3d
 LIBFT		= libft.a
 MLX			= libmlx_Linux.a
 SRCD		= ./source/
+INIT		= a_init/
+PARSING		= b_parsing/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
 LIBMLXD 	= ./minilibx-linux/
 
 SRC = 		main.c \
-			init.c \
-			map_parsing_control.c \
-			map_parsing_flood_fill.c \
-			map_parsing_flood_sim.c \
-			failure_management.c \
-			freeing_protocol.c
+			$(INIT)init.c \
+			$(PARSING)map_parsing_control.c \
+			$(PARSING)map_parsing_flood_fill.c \
+			$(PARSING)map_parsing_flood_sim.c \
+			$(PARSING)failure_management.c \
+			$(PARSING)freeing_protocol.c
 
 HFILES =	cub3d.h \
 			errors.h
 
 all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
+# delete this once submodule minilibx thoroughly tested:
 # $(LIBMLXD):
 # 	@if [ ! -d $(LIBMLXD) ]; then \
 # 		echo "Cloning minilibx-linux..."; \
@@ -42,16 +45,16 @@ $(LIBFT):
 $(MLX):
 	make -C $(LIBMLXD) all
 
+# libminilibx Makefile (and its 'configure') do not
+# handle *.o files, it's essentially fclean only 
 clean:
 	make -C $(LIBFTD) clean
-	# libminilibx Makefile (and its 'configure') do not
-	# handle *.o files, it's essentially fclean only 
 	rm -f *.o
 
+# in libminilibx Makefile, 'clean' is essentially fclean
 fclean:	clean
 	rm -f $(NAME)
 	make -C $(LIBFTD) fclean
-	# in libminilibx Makefile, 'clean' is essentially fclean
 	make -C $(LIBMLXD) clean
 
 re:	fclean all

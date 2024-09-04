@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /* malloc for char **map using max_vector_values */
 static int	malloc_for_map_vals(t_data *data)

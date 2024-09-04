@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /* A chain of returns brings us back out to main, only then do we free.
 Any errors messages are printed on the spot, as soon as encountered. */

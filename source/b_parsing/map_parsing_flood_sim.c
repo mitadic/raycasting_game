@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 static int	scan_for_dry_fields(t_data *data, char **map)
 {
