@@ -1,8 +1,8 @@
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g #-fsanitize=address
 NAME		= cub3d
-MLX			= libmlx_Linux.a
 LIBFT		= libft.a
+MLX			= libmlx_Linux.a
 SRCD		= ./source/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
@@ -19,26 +19,28 @@ SRC = 		main.c \
 HFILES =	cub3d.h \
 			errors.h
 
-all: $(LIBFT) $(LIBMLXD) $(NAME)
+all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
-$(LIBMLXD):
-	@if [ ! -d $(LIBMLXD) ]; then \
-		echo "Cloning minilibx-linux..."; \
-		git clone git@github.com:42Paris/minilibx-linux.git $(LIBMLXD); \
-	fi
+# $(LIBMLXD):
+# 	@if [ ! -d $(LIBMLXD) ]; then \
+# 		echo "Cloning minilibx-linux..."; \
+# 		git clone git@github.com:42Paris/minilibx-linux.git $(LIBMLXD); \
+# 	fi
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME)
 # -L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
 # -lXext -lX11 -lm -lz -o $(NAME)
 
-$(MLX):
-	make -C $(LIBMLXD) all
+init_submodules:
+	git submodule init
+	git submodule update
 
 $(LIBFT):
-# git submodule init
-# git submodule update
 	make -C $(LIBFTD) all
+
+$(MLX):
+	make -C $(LIBMLXD) all
 
 clean:
 	make -C $(LIBFTD) clean
@@ -54,4 +56,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean init_submodules

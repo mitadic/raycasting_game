@@ -3,6 +3,10 @@ cub3d
 
 # VSCode
 .vscode/
+vgcore.*
+
+# minilibx
+minilibx-linux/
 
 # Prerequisites
 *.d
