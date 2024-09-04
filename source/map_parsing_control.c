@@ -9,10 +9,10 @@ static int	locate_player(t_data *data)
 {
 	int y;
     int x;
-	int	pos_count;
+	int	pl_pos_count;
 
     y = -1;
-	pos_count = 0;
+	pl_pos_count = 0;
     while (++y < data->map.max_y)
     {
         x = -1;
@@ -22,13 +22,13 @@ static int	locate_player(t_data *data)
 			{
 				data->pl_pos.x = x + 0.5;
 				data->pl_pos.y = y + 0.5;
-				pos_count++;
+				pl_pos_count++;
 			}
 		}
     }
-	if (pos_count < 1)
+	if (pl_pos_count < 1)
 		return (error(NOPL, KO));
-	if (pos_count > 1)
+	if (pl_pos_count > 1)
 		return (error(TOOMANYPL, KO));
 	return (OK);
 }
