@@ -27,15 +27,15 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 	fd = open(map_filename, O_RDONLY);
 	if (fd < 0)
 		return (error(CANTOPEN, KO));
-	line = getnextline(fd);
+	line = get_next_line(fd);
 	data->map.max_x = ft_strlen(line) - ENDLINE;
 	while (line)
 	{
 		data->map.max_y += 1;
-		if (ft_strlen(line) - ENDLINE > data->map.max_x)
+		if ((int)(ft_strlen(line) - ENDLINE) > data->map.max_x)
 			data->map.max_x = ft_strlen(line) - ENDLINE;
 		free(line);
-		line = getnextline(fd);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	if (data->map.max_x < 3 || data->map.max_y < 3)

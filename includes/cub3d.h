@@ -16,8 +16,9 @@
 # include <stdio.h>
 # include <math.h>
 # include <stdlib.h>
-# include <asm-generic/fcntl.h>
-# include "../libft/libft/libft.h"
+# include <fcntl.h>
+// # include <asm-generic/fcntl.h>
+# include "../libft/libft.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/

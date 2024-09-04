@@ -60,7 +60,7 @@ static int	extract_map_values(t_data *data, int fd)
 	int	y;
 
 	y = -1;
-	line = getnextline(fd);
+	line = get_next_line(fd);
 	if (!line)
 		return(error(BADMAP, KO));
 	while (line)
@@ -70,7 +70,7 @@ static int	extract_map_values(t_data *data, int fd)
 		if (go_through_this_line(data, x, y, line) != OK)
 			return(KO);
 		free(line);
-		line = getnextline(fd);
+		line = get_next_line(fd);
 	}
 	return (OK);
 }

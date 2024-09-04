@@ -48,6 +48,7 @@ static int	copy_map(t_data *data, char ***map_copy)
 				(*map_copy)[y][x] = '0';
 		}
 	}
+	return (OK);
 }
 
 /* Time and again I'm astonished by pointers.

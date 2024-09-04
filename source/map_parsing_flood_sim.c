@@ -13,7 +13,8 @@ static int	scan_for_dry_fields(t_data *data, char **map)
 		{
 			if (map[y][x] == '0')
 				return (error(AIRPOCKETS, KO));
-			if ((y == data->map.max_y - 1 || x == data->map.max_x) && \
+			if ((y == 0 || y == data->map.max_y - 1 || \
+					x== 0 || x == data->map.max_x - 1) && \
 					map[y][x] == 'W')
 				return (error(LEAKYMAP, KO));
 		}
@@ -39,7 +40,7 @@ static void	flood_fields(t_data *data, char **map, int y, int x)
 /* Locate first available '0' to start the flood at.
 At this point, we know that at the very least the player field exist,
 which at this stage has been replaced with a '0' so we will find sth. */
-static void	get_start_coords(t_data *data, char **map_copy, int **coords)
+static void	get_start_coords(t_data *data, char **map_copy, int (*coords)[2])
 {
 	int y;
 	int x;
@@ -50,7 +51,7 @@ static void	get_start_coords(t_data *data, char **map_copy, int **coords)
 		x = -1;
 		while (++x < data->map.max_x)
 		{
-			if (data->map.vals[y][x] == '0')
+			if (map_copy[y][x] == '0')
 			{
 				(*coords)[0] = y;
 				(*coords)[1] = x;
