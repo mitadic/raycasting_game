@@ -18,7 +18,7 @@ static int	locate_player(t_data *data)
         x = -1;
         while (++x < data->map.max_x)
 		{
-			if (ft_strchr(PLAYER_DIR, data->map.vals[y][x]))
+			if (ft_strchr(PLAYER_DIR, data->map.vals[x][y]))
 			{
 				data->pl_pos.x = x + 0.5;
 				data->pl_pos.y = y + 0.5;
@@ -45,7 +45,7 @@ static int	validate_map_symbols(t_data *data)
 		x = -1;
 		while (++x < data->map.max_x)
 		{
-			if (!ft_strchr(LEGAL_CHARS, data->map.vals[y][x]))
+			if (!ft_strchr(LEGAL_CHARS, data->map.vals[x][y]))
 				return (error(ILLEGAL, KO));
 		}
 	}
@@ -72,9 +72,9 @@ static int	extract_map_values(t_data *data, int fd)
 		while (++x < data->map.max_x)
 		{
 			if (x < (int)(ft_strlen(line) - ENDLINE))
-				data->map.vals[y][x] = line[x];
+				data->map.vals[x][y] = line[x];
 			else
-				data->map.vals[y][x] = ' ';
+				data->map.vals[x][y] = ' ';
 		}
 		free(line);
 		line = get_next_line(fd);

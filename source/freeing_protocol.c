@@ -2,13 +2,13 @@
 
 static void    free_map_vals(t_data *data)
 {
-    int y;
+    int x;
 
-    y = -1;
+    x = -1;
     if (!data->map.vals)
         return ;
-    while (++y < data->map.max_y)
-        free(data->map.vals[y]);
+    while (++x < data->map.max_x)
+        free(data->map.vals[x]);
     free(data->map.vals);
 }
 

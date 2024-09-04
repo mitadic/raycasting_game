@@ -3,16 +3,16 @@
 /* malloc for char **map using max_vector_values */
 static int	malloc_for_map_vals(t_data *data)
 {
-	int	y;
+	int	x;
 
-	data->map.vals = malloc(sizeof(char *) * data->map.max_y);
+	data->map.vals = malloc(sizeof(char *) * data->map.max_x);
 	if (!data->map.vals)
 		return (error(MALLOCFAIL, KO));
-	y = -1;
-	while (++y < data->map.max_y)
+	x = -1;
+	while (++x < data->map.max_x)
 	{
-		data->map.vals[y] = malloc(sizeof(char) * data->map.max_x);
-		if (!data->map.vals[y])
+		data->map.vals[x] = malloc(sizeof(char) * data->map.max_y);
+		if (!data->map.vals[x])
 			return (error(MALLOCFAIL, KO));
 	}
 	return (OK);

@@ -61,7 +61,7 @@ int		validate_map(t_data *data, char *map_filename);
 
 // map_parsing_flood_fill.c
 int		flood_fill(t_data *data);
-void	free_map_copy(char **map_copy, int rows_allocated);
+void	free_map_copy(char **map_copy, int columns_allocated);
 
 // map_parsing_flood_sim.c
 int		flood_simulation(t_data *data, char **map_copy);

@@ -14,7 +14,7 @@ int	main(int argc, char **argv)
 	// {
 	// 	x = -1;
 	// 	while (++x < data.map.max_x)
-	// 		printf("%c", data.map.vals[y][x]);
+	// 		printf("%c", data.map.vals[x][y]);
 	// 	printf("\n");
 	// }
 	purge(&data);

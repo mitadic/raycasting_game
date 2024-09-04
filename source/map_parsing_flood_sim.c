@@ -11,11 +11,11 @@ static int	scan_for_dry_fields(t_data *data, char **map)
 		x = -1;
 		while (++x < data->map.max_x)
 		{
-			if (map[y][x] == '0')
+			if (map[x][y] == '0')
 				return (error(AIRPOCKETS, KO));
 			if ((y == 0 || y == data->map.max_y - 1 || \
 					x== 0 || x == data->map.max_x - 1) && \
-					map[y][x] == 'W')
+					map[x][y] == 'W')
 				return (error(LEAKYMAP, KO));
 		}
 	}
@@ -23,18 +23,18 @@ static int	scan_for_dry_fields(t_data *data, char **map)
 }
 
 /* recursive Paint fill tool, NESW */
-static void	flood_fields(t_data *data, char **map, int y, int x)
+static void	flood_fields(t_data *data, char **map, int x, int y)
 {
-	if (map[y][x] == '0')
-		map[y][x] = 'W';
-	if (y > 0 && map[y - 1][x] == '0')
-		flood_fields(data, map, y - 1, x);
-	if (x < data->map.max_x - 1 && map[y][x + 1] == '0')
-		flood_fields(data, map, y, x + 1);
-	if (y < data->map.max_y - 1 && map[y + 1][x] == '0')
-		flood_fields(data, map, y + 1, x);
-	if (x > 0 && map[y][x - 1] == '0')
-		flood_fields(data, map, y, x - 1);
+	if (map[x][y] == '0')
+		map[x][y] = 'W';
+	if (y > 0 && map[x][y - 1] == '0')
+		flood_fields(data, map, x, y - 1);
+	if (x < data->map.max_x - 1 && map[x + 1][y] == '0')
+		flood_fields(data, map, x + 1, y);
+	if (y < data->map.max_y - 1 && map[x][y + 1] == '0')
+		flood_fields(data, map, x, y + 1);
+	if (x > 0 && map[x - 1][y] == '0')
+		flood_fields(data, map, x - 1, y);
 }
 
 /* Locate first available '0' to start the flood at.
@@ -51,10 +51,10 @@ static void	get_start_coords(t_data *data, char **map_copy, int (*coords)[2])
 		x = -1;
 		while (++x < data->map.max_x)
 		{
-			if (map_copy[y][x] == '0')
+			if (map_copy[x][y] == '0')
 			{
-				(*coords)[0] = y;
-				(*coords)[1] = x;
+				(*coords)[0] = x;
+				(*coords)[1] = y;
 				return ;
 			}
 		}

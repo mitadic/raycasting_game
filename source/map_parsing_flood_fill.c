@@ -1,28 +1,28 @@
 #include "../includes/cub3d.h"
 
-void	free_map_copy(char **map_copy, int rows_allocated)
+void	free_map_copy(char **map_copy, int columns_allocated)
 {
-	int	y;
+	int	x;
 
 	if (!map_copy)
 		return ;
-	y = -1;
-	while (++y < rows_allocated)
-		free(map_copy[y]);
+	x = -1;
+	while (++x < columns_allocated)
+		free(map_copy[x]);
 	free(map_copy);
 }
 
-static int	malloc_for_map_copy(t_data *data, char ***map_copy, int y)
+static int	malloc_for_map_copy(t_data *data, char ***map_copy, int x)
 {
-	*map_copy = malloc(sizeof(char *) * data->map.max_y);
+	*map_copy = malloc(sizeof(char *) * data->map.max_x);
 	if (!*map_copy)
 		return (error(MALLOCFAIL, KO));
-	while (++y < data->map.max_y)
+	while (++x < data->map.max_x)
 	{
-		(*map_copy)[y] = malloc(sizeof(char) * data->map.max_x);
-		if (!(*map_copy)[y])
+		(*map_copy)[x] = malloc(sizeof(char) * data->map.max_y);
+		if (!(*map_copy)[x])
 		{
-			free_map_copy(*map_copy, y);
+			free_map_copy(*map_copy, x);
 			return (error(MALLOCFAIL, KO));
 		}
 	}
@@ -35,17 +35,17 @@ static int	copy_map(t_data *data, char ***map_copy)
 	int	y;
 	int	x;
 
-	y = -1;
-	if (malloc_for_map_copy(data, map_copy, y) != OK)
+	x = -1;
+	if (malloc_for_map_copy(data, map_copy, x) != OK)
 		return (KO);
-	while (++y < data->map.max_y)
+	while (++x < data->map.max_x)
 	{
-		x = -1;
-		while (++x < data->map.max_x)
+		y = -1;
+		while (++y < data->map.max_y)
 		{
-			(*map_copy)[y][x] = data->map.vals[y][x];
-			if (ft_strchr(PLAYER_DIR, data->map.vals[y][x]))
-				(*map_copy)[y][x] = '0';
+			(*map_copy)[x][y] = data->map.vals[x][y];
+			if (ft_strchr(PLAYER_DIR, data->map.vals[x][y]))
+				(*map_copy)[x][y] = '0';
 		}
 	}
 	return (OK);
@@ -66,9 +66,9 @@ int	flood_fill(t_data *data)
 		return (KO);
 	if (flood_simulation(data, map_copy) != OK)
 	{
-		free_map_copy(map_copy, data->map.max_y);
+		free_map_copy(map_copy, data->map.max_x);
 		return (KO);
 	}
-	free_map_copy(map_copy, data->map.max_y);
+	free_map_copy(map_copy, data->map.max_x);
 	return (OK);
 }
