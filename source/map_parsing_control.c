@@ -33,27 +33,28 @@ static int	locate_player(t_data *data)
 	return (OK);
 }
 
-/* Captures the case where a line is shorter than max_x, stores ' ' */
-static int	go_through_this_line(t_data *data, int x, int y, char *line)
+/* Look for illegal symbols */
+static int	validate_map_symbols(t_data *data)
 {
-	int	line_len;
+	int	y;
+	int	x;
 
-	line_len = ft_strlen(line) - ENDLINE;
-	while (++x < data->map.max_x)
+	y = -1;
+	while (++y < data->map.max_y)
 	{
-		if (x < line_len)
+		x = -1;
+		while (++x < data->map.max_x)
 		{
-			if (!ft_strchr(LEGAL_CHARS, line[x]))
+			if (!ft_strchr(LEGAL_CHARS, data->map.vals[y][x]))
 				return (error(ILLEGAL, KO));
-			data->map.vals[y][x] = line[x];
 		}
-		else
-			data->map.vals[y][x] = ' ';
 	}
 	return (OK);
 }
 
-/* I think the check for "no line" is redundant, I think I checked for '< 3' */
+/* I think the check for "no line" is redundant, I think I checked for '< 3'
+Captures the case where a line is shorter than max_x, stores ' '
+ */
 static int	extract_map_values(t_data *data, int fd)
 {
 	char *line;
@@ -68,16 +69,12 @@ static int	extract_map_values(t_data *data, int fd)
 	{
 		y += 1;
 		x = -1;
-		if (go_through_this_line(data, x, y, line) != OK)
+		while (++x < data->map.max_x)
 		{
-			while (line)
-			{
-				free(line);
-				line = get_next_line(fd);
-			}
-			if (close(fd) < 0)
-				return (error(CANTCLOSE, KO));
-			return(KO);
+			if (x < (int)(ft_strlen(line) - ENDLINE))
+				data->map.vals[y][x] = line[x];
+			else
+				data->map.vals[y][x] = ' ';
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -112,6 +109,8 @@ int	validate_map(t_data *data, char *map_filename)
 		return (KO);
 	if (close(fd) < 0)
 		return (error(CANTCLOSE, KO));
+	if (validate_map_symbols(data) != OK)
+		return (KO);
 	if (locate_player(data) != OK)
 		return (KO);
 	if (flood_fill(data) != OK)
