@@ -53,6 +53,7 @@ static int	go_through_this_line(t_data *data, int x, int y, char *line)
 	return (OK);
 }
 
+/* I think the check for "no line" is redundant, I think I checked for '< 3' */
 static int	extract_map_values(t_data *data, int fd)
 {
 	char *line;
@@ -68,7 +69,10 @@ static int	extract_map_values(t_data *data, int fd)
 		y += 1;
 		x = -1;
 		if (go_through_this_line(data, x, y, line) != OK)
+		{
+			free(line);
 			return(KO);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
