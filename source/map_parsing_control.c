@@ -70,7 +70,13 @@ static int	extract_map_values(t_data *data, int fd)
 		x = -1;
 		if (go_through_this_line(data, x, y, line) != OK)
 		{
-			free(line);
+			while (line)
+			{
+				free(line);
+				line = get_next_line(fd);
+			}
+			if (close(fd) < 0)
+				return (error(CANTCLOSE, KO));
 			return(KO);
 		}
 		free(line);
