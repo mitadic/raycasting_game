@@ -18,7 +18,7 @@ static int	malloc_for_map_vals(t_data *data)
 	return (OK);
 }
 
-/* open the map file to the sole purpose of finding max x and y values */
+/* open the map file for the sole purpose of finding max x and y values */
 static int	set_max_vector_values(t_data *data, char *map_filename)
 {
 	int	fd;
@@ -37,7 +37,8 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
+	if (close(fd) < 0)
+		return (error(CANTCLOSE, KO));
 	if (data->map.max_x < 3 || data->map.max_y < 3)
 		return (error(MAPTOOTINY, KO));
 	return (OK);

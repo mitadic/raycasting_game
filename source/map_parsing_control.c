@@ -75,17 +75,33 @@ static int	extract_map_values(t_data *data, int fd)
 	return (OK);
 }
 
+/* ensure an early exit for filenames too short or with incorrect suffix */
+static int	verify_filename(char *map_filename)
+{
+	int	len;
+
+	len = ft_strlen(map_filename);
+	if (len < 5)
+		return (error(PRINTUSAGE, KO));
+	if (ft_strncmp(".cub", &map_filename[len - 4], 4) != OK)
+		return (error(BADSUFF, KO));
+	return (OK);
+}
+
 /* reopen map, populate char **map and read for invalidities */
 int	validate_map(t_data *data, char *map_filename)
 {
 	int	fd;
 
+	if (verify_filename(map_filename) != OK)
+		return (KO);
 	fd = open(map_filename, O_RDONLY);
 	if (fd < 0)
 		return (error(CANTOPEN, KO));
 	if (extract_map_values(data, fd) != OK)
 		return (KO);
-	close(fd);
+	if (close(fd) < 0)
+		return (error(CANTCLOSE, KO));
 	if (locate_player(data) != OK)
 		return (KO);
 	if (flood_fill(data) != OK)

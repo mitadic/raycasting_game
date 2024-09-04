@@ -29,7 +29,6 @@ $(LIBMLXD):
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME)
-
 # -L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
 # -lXext -lX11 -lm -lz -o $(NAME)
 
@@ -37,8 +36,8 @@ $(MLX):
 	make -C $(LIBMLXD) all
 
 $(LIBFT):
-	git submodule init
-	git submodule update
+# git submodule init
+# git submodule update
 	make -C $(LIBFTD) all
 
 clean:
