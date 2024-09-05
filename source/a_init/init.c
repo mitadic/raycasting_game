@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
+/*   Updated: 2024/09/05 14:02:29 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 /* malloc for char **map using max_vector_values */
@@ -44,6 +56,7 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 	return (OK);
 }
 
+/* control flow */
 int	init(t_data *data, char *map_filename)
 {
 	data->map.max_x = 0;
