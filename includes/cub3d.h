@@ -46,6 +46,9 @@ typedef struct s_pl_pos
 {
 	float	x;
 	float	y;
+	char direction;
+	float player_angle;
+
 }	t_pl_pos;
 
 /* Rays, will need (screen width) number of those */
@@ -53,6 +56,12 @@ typedef struct s_rays
 {
 	float	dir_x;
 	float	dir_y;
+	float	ray_angle;
+	float 	deltaDist_X;
+	float	deltaDist_Y;
+	float	sideDist_X;
+	float	sideDist_Y;
+	float 	distance;
 }	t_rays;
 
 /* Encapsulating other structs as abstractions / groups
@@ -65,6 +74,19 @@ typedef struct s_data
 	t_rays		*rays;
 }	t_data;
 
+
+// map_parsing.c
+int is_valid_map(t_data *data, char *map_filename);
+
+
+//helper_functions.c
+float ft_abs(float number);
+
+
+//map.c
+char **generate_bogus_map(void);
+#endif
+=======
 // init.c
 int		init(t_data *data, char *map_filename);
 
