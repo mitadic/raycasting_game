@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/04 16:40:17 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:49:42 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "../includes/cub3d.h"
 #include <math.h>
 #include <stdio.h>
-
+#define SQUARE_SIZE 5
+#define	MIN 0
+#define	MAX 4
 
 void calculate_delta_and_side(t_rays *ray, t_pl_pos *player, char **map)
 {
 	//deltaDist_X and deltaDist_Y (meaning: distance from one axis to the next)
-
-    // avoid dividing by 0
-    if (ray->dir_x != 0)
+    if (ray->dir_x != 0)// avoid dividing by 0
         ray->deltaDist_X = ft_abs(1 / ray->dir_x);
 		
     else
@@ -40,8 +40,6 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos *player, char **map)
     // sideDist_X and sideDist_Y (meaning: distance from player to the axis)
     float sideDist_X;
     float sideDist_Y;
-
-   
 
     int mapX = (int)player->x;
     int mapY = (int)player->y;
@@ -72,9 +70,14 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos *player, char **map)
     printf("sideDist_X is: %f\n", sideDist_X);
     printf("sideDist_Y is: %f\n", sideDist_Y);
 
-	int hit = 0;
+	
 
-	while(!hit) //loop as long as there is no wall found
+	printf("x player pos is at: %d\n", mapX);
+	printf("y player pos is at: %d\n", mapY);
+	int hit = 0;
+	
+   
+	while(!hit && mapX >= MIN && mapX < SQUARE_SIZE && mapY >= MIN && mapY < SQUARE_SIZE) //loop as long as there is no wall found
 	{
 		if(ray->sideDist_X < ray->deltaDist_Y) //rather horizontal
 		{
@@ -86,12 +89,35 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos *player, char **map)
 			ray->sideDist_Y += ray->deltaDist_Y;
 			mapY += stepY;
 		}
-		if(map[mapX][mapY] == '1')
-		{
-			hit =1;
-		}
+		 printf("Ray position: mapX = %d, mapY = %d\n", mapX, mapY);
+		
+float delta_x = mapX - player->x;
+float delta_y = mapY - player->y;
+float expected_slope = ray->dir_y / ray->dir_x;
+
+float actual_slope = delta_y / delta_x;
+
+printf("Expected slope: %f, Actual slope: %f\n", expected_slope, actual_slope);
+
+		// Check if the current position is a wall
+        if (mapX >= MIN && mapX < SQUARE_SIZE && mapY >= MIN && mapY < SQUARE_SIZE)
+        {
+            if (map[mapX][mapY] == '1')
+            {
+                hit = 1;
+                printf("Hit a wall at (%d, %d)\n", mapX, mapY);
+            }
+        }
+        else
+        {
+            // If out of bounds, exit loop to prevent endless loop
+            printf("Out of bounds at (%d, %d)\n", mapX, mapY);
+            break;
+        }
+
+
 	}
-	ray->distance = .... //to be continued
+	
 }
 /* 
 void calculate_distance(t_rays *ray, char **map, t_pl_pos *player)
