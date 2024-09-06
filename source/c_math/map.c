@@ -54,7 +54,7 @@ int i = -1;
             else if (j == SQUARE_SIZE)
             {
                 printf("\n");
-                free(map[i]);
+                //free(map[i]);
             }
         }
     }
