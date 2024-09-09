@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/06 14:27:09 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:15:27 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,28 @@
 #define	MIN 0
 #define	MAX 4
 
-
+void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
+{
+	if (ray->sideDist_X < ray->sideDist_Y) 
+	{
+        //  Strahl trifft vertikale Wand
+        *hit_x = player.x + ray->sideDist_X * ray->dir_x;
+        *hit_y = player.y + ray->sideDist_X * ray->dir_y;
+    } else 
+	{
+        //  Strahl trifft horizontale Wand
+        *hit_x = player.x + ray->sideDist_Y * ray->dir_x;
+        *hit_y = player.y + ray->sideDist_Y * ray->dir_y;
+    }
+}
 void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 {
-	int hit = 0;
+	int hit = 0; 
+	float hit_x;
+	float hit_y;
 	while(!hit && ray->mapX >= MIN && ray->mapX < SQUARE_SIZE && ray->mapY >= MIN && ray->mapY < SQUARE_SIZE) //loop as long as there is no wall found
 	{
+		
 		if(ray->sideDist_X < ray->sideDist_Y) //rather horizontal
 		{
 			ray->sideDist_X += ray->deltaDist_X;
@@ -33,9 +49,8 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 		{
 			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
-		}
+		} 
 		 printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
-		
 
 		// Check if the current position is a wall
         if (ray->mapX >= MIN && ray->mapX < SQUARE_SIZE && ray->mapY >= MIN && ray->mapY < SQUARE_SIZE)
@@ -43,7 +58,9 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
             if (map[ray->mapX][ray->mapY] == '1')
             {
                 hit = 1;
+				calculate_hit_point(ray, player, &hit_x, &hit_y);
                 printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
+				printf("Hitpoint(%f, %f)\n", hit_x, hit_y);
             }
         }
         else
@@ -53,6 +70,9 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
             break;
         }
 	}
+	
+	ray->distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
+	printf("calculated distance to wall: %f\n", ray->distance);
 }
 void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
 {
@@ -98,8 +118,8 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
     printf("sideDist_X is: %f\n", ray->sideDist_X);
     printf("sideDist_Y is: %f\n", ray->sideDist_Y);
 
-	printf("x player pos is at: %d\n", ray->mapX);
-	printf("y player pos is at: %d\n", ray->mapY);
+	printf("x player pos is at: %f\n", player.x);
+	printf("y player pos is at: %f\n", player.y);
 }
 
 int dda_algorithm(t_rays *ray, char **map, t_pl_pos player)
@@ -116,7 +136,7 @@ int dda_algorithm(t_rays *ray, char **map, t_pl_pos player)
 int calculate_vector(t_rays *ray)
 {
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	float player_angle = 0 * (M_PI /180);
+	float player_angle = 0 * (M_PI /180); //hardcoded for now!!
 
 
 	// 2. calculate the ray angle for each ray (angle relative to player_angle)
@@ -128,7 +148,7 @@ int calculate_vector(t_rays *ray)
 		i++;
 	} */
 	//here we ignore the loop and just calculate the ray_angle for the first ray
-	ray_angle = player_angle - BOGENMASS / 2 + 320 * (BOGENMASS / 320);
+	ray_angle = player_angle - BOGENMASS / 2 + 0 * (BOGENMASS / 320);
 
 	// 3. calculate the vector itself
 	ray->dir_x = cos(ray_angle);
