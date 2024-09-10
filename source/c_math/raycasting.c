@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/09 17:15:27 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:57:18 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
 	if (ray->sideDist_X < ray->sideDist_Y) 
 	{
         //  Strahl trifft vertikale Wand
-        *hit_x = player.x + ray->sideDist_X * ray->dir_x;
-        *hit_y = player.y + ray->sideDist_X * ray->dir_y;
+        *hit_x = ray->mapX;//player.x + ray->sideDist_X * ray->dir_x;
+        *hit_y =  player.y + (ray->sideDist_X - ray->deltaDist_X) * ray->dir_y; //player.y + ray->sideDist_X * ray->dir_y;
     } else 
 	{
         //  Strahl trifft horizontale Wand
-        *hit_x = player.x + ray->sideDist_Y * ray->dir_x;
-        *hit_y = player.y + ray->sideDist_Y * ray->dir_y;
+        *hit_x = player.x + (ray->sideDist_Y - ray->deltaDist_Y) * ray->dir_x;//player.x + ray->sideDist_Y * ray->dir_x;
+        *hit_y = ray->mapY;//player.y + ray->sideDist_Y * ray->dir_y;
     }
 }
 void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
@@ -80,11 +80,11 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
     if (ray->dir_x != 0)// avoid dividing by 0
         ray->deltaDist_X = ft_abs(1 / ray->dir_x);
     else
-        ray->deltaDist_X = 1e30; //very big value if 0
+        ray->deltaDist_X = INFINITY; //very big value if 0
     if (ray->dir_y != 0)
         ray->deltaDist_Y = ft_abs(1 /ray->dir_y);
     else
-    	ray->deltaDist_Y = 1e30; 
+    	ray->deltaDist_Y = INFINITY; 
 		
     printf("deltaDist_X is: %f\n", ray->deltaDist_X);
     printf("deltaDist_Y is: %f\n", ray->deltaDist_Y);
@@ -148,7 +148,7 @@ int calculate_vector(t_rays *ray)
 		i++;
 	} */
 	//here we ignore the loop and just calculate the ray_angle for the first ray
-	ray_angle = player_angle - BOGENMASS / 2 + 0 * (BOGENMASS / 320);
+	ray_angle = player_angle - BOGENMASS / 2 + 160 * (BOGENMASS / 320);
 
 	// 3. calculate the vector itself
 	ray->dir_x = cos(ray_angle);
