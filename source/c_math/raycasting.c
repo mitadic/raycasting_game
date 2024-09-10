@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/10 18:52:34 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:57:41 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void calculate_distance(t_data *data, t_rays *ray, t_pl_pos player, char **map)
 	ray->distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
 	printf("calculated distance to wall: %f\n", ray->distance);
 }
-void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
+void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
 {
 	//deltaDist_X and deltaDist_Y (meaning: distance from one axis to the next)
     if (ray->dir_x != 0)// avoid dividing by 0
@@ -102,7 +102,6 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
         ray->stepX = -1;
         ray->sideDist_X = (player.x - ray->mapX) * ray->deltaDist_X;
     }
- 	int stepY;
     if (ray->dir_y > 0)
     {
         ray->stepY = 1;
@@ -123,7 +122,7 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
 int dda_algorithm(t_data *data, t_rays *ray, char **map, t_pl_pos player)
 {
 
-	calculate_delta_and_side(ray, player, map);
+	calculate_delta_and_side(ray, player);
 	calculate_distance(data, ray, player, map);
 
 
