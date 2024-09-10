@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/10 12:57:18 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:52:34 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 #include "../../includes/cub3d.h"
 #include <math.h>
 #include <stdio.h>
-#define SQUARE_SIZE 5
-#define	MIN 0
-#define	MAX 4
+
 
 void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
 {
@@ -32,12 +30,12 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
         *hit_y = ray->mapY;//player.y + ray->sideDist_Y * ray->dir_y;
     }
 }
-void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
+void calculate_distance(t_data *data, t_rays *ray, t_pl_pos player, char **map)
 {
 	int hit = 0; 
 	float hit_x;
 	float hit_y;
-	while(!hit && ray->mapX >= MIN && ray->mapX < SQUARE_SIZE && ray->mapY >= MIN && ray->mapY < SQUARE_SIZE) //loop as long as there is no wall found
+	while(!hit && ray->mapX >= 0 && ray->mapX < data->map.max_x && ray->mapY >= 0 && ray->mapY < data->map.max_y) //loop as long as there is no wall found
 	{
 		
 		if(ray->sideDist_X < ray->sideDist_Y) //rather horizontal
@@ -53,7 +51,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 		 printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
 
 		// Check if the current position is a wall
-        if (ray->mapX >= MIN && ray->mapX < SQUARE_SIZE && ray->mapY >= MIN && ray->mapY < SQUARE_SIZE)
+        if (ray->mapX >= 0 && ray->mapX < data->map.max_x && ray->mapY >= 0 && ray->mapY < data->map.max_y)
         {
             if (map[ray->mapX][ray->mapY] == '1')
             {
@@ -122,11 +120,11 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player, char **map)
 	printf("y player pos is at: %f\n", player.y);
 }
 
-int dda_algorithm(t_rays *ray, char **map, t_pl_pos player)
+int dda_algorithm(t_data *data, t_rays *ray, char **map, t_pl_pos player)
 {
 
 	calculate_delta_and_side(ray, player, map);
-	calculate_distance(ray, player, map);
+	calculate_distance(data, ray, player, map);
 
 
     return 0;
@@ -161,21 +159,11 @@ int calculate_vector(t_rays *ray)
 	
 }
 
-int main(void)
+int math(t_data *data)
 {
 
-	t_data *data = malloc(sizeof(t_data));
-    data->rays = malloc(sizeof(t_rays) * SCREEN_W);
-	char **map = generate_bogus_map();
-	data->pl_pos.x = 2.5; //hardcoded for now!!
-	data->pl_pos.y = 2.5;
-	
-    if (!data || !data->rays) 
-	{
-        return (-1);
-    }
-	
 	
 	calculate_vector(data->rays); //only for the first ray for now
-	dda_algorithm(data->rays, map, data->pl_pos); //only for the first ray for now
+	dda_algorithm(data, data->rays, data->map.vals, data->pl_pos); //only for the first ray for now
+	return(1);
 }

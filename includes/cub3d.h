@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/09 16:02:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:27:12 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "../libft/libft/libft.h"
+# include "../libft/libft.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
@@ -81,6 +81,8 @@ typedef struct s_data
 // map_parsing.c
 int is_valid_map(t_data *data, char *map_filename);
 
+//raycasting.c
+int math(t_data *data);
 
 //helper_functions.c
 float ft_abs(float number);
@@ -107,16 +109,8 @@ int		flood_simulation(t_data *data, char **map_copy);
 	- error() usage:
 		return(error(err_msg, passthrough_return_value));
 	- bail() typedef struct s_rays
-{
-	float	dir_x;
-	float	dir_y;
-	float	ray_angle;
-	float 	deltaDist_X;
-	float	deltaDist_Y;
-	float	sideDist_X;
-	float	sideDist_Y;
-	float 	distance;
-}	t_rays;usage:
+
+usage:
 		pass the data to free and the exit code. It will exit();
 	- error_and_bail() usage:
 		pass the data to free, the msg to print, the exit code. It will exit();
