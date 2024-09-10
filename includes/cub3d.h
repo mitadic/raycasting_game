@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:01:06 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/09/09 16:02:43 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,14 @@
 # define PLAYER_DIR "NESW"
 # define SCREEN_W 320
 # define SCREEN_H 240
-
+# define M_PI           3.14159265358979323846  /* pi */
 # define ENDLINE 1
 
 # include <stdio.h>
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
-// # include <asm-generic/fcntl.h>
-# include "../libft/libft.h"
+# include "../libft/libft/libft.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
@@ -62,6 +61,10 @@ typedef struct s_rays
 	float	sideDist_X;
 	float	sideDist_Y;
 	float 	distance;
+	int		mapX;
+	int		mapY;
+	int		stepX;
+	int		stepY;
 }	t_rays;
 
 /* Encapsulating other structs as abstractions / groups
@@ -85,8 +88,7 @@ float ft_abs(float number);
 
 //map.c
 char **generate_bogus_map(void);
-#endif
-=======
+
 // init.c
 int		init(t_data *data, char *map_filename);
 
@@ -104,7 +106,17 @@ int		flood_simulation(t_data *data, char **map_copy);
 /*
 	- error() usage:
 		return(error(err_msg, passthrough_return_value));
-	- bail() usage:
+	- bail() typedef struct s_rays
+{
+	float	dir_x;
+	float	dir_y;
+	float	ray_angle;
+	float 	deltaDist_X;
+	float	deltaDist_Y;
+	float	sideDist_X;
+	float	sideDist_Y;
+	float 	distance;
+}	t_rays;usage:
 		pass the data to free and the exit code. It will exit();
 	- error_and_bail() usage:
 		pass the data to free, the msg to print, the exit code. It will exit();
