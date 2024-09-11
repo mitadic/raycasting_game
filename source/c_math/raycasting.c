@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/10 18:57:41 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:57:39 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,97 @@
 #include <stdio.h>
 
 
+// void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
+// {
+// /* 	if (ray->sideDist_X < ray->sideDist_Y) 
+// 	{
+//         //  Strahl trifft vertikale Wand
+//         *hit_x = ray->mapX;//player.x + ray->sideDist_X * ray->dir_x;
+//         *hit_y =  player.y + (ray->sideDist_X - ray->deltaDist_X) * ray->dir_y; //player.y + ray->sideDist_X * ray->dir_y;
+//     } else 
+// 	{
+//         //  Strahl trifft horizontale Wand
+//         *hit_x = player.x + (ray->sideDist_Y - ray->deltaDist_Y) * ray->dir_x;//player.x + ray->sideDist_Y * ray->dir_x;
+//         *hit_y = ray->mapY;//player.y + ray->sideDist_Y * ray->dir_y;
+//     } */
+
+// /* if (ray->sideDist_X < ray->sideDist_Y) 
+// 	{
+//         //  Strahl trifft vertikale Wand
+//         *hit_x = player.x + ray->sideDist_X * ray->dir_x;
+//         *hit_y =  player.y + ray->sideDist_X * ray->dir_y;
+//     } else 
+// 	{
+//         //  Strahl trifft horizontale Wand
+//         *hit_x = player.x + ray->sideDist_Y * ray->dir_x;
+//         *hit_y = player.y + ray->sideDist_Y * ray->dir_y;
+//     } */
+
+
+
+
+// }
+
 void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
 {
-	if (ray->sideDist_X < ray->sideDist_Y) 
-	{
-        //  Strahl trifft vertikale Wand
-        *hit_x = ray->mapX;//player.x + ray->sideDist_X * ray->dir_x;
-        *hit_y =  player.y + (ray->sideDist_X - ray->deltaDist_X) * ray->dir_y; //player.y + ray->sideDist_X * ray->dir_y;
-    } else 
-	{
-        //  Strahl trifft horizontale Wand
-        *hit_x = player.x + (ray->sideDist_Y - ray->deltaDist_Y) * ray->dir_x;//player.x + ray->sideDist_Y * ray->dir_x;
-        *hit_y = ray->mapY;//player.y + ray->sideDist_Y * ray->dir_y;
+    if (ray->sideDist_X < ray->sideDist_Y)
+    {
+        // Ray hits vertical wall
+		printf("aa\n");
+		printf("player x is: %f\n", player.x);
+		printf("sideDistX is: %f\n", ray->sideDist_X);
+		printf("sideDistY is: %f\n", ray->sideDist_Y);
+		printf("ray_dir_x is: %f\n", ray->dir_x);
+        *hit_x = player.x + ray->sideDist_X * ray->dir_x;
+        *hit_y = player.y + ray->sideDist_X * ray->dir_y;
+    }
+    else
+    {
+        // Ray hits horizontal wall
+        *hit_x = player.x + ray->sideDist_Y * ray->dir_x;
+        *hit_y = player.y + ray->sideDist_Y * ray->dir_y;
     }
 }
+/* void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
+{
+    if (ray->sideDist_X < ray->sideDist_Y) 
+    {
+        // Ray hits a vertical wall (x-boundary first)
+        *hit_x = ray->mapX; // X-position of the wall (since it's vertical)
+        *hit_y = player.y + ray->sideDist_X * ray->dir_y; // Calculate Y-position
+    } 
+    else 
+    {
+        // Ray hits a horizontal wall (y-boundary first)
+        *hit_y = ray->mapY; // Y-position of the wall (since it's horizontal)
+        *hit_x = player.x + ray->sideDist_Y * ray->dir_x; // Calculate X-position
+    }
+} */
+
+
+
 void calculate_distance(t_data *data, t_rays *ray, t_pl_pos player, char **map)
 {
 	int hit = 0; 
 	float hit_x;
 	float hit_y;
+
 	while(!hit && ray->mapX >= 0 && ray->mapX < data->map.max_x && ray->mapY >= 0 && ray->mapY < data->map.max_y) //loop as long as there is no wall found
 	{
 		
 		if(ray->sideDist_X < ray->sideDist_Y) //rather horizontal
 		{
-			ray->sideDist_X += ray->deltaDist_X;
+			printf("hello\n");
+			if (!ray->side_delta_incr_X)
+				ray->side_delta_incr_X = ray->sideDist_X;
+			ray->side_delta_incr_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
 		}
 		else //rather vertical
 		{
-			ray->sideDist_Y += ray->deltaDist_Y;
+			if (!ray->side_delta_incr_Y)
+				ray->side_delta_incr_Y = ray->sideDist_Y;
+			ray->side_delta_incr_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
 		} 
 		 printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
@@ -80,7 +141,7 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
     else
         ray->deltaDist_X = INFINITY; //very big value if 0
     if (ray->dir_y != 0)
-        ray->deltaDist_Y = ft_abs(1 /ray->dir_y);
+        ray->deltaDist_Y = ft_abs(1 / ray->dir_y);
     else
     	ray->deltaDist_Y = INFINITY; 
 		
@@ -92,10 +153,11 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
     ray->mapX = (int)player.x;
     ray->mapY = (int)player.y;
 
+	printf("ray.mapX is: %d\n", ray->mapX);
     if (ray->dir_x > 0)
     {
         ray->stepX = 1;
-        ray->sideDist_X= (ray->mapX + 1 - player.x) * ray->deltaDist_X;
+        ray->sideDist_X = (ray->mapX + 1 - player.x) * ray->deltaDist_X;
     }
     else
     {
@@ -112,6 +174,7 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
         ray->stepY = -1;
         ray->sideDist_Y = (player.y - ray->mapY) * ray->deltaDist_Y;
     }
+	
     printf("sideDist_X is: %f\n", ray->sideDist_X);
     printf("sideDist_Y is: %f\n", ray->sideDist_Y);
 
@@ -133,7 +196,7 @@ int dda_algorithm(t_data *data, t_rays *ray, char **map, t_pl_pos player)
 int calculate_vector(t_rays *ray)
 {
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	float player_angle = 0 * (M_PI /180); //hardcoded for now!!
+	double player_angle = 35 * (M_PI /180); //hardcoded for now!!
 
 
 	// 2. calculate the ray angle for each ray (angle relative to player_angle)

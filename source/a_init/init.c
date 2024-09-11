@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:02:29 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/09/11 14:46:42 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	init(t_data *data, char *map_filename)
 	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
 	if (!data->rays)
 		return (error(MALLOCFAIL, KO));
+	data->rays->side_delta_incr_X = 0;
+	data->rays->side_delta_incr_Y = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
 			malloc_for_map_vals(data) != OK)
 		return (KO);
