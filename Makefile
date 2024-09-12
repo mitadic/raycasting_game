@@ -7,6 +7,7 @@ SRCD		= ./source/
 INIT		= a_init/
 PARSING		= b_parsing/
 MATH		= c_math/
+META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
 LIBMLXD 	= ./minilibx-linux/
@@ -16,8 +17,8 @@ SRC = 		main.c \
 			$(PARSING)map_parsing_control.c \
 			$(PARSING)map_parsing_flood_fill.c \
 			$(PARSING)map_parsing_flood_sim.c \
-			$(PARSING)failure_management.c \
-			$(PARSING)freeing_protocol.c \
+			$(META)failure_management.c \
+			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c
 
