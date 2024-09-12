@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/11 14:40:02 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:40:16 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef struct s_pl_pos
 	float	x;
 	float	y;
 	char direction;
-	float player_angle;
+	float player_angle_degree;
+	float player_angle_radian;
 
 }	t_pl_pos;
 
