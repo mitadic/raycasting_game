@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/13 13:14:20 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:47:03 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
 # define SCREEN_W 320
-# define SCREEN_H 240
+# define SCREEN_H 180
 # define M_PI           3.14159265358979323846  /* pi */
 # define ENDLINE 1
 
@@ -71,6 +71,15 @@ typedef struct s_rays
 	float	wall_height;
 }	t_rays;
 
+typedef struct s_img_buff
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_img_buff;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a <t_map *map>
  */
@@ -79,6 +88,9 @@ typedef struct s_data
 	t_map		map;
 	t_pl_pos	pl_pos;
 	t_rays		*rays;
+	void		*mlx;
+	void		*win;
+	t_img_buff	img_buff;
 }	t_data;
 
 
@@ -107,6 +119,9 @@ void	free_map_copy(char **map_copy, int columns_allocated);
 
 // map_parsing_flood_sim.c
 int		flood_simulation(t_data *data, char **map_copy);
+
+// d_mlxing/go_mlxing.c
+void	go_mlxing(t_data *data);
 
 // failure_management.c
 /*

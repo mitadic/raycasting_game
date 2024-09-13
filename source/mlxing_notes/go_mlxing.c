@@ -1,4 +1,5 @@
 
+
 // exiters.c
 int		close_esc(int keycode, void *param);
 int		close_x(t_vars *vars);

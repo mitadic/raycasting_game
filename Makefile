@@ -7,6 +7,7 @@ SRCD		= ./source/
 INIT		= a_init/
 PARSING		= b_parsing/
 MATH		= c_math/
+MLX			= d_mlxing/
 META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
@@ -20,7 +21,8 @@ SRC = 		main.c \
 			$(META)failure_management.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
-			$(MATH)raycasting.c
+			$(MATH)raycasting.c \
+			$(MLX)go_mlxing.c
 
 HFILES =	cub3d.h \
 			errors.h
