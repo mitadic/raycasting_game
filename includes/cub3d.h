@@ -93,36 +93,32 @@ typedef struct s_data
 	t_img_buff	img_buff;
 }	t_data;
 
-
-// map_parsing.c
-int is_valid_map(t_data *data, char *map_filename);
-
-//raycasting.c
-int math(t_data *data);
-
-//helper_functions.c
-float ft_abs(float number);
-
-
-//map.c
-char **generate_bogus_map(void);
-
+// A
 // init.c
 int		init(t_data *data, char *map_filename);
 
+// B
 // map_parsing_control.c
 int		validate_map(t_data *data, char *map_filename);
-
 // map_parsing_flood_fill.c
 int		flood_fill(t_data *data);
 void	free_map_copy(char **map_copy, int columns_allocated);
-
 // map_parsing_flood_sim.c
 int		flood_simulation(t_data *data, char **map_copy);
 
-// d_mlxing/go_mlxing.c
+// C
+// raycasting.c
+int math(t_data *data);
+// helper_functions.c
+float ft_abs(float number);
+// map.c
+char **generate_bogus_map(void);
+
+// D
+// go_mlxing.c
 void	go_mlxing(t_data *data);
 
+// Z
 // failure_management.c
 /*
 	- error() usage:
