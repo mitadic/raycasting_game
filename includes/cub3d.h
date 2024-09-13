@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/12 15:40:16 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:14:20 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_rays
 	int		mapY;
 	int		stepX;
 	int		stepY;
+	float	wall_height;
 }	t_rays;
 
 /* Encapsulating other structs as abstractions / groups
