@@ -98,6 +98,7 @@ void adjust_for_fisheye_effect(t_pl_pos player, t_rays* ray, float distance_with
 	ray->distance = distance_without_correction / cos(ray->ray_angle - player.player_angle_radian);
 	printf("corrected distance: %f\n", ray->distance);
 }
+
 void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 {
 	int hit = 0; 
@@ -222,7 +223,7 @@ int math(t_data *data)
 	int	i;
 
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	data->pl_pos.player_angle_degree = -45;
+	data->pl_pos.player_angle_degree = -30;
 	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!!
 	i = -1;
 	while(++i < SCREEN_W) //we assume that the number of rays is 320

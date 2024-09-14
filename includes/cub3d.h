@@ -15,14 +15,14 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define FOV 60
-# define BOGENMASS 1.047
-
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
+# define TILE_SIZE 64
 # define SCREEN_W 320
 # define SCREEN_H 180
 # define M_PI           3.14159265358979323846  /* pi */
+# define BOGENMASS 1.047
+# define FOV (M_PI / 3)
 # define ENDLINE 1
 
 # define BLACK	0x000000
@@ -36,6 +36,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/

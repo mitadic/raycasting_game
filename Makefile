@@ -7,7 +7,7 @@ SRCD		= ./source/
 INIT		= a_init/
 PARSING		= b_parsing/
 MATH		= c_math/
-MLX			= d_mlxing/
+MLXING		= d_mlxing/
 META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
@@ -22,7 +22,7 @@ SRC = 		main.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
-			$(MLX)go_mlxing.c
+			$(MLXING)go_mlxing.c
 
 HFILES =	cub3d.h \
 			errors.h
@@ -37,9 +37,9 @@ all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 # 	fi
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm
-# -L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
-# -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
+	-L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
+	-lXext -lX11 -lm -lz -o $(NAME)
 
 init_submodules:
 	git submodule init
