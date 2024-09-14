@@ -98,13 +98,13 @@ void adjust_for_fisheye_effect(t_pl_pos player, t_rays* ray, float distance_with
 	ray->distance = distance_without_correction / cos(ray->ray_angle - player.player_angle_radian);
 	printf("corrected distance: %f\n", ray->distance);
 }
-void calculate_distance(t_data *data, t_rays *ray, t_pl_pos player, char **map)
+void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 {
 	int hit = 0; 
 	float hit_x = 0.0;
 	float hit_y = 0.0;
 	float distance;
-	(void)data;
+	// (void)data;
 	while(!hit) //loop as long as there is no wall found
 	{
 		
@@ -191,50 +191,46 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
 	printf("y player pos is at: %f\n", player.y);
 }
 
-int dda_algorithm(t_data *data, t_rays *ray, char **map, t_pl_pos player)
+int dda_algorithm(t_rays *ray, char **map, t_pl_pos player)
 {
 
 	calculate_delta_and_side(ray, player);
-	calculate_distance(data, ray, player, map);
+	calculate_distance(ray, player, map);
 	calculate_wall_height(ray);
 
-    return 0;
+    return (OK);
 }
 
 
-int calculate_vector(t_data *data)
+int calculate_vector(t_rays *ray)
 {
-	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	data->pl_pos.player_angle_degree = -45;
-	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI /180); //hardcoded for now!!
-
-
-	// 2. calculate the ray angle for each ray (angle relative to player_angle)
-/*	int i = 0;
- 	while(i < 320) //we assume that the number of rays is 320
-	{
-		ray_angle = player_angle - FOV / 2 + i * (FOV / 320);
-		i++;
-	} */
-	//here we ignore the loop and just calculate the ray_angle for the first ray
-	data->rays->ray_angle = data->pl_pos.player_angle_radian - BOGENMASS / 2 + 160 * (BOGENMASS / 320);
-	
 	// 3. calculate the vector itself
-	data->rays->dir_x = cos(data->rays->ray_angle);
-	data->rays->dir_y = sin(data->rays->ray_angle);
-	printf("ray_dir_x is: %f\n",data->rays->dir_x);
-	printf("ray_dir_y is: %f\n",data->rays->dir_y);
-	printf("\n");
+	ray->dir_x = cos(ray->ray_angle);
+	ray->dir_y = sin(ray->ray_angle);
+	// printf("ray_dir_x is: %f\n",data->rays->dir_x);
+	// printf("ray_dir_y is: %f\n",data->rays->dir_y);
+	// printf("\n");
+	// milos: suspend the below for now
+	// jasmin: here we ignore the loop and just calculate the ray_angle for the first ray
+	// data->rays->ray_angle = data->pl_pos.player_angle_radian - BOGENMASS / 2 + 160 * (BOGENMASS / 320);
 
-	return (0);
-	
+	return (OK);
 }
 
 int math(t_data *data)
 {
+	int	i;
 
-	
-	calculate_vector(data); //only for the first ray for now
-	dda_algorithm(data, data->rays, data->map.vals, data->pl_pos); //only for the first ray for now
-	return(1);
+	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
+	data->pl_pos.player_angle_degree = -45;
+	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!!
+	i = -1;
+	while(++i < SCREEN_W) //we assume that the number of rays is 320
+	{
+		// 2. calculate the ray angle for each ray (angle relative to player_angle)
+		data->rays[i].ray_angle = data->pl_pos.player_angle_radian - FOV / 2 + i * (FOV / SCREEN_W);
+		calculate_vector(&data->rays[i]); //only for the first ray for now
+		dda_algorithm(&data->rays[i], data->map.vals, data->pl_pos); //only for the first ray for now
+	}
+	return(OK);
 }

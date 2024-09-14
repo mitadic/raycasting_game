@@ -56,19 +56,30 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 	return (OK);
 }
 
+int	init_rays(t_data *data)
+{
+	int	i;
+
+	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
+	if (!data->rays)
+		return (error(MALLOCFAIL, KO));
+	i = -1;
+	while (++i < SCREEN_W)
+	{
+		data->rays[i].side_delta_incr_X = 0;
+		data->rays[i].side_delta_incr_Y = 0;
+	}
+	return (OK);
+}
+
 /* control flow */
 int	init(t_data *data, char *map_filename)
 {
 	data->map.max_x = 0;
 	data->map.max_y = 0;
 	data->map.vals = NULL;
-	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
-	if (!data->rays)
-		return (error(MALLOCFAIL, KO));
-	data->rays->side_delta_incr_X = 0;
-	data->rays->side_delta_incr_Y = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
-			malloc_for_map_vals(data) != OK)
+			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
 		return (KO);
 	return (OK);
 }

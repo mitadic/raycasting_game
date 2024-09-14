@@ -25,6 +25,12 @@
 # define M_PI           3.14159265358979323846  /* pi */
 # define ENDLINE 1
 
+# define BLACK	0x000000
+# define WHITE	0xFFFFFF
+# define RED	0xFF0000
+# define GREEN	0x00FF00
+# define BLUE	0x0000FF
+
 # include <stdio.h>
 # include <math.h>
 # include <stdlib.h>
@@ -71,6 +77,15 @@ typedef struct s_rays
 	float	wall_height;
 }	t_rays;
 
+/*
+All of these are initialized by MiniLibX suite functions, not manually:
+-endian
+	is about how data is stored within say 32bits, so RGBA or ARGB or otherwise
+-line_length (== "scanline")
+	is the total number of bytes need to represent a row of pixels
+-bits_per_pixel;
+	determines how many bytes each "pixel" is taking up
+*/
 typedef struct s_img_buff
 {
 	void	*img;
@@ -81,8 +96,7 @@ typedef struct s_img_buff
 }			t_img_buff;
 
 /* Encapsulating other structs as abstractions / groups
-	though map->vals will need malloc, map itself needs not be a <t_map *map>
- */
+	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
 {
 	t_map		map;
