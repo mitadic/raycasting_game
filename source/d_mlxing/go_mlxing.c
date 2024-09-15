@@ -100,6 +100,11 @@ int	continuous_rendering(void *param)
 	if (data->key_state.d) move_right(data);
 	if (data->key_state.left) rotate_left(data);
 	if (data->key_state.right) rotate_right(data);
+
+	// Clear the image buffer? Seems to be acting glitchy
+	// mlx_clear_window(data->mlx, data->win);
+
+	// Do raycasting anew
 	math(data);
 	draw_columns(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
@@ -118,7 +123,6 @@ void	go_mlxing(t_data *data)
 	data->img_buff.addr = mlx_get_data_addr(data->img_buff.img, &data->img_buff.bits_per_pixel, \
 		&data->img_buff.line_length, &data->img_buff.endian);
     // FAST PUT PIXELS TO IMG BUFFER HERE
-
     mlx_hook(data->win, 2, 1L << 0, handle_keypress, data); // Key press (mov, Esc...)
 	mlx_hook(data->win, 3, 1L << 1, handle_keyrelease, data);  // Key release event
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
