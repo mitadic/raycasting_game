@@ -243,7 +243,7 @@ int math(t_data *data)
 	int	i;
 
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	data->pl_pos.player_angle_degree = 150;
+	// data->pl_pos.player_angle_degree = 150;
 	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!!
 	i = -1;
 	while(++i < SCREEN_W) //we assume that the number of rays is 320

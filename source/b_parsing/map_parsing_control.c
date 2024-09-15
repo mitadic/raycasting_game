@@ -15,6 +15,20 @@
 /* A chain of returns brings us back out to main, only then do we free.
 Any errors messages are printed on the spot, as soon as encountered. */
 
+/* Set up player */
+void	init_player(t_data *data, int x, int y, char pl_orientation)
+{
+	data->pl_pos.x = x + 0.5;
+	data->pl_pos.y = y + 0.5;
+	if (pl_orientation == 'N')
+		data->pl_pos.player_angle_degree = -90;
+	else if (pl_orientation == 'E')
+		data->pl_pos.player_angle_degree = 0;
+	else if (pl_orientation == 'S')
+		data->pl_pos.player_angle_degree = 90;
+	else if (pl_orientation == 'W')
+		data->pl_pos.player_angle_degree = -180;
+}
 
 /* Validates and stores player position. No need for pl_pos.<c> to be init'd */
 static int	locate_player(t_data *data)
@@ -32,8 +46,7 @@ static int	locate_player(t_data *data)
 		{
 			if (ft_strchr(PLAYER_DIR, data->map.vals[x][y]))
 			{
-				data->pl_pos.x = x + 0.5;
-				data->pl_pos.y = y + 0.5;
+				init_player(data, x, y, data->map.vals[x][y]);
 				pl_pos_count++;
 			}
 		}

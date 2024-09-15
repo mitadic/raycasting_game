@@ -1,27 +1,5 @@
 #include "../../includes/cub3d.h"
 
-int	close_esc(int keycode, void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	if (data->mlx && data->win)
-	{
-		if (keycode == 0xff1b)
-		{
-			mlx_destroy_window(data->mlx, data->win);
-			exit(0);
-		}
-	}
-	return (0);
-}
-
-int	close_x(t_data *data)
-{
-	(void)data;
-	exit(0);
-}
-
 /*
 1	data->img_buff.addr	- address of the very first pixel
 2	y * data->img_buff.line_length - pixel row count
@@ -69,6 +47,65 @@ void	draw_columns(t_data *data)
 	}
 }
 
+int	handle_keypress(int keycode, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (!data->mlx || !data->win)
+		return(1);
+	if (keycode == KEY_ESC)
+	{
+		mlx_destroy_window(data->mlx, data->win);
+		exit(0);
+	}
+	else if (keycode == KEY_W) data->key_state.w = 1;
+	else if (keycode == KEY_S) data->key_state.s = 1;
+	else if (keycode == KEY_A) data->key_state.a = 1;
+	else if (keycode == KEY_D) data->key_state.d = 1;
+	else if (keycode == KEY_LEFT) data->key_state.left = 1;
+	else if (keycode == KEY_RIGHT) data->key_state.right = 1;
+	return (0);
+}
+
+int	handle_keyrelease(int keycode, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (!data->mlx || !data->win)
+		return(1);
+	if (keycode == KEY_W) data->key_state.w = 0;
+	else if (keycode == KEY_S) data->key_state.s = 0;
+	else if (keycode == KEY_A) data->key_state.a = 0;
+	else if (keycode == KEY_D) data->key_state.d = 0;
+	else if (keycode == KEY_LEFT) data->key_state.left = 0;
+	else if (keycode == KEY_RIGHT) data->key_state.right = 0;
+	return (0);
+}
+
+int	close_x(t_data *data)
+{
+	(void)data;
+	exit(0);
+}
+
+int	continuous_rendering(void *param)
+{
+	t_data *data = (t_data *)param;
+
+	if (data->key_state.w) move_forward(data);
+	if (data->key_state.s) move_backward(data);
+	if (data->key_state.a) move_left(data);
+	if (data->key_state.d) move_right(data);
+	if (data->key_state.left) rotate_left(data);
+	if (data->key_state.right) rotate_right(data);
+	math(data);
+	draw_columns(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
+	return (0);
+}
+
 void	go_mlxing(t_data *data)
 {
     data->mlx = mlx_init();
@@ -81,17 +118,12 @@ void	go_mlxing(t_data *data)
 	data->img_buff.addr = mlx_get_data_addr(data->img_buff.img, &data->img_buff.bits_per_pixel, \
 		&data->img_buff.line_length, &data->img_buff.endian);
     // FAST PUT PIXELS TO IMG BUFFER HERE
-	math(data);
-	draw_columns(data);
-    // OBSOLETE from fdf for reference:
-        // points_2d(vars);
-        // edges(vars, img);
-	// MILOS: print just to see them all bundled
-	// int i = -1;
-	// while (++i < SCREEN_W)
-	// 	printf("for ray no. %d, ray angle is %f\n", i, data->rays[i].ray_angle);
-	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
-	mlx_hook(data->win, 2, 1L << 0, close_esc, (void *)data);
+
+    mlx_hook(data->win, 2, 1L << 0, handle_keypress, data); // Key press (mov, Esc...)
+	mlx_hook(data->win, 3, 1L << 1, handle_keyrelease, data);  // Key release event
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
+	// Register the continuous rendering loop
+    mlx_loop_hook(data->mlx, continuous_rendering, data);
+	// Start the MLX event loop
 	mlx_loop(data->mlx);
 }

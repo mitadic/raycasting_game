@@ -25,11 +25,23 @@
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
+# define ROT_SPEED 0.015
+# define MOV_SPEED 0.0125
+
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
 # define RED	0xFF0000
 # define GREEN	0x00FF00
 # define BLUE	0x0000FF
+
+// Linux key codes
+#define KEY_ESC		65307
+#define KEY_W		119
+#define KEY_A		97
+#define KEY_S		115
+#define KEY_D		100
+#define KEY_LEFT	65361
+#define KEY_RIGHT	65363
 
 # include <stdio.h>
 # include <math.h>
@@ -47,15 +59,25 @@ typedef struct s_map
 	char	**vals;
 } t_map;
 
+/* Key statuses (0 or 1) */
+typedef struct s_key_state
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+}	t_key_state;
+
 /* Player position expressed as a 2D vector */
 typedef struct s_pl_pos
 {
-	float	x;
-	float	y;
-	char direction;
-	float player_angle_degree;
-	float player_angle_radian;
-
+	float		x;
+	float		y;
+	char		direction;
+	float		player_angle_degree;
+	float		player_angle_radian;
 }	t_pl_pos;
 
 /* Rays, will need (screen width) number of those */
@@ -102,6 +124,7 @@ typedef struct s_data
 {
 	t_map		map;
 	t_pl_pos	pl_pos;
+	t_key_state	key_state;
 	t_rays		*rays;
 	void		*mlx;
 	void		*win;
@@ -132,6 +155,13 @@ char **generate_bogus_map(void);
 // D
 // go_mlxing.c
 void	go_mlxing(t_data *data);
+// player_movements.c
+void	move_forward(t_data *data);
+void	move_backward(t_data *data);
+void	move_left(t_data *data);
+void	move_right(t_data *data);
+void	rotate_left(t_data *data);
+void	rotate_right(t_data *data);
 
 // Z
 // failure_management.c

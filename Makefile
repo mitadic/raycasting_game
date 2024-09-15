@@ -22,7 +22,8 @@ SRC = 		main.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
-			$(MLXING)go_mlxing.c
+			$(MLXING)go_mlxing.c \
+			$(MLXING)player_movements.c
 
 HFILES =	cub3d.h \
 			errors.h
