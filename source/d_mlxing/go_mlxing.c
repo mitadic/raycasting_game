@@ -40,29 +40,32 @@ void	fst_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
+void	draw_single_column(t_data *data, int x, int y, float wall_h)
+{
+	int	wall_start;
+	int	wall_end;
+
+	wall_start = (SCREEN_H - wall_h) / 2;
+	wall_end = wall_start + wall_h - 1;
+	if (y < wall_start)
+		fst_mlx_pixel_put(data, x, y, WHITE);
+	else if (y > wall_end)
+		fst_mlx_pixel_put(data, x, y, BLACK);
+	else
+		fst_mlx_pixel_put(data, x, y, BLUE);
+}
+
 void	draw_columns(t_data *data)
 {
 	int		x;
 	int		y;
-	float	wall_h;
 
 	x = -1;
 	while (++x < SCREEN_W)
 	{
 		y = -1;
 		while (++y < SCREEN_H)
-		{
-			wall_h = data->rays[x].wall_height;
-			if (y < (SCREEN_H - wall_h) / 2 || y > wall_h + (SCREEN_H - wall_h) / 2)
-			{
-				if (y < (SCREEN_H - data->rays[x].wall_height) / 2)
-					fst_mlx_pixel_put(data, x, y, WHITE);
-				else if (y > (SCREEN_H - data->rays[x].wall_height) / 2)
-					fst_mlx_pixel_put(data, x, y, BLACK);
-			}
-			else
-				fst_mlx_pixel_put(data, x, y, BLUE);
-		}
+			draw_single_column(data, x, y, data->rays[x].wall_height);
 	}
 }
 
@@ -83,9 +86,10 @@ void	go_mlxing(t_data *data)
     // OBSOLETE from fdf for reference:
         // points_2d(vars);
         // edges(vars, img);
-	int i = -1;
-	while (++i < SCREEN_W)
-		printf("for ray no. %d, ray angle is %f\n", i, data->rays[i].ray_angle);
+	// MILOS: print just to see them all bundled
+	// int i = -1;
+	// while (++i < SCREEN_W)
+	// 	printf("for ray no. %d, ray angle is %f\n", i, data->rays[i].ray_angle);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
 	mlx_hook(data->win, 2, 1L << 0, close_esc, (void *)data);
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);

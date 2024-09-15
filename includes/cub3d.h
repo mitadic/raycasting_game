@@ -18,8 +18,8 @@
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
 # define TILE_SIZE 64
-# define SCREEN_W 320
-# define SCREEN_H 180
+# define SCREEN_W 512
+# define SCREEN_H 384
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
 # define FOV (M_PI / 3)

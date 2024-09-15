@@ -54,7 +54,7 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
 {
     if (ray->sideDist_X < ray->sideDist_Y)
     {
-		printf("in calculate hitpoint mapX is: %d\n", ray->mapX);
+		// printf("in calculate hitpoint mapX is: %d\n", ray->mapX);
         // Ray hits vertical wall (x-boundary first)
         *hit_x = ray->mapX; // X-position of the wall (since it's vertical)
         *hit_y = player.y + ray->sideDist_X * ray->dir_y; // Calculate Y-position
@@ -78,7 +78,7 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
 
 void adjust_map_coords_for_index(t_rays *ray, t_pl_pos player)
 {
-	printf("player angle is: %f\n", player.player_angle_degree);
+	// printf("player angle is: %f\n", player.player_angle_degree);
 	if (player.player_angle_degree < -90 || player.player_angle_degree > 90)
 	{
 		ray->mapX += 1;
@@ -92,11 +92,31 @@ void adjust_map_coords_for_index(t_rays *ray, t_pl_pos player)
 
 }
 
+// float normalize_angle(float angle)
+// {
+//     while (angle < -M_PI) angle += M_PI;
+//     while (angle > M_PI) angle -= M_PI;
+//     return angle;
+// }
 
 void adjust_for_fisheye_effect(t_pl_pos player, t_rays* ray, float distance_without_correction)
 {
-	ray->distance = distance_without_correction / cos(ray->ray_angle - player.player_angle_radian);
-	printf("corrected distance: %f\n", ray->distance);
+	float	angle_difference;
+	float	correction_factor;
+
+	angle_difference = player.player_angle_radian - ray->ray_angle;
+	correction_factor = cos(angle_difference / M_PI);
+	if (fabs(correction_factor) < 0.01)
+		ray->distance = distance_without_correction;
+	else
+		ray->distance = distance_without_correction * correction_factor;
+	// MILOS: diagnostics
+	// if ((ray->ray_angle > -0.01 && ray->ray_angle < 0.01) || ray->ray_angle > 0.52)
+	// {
+	// 	printf("calculated distance to wall(without correction): %f\n", distance_without_correction);
+	// 	printf("player_angle_radian is %f, ray_angle is %f, correction factor is %f\n", player.player_angle_radian, ray->ray_angle, correction_factor);
+	// 	printf("corrected distance: %f\n", ray->distance);
+	// }
 }
 
 void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
@@ -115,7 +135,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 				ray->side_delta_incr_X = ray->sideDist_X;
 			ray->side_delta_incr_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
-			printf("in calculate distance mapX is: %d\n", ray->mapX);
+			// printf("in calculate distance mapX is: %d\n", ray->mapX);
 		}
 		else //rather vertical
 		{
@@ -124,7 +144,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 			ray->side_delta_incr_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
 		} 
-		 printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
+		//  printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
 
 		// Check if the current position is a wall
        
@@ -133,14 +153,14 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
                 hit = 1;
 				adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player, &hit_x, &hit_y);
-                printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
-				printf("\nHitpoint(%f, %f)\n", hit_x, hit_y);
+                // printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
+				// printf("\nHitpoint(%f, %f)\n", hit_x, hit_y);
 		
             }
 	}
-	
+	// ray->distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
 	distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
-	printf("calculated distance to wall(without correction): %f\n", distance);
+	// printf("calculated distance to wall(without correction): %f\n", distance);
 	adjust_for_fisheye_effect(player, ray, distance);
 }
 void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
@@ -155,15 +175,15 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
     else
     	ray->deltaDist_Y = INFINITY; 
 		
-    printf("deltaDist_X is: %f\n", ray->deltaDist_X);
-    printf("deltaDist_Y is: %f\n", ray->deltaDist_Y);
-    printf("\n");
+    // printf("deltaDist_X is: %f\n", ray->deltaDist_X);
+    // printf("deltaDist_Y is: %f\n", ray->deltaDist_Y);
+    // printf("\n");
 	
     // sideDist_X and sideDist_Y (meaning: distance from player to the axis)
     ray->mapX = (int)player.x;
     ray->mapY = (int)player.y;
 
-	printf("ray.mapX is: %d\n", ray->mapX);
+	// printf("ray.mapX is: %d\n", ray->mapX);
     if (ray->dir_x > 0)
     {
         ray->stepX = 1;
@@ -185,11 +205,11 @@ void calculate_delta_and_side(t_rays *ray, t_pl_pos player)
         ray->sideDist_Y = (player.y - ray->mapY) * ray->deltaDist_Y;
     }
 	
-    printf("sideDist_X is: %f\n", ray->sideDist_X);
-    printf("sideDist_Y is: %f\n", ray->sideDist_Y);
+    // printf("sideDist_X is: %f\n", ray->sideDist_X);
+    // printf("sideDist_Y is: %f\n", ray->sideDist_Y);
 
-	printf("x player pos is at: %f\n", player.x);
-	printf("y player pos is at: %f\n", player.y);
+	// printf("x player pos is at: %f\n", player.x);
+	// printf("y player pos is at: %f\n", player.y);
 }
 
 int dda_algorithm(t_rays *ray, char **map, t_pl_pos player)
@@ -223,13 +243,13 @@ int math(t_data *data)
 	int	i;
 
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
-	data->pl_pos.player_angle_degree = -30;
+	data->pl_pos.player_angle_degree = 150;
 	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!!
 	i = -1;
 	while(++i < SCREEN_W) //we assume that the number of rays is 320
 	{
 		// 2. calculate the ray angle for each ray (angle relative to player_angle)
-		data->rays[i].ray_angle = data->pl_pos.player_angle_radian - FOV / 2 + i * (FOV / SCREEN_W);
+		data->rays[i].ray_angle = data->pl_pos.player_angle_radian - FOV / 2 + i * (FOV / (SCREEN_W - 1));
 		calculate_vector(&data->rays[i]); //only for the first ray for now
 		dda_algorithm(&data->rays[i], data->map.vals, data->pl_pos); //only for the first ray for now
 	}
