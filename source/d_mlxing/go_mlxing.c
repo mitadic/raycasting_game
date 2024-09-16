@@ -18,11 +18,14 @@ void	fst_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void	draw_single_column(t_data *data, int x, int y, float wall_h)
+void	draw_single_column(t_data *data, int x, int y)
 {
-	int	wall_start;
-	int	wall_end;
+	int		wall_start;
+	int		wall_end;
+	float	wall_h;
+	int		color;
 
+	wall_h = data->rays[x].wall_height;
 	wall_start = (SCREEN_H - wall_h) / 2;
 	wall_end = wall_start + wall_h - 1;
 	if (y < wall_start)
@@ -30,7 +33,19 @@ void	draw_single_column(t_data *data, int x, int y, float wall_h)
 	else if (y > wall_end)
 		fst_mlx_pixel_put(data, x, y, BLACK);
 	else
-		fst_mlx_pixel_put(data, x, y, BLUE);
+	{
+		if (data->rays[x].wall_to_the == 'N')
+			color = BLUE;
+		else if (data->rays[x].wall_to_the == 'E')
+			color = YELLOW;
+		else if (data->rays[x].wall_to_the == 'S')
+			color = RED;
+		else if (data->rays[x].wall_to_the == 'W')
+			color = ORANGE;
+		else // corners
+			color = WHITE;
+		fst_mlx_pixel_put(data, x, y, color);
+	}
 }
 
 void	draw_columns(t_data *data)
@@ -43,7 +58,7 @@ void	draw_columns(t_data *data)
 	{
 		y = -1;
 		while (++y < SCREEN_H)
-			draw_single_column(data, x, y, data->rays[x].wall_height);
+			draw_single_column(data, x, y);
 	}
 }
 
@@ -65,6 +80,7 @@ int	handle_keypress(int keycode, void *param)
 	else if (keycode == KEY_D) data->key_state.d = 1;
 	else if (keycode == KEY_LEFT) data->key_state.left = 1;
 	else if (keycode == KEY_RIGHT) data->key_state.right = 1;
+	printf("key pressed is %i\n", keycode);
 	return (0);
 }
 
@@ -90,8 +106,15 @@ int	close_x(t_data *data)
 	exit(0);
 }
 
+
+
+
+
+
 int	continuous_rendering(void *param)
 {
+
+	
 	t_data *data = (t_data *)param;
 
 	if (data->key_state.w) move_forward(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/13 15:47:03 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/09/16 17:38:03 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define RED	0xFF0000
 # define GREEN	0x00FF00
 # define BLUE	0x0000FF
+# define YELLOW	0xFAEE05
+# define ORANGE 0xBA8507
 
 // Linux key codes
 #define KEY_ESC		65307
@@ -98,6 +100,7 @@ typedef struct s_rays
 	int		stepX;
 	int		stepY;
 	float	wall_height;
+	char	wall_to_the;
 }	t_rays;
 
 /*
@@ -122,7 +125,8 @@ typedef struct s_img_buff
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
 {
-	t_map		map;
+	t_map		
+	map;
 	t_pl_pos	pl_pos;
 	t_key_state	key_state;
 	t_rays		*rays;

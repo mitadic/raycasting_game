@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/13 13:22:58 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:40:49 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void calculate_wall_height(t_rays *ray)
 {
 	ray->wall_height = SCREEN_H / ray->distance;
-	printf("calculated wall height: %f\n", ray->wall_height);
+	// printf("calculated wall height: %f\n", ray->wall_height);
 }
 
 // void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_y)
@@ -78,18 +78,25 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
 
 void adjust_map_coords_for_index(t_rays *ray, t_pl_pos player)
 {
-	// printf("player angle is: %f\n", player.player_angle_degree);
-	if (player.player_angle_degree < -90 || player.player_angle_degree > 90)
+	float	ray_total_angle;
+	// for when the ray goes to the W and hits a wall
+	ray_total_angle = player.player_angle_radian + ray->ray_angle;
+	if (ray_total_angle < -M_PI / 2 + -M_PI / 4 || ray_total_angle > M_PI / 2 + M_PI / 4)
 	{
 		ray->mapX += 1;
+		ray->wall_to_the = 'W';
 	}
+	else if (ray_total_angle < M_PI / 4 && ray_total_angle > -M_PI / 4)
+		ray->wall_to_the = 'E';
 
-
-	if (player.player_angle_degree < 0)
+	// for when the ray goes to the N and hits a wall
+	else if (ray_total_angle < -M_PI / 4 && ray_total_angle > -M_PI / 2 + -M_PI / 4)
 	{
 		ray->mapY += 1;
+		ray->wall_to_the = 'N';
 	}
-
+	else if (ray_total_angle < M_PI / 2 + M_PI / 4 && ray_total_angle > M_PI / 4)
+		ray->wall_to_the = 'S';
 }
 
 // float normalize_angle(float angle)
@@ -153,7 +160,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
                 hit = 1;
 				adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player, &hit_x, &hit_y);
-                // printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
+                printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
 				// printf("\nHitpoint(%f, %f)\n", hit_x, hit_y);
 		
             }
@@ -241,10 +248,10 @@ int calculate_vector(t_rays *ray)
 int math(t_data *data)
 {
 	int	i;
-
+	
 	// 1. we determine the direction the player is looking (value is relative to the x-axis) //this will need to be adjusted later
 	// data->pl_pos.player_angle_degree = 150;
-	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!!
+	data->pl_pos.player_angle_radian = data->pl_pos.player_angle_degree * (M_PI / 180); //hardcoded for now!
 	i = -1;
 	while(++i < SCREEN_W) //we assume that the number of rays is 320
 	{
@@ -255,3 +262,5 @@ int math(t_data *data)
 	}
 	return(OK);
 }
+
+
