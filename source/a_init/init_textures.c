@@ -76,7 +76,7 @@ void	go_mlxing(t_data *data)
 		exit(2);
     int size_x;
     int size_y;
-    data->img_buff.img = mlx_xpm_file_to_image(data->mlx, "./textures/test.xpm", &size_x, &size_y);
+    data->img_buff.img = mlx_xpm_file_to_image(data->mlx, "./textures/logo.xpm", &size_x, &size_y);
 	if (!data->img_buff.img)
         exit (3);
 	// data->img_buff.img = mlx_new_image(data->mlx, SCREEN_W, SCREEN_H);
@@ -86,6 +86,7 @@ void	go_mlxing(t_data *data)
     // FAST PUT PIXELS TO IMG BUFFER HERE
     draw_columns(data, size_x, size_y);
     mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
+	mlx_do_sync(data->mlx);  // Forces synchronization of the MiniLibX display
     mlx_hook(data->win, 2, 1L << 0, close_esc, data);
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
 	mlx_loop(data->mlx);
