@@ -7,8 +7,8 @@
 # define KO 1
 # define OK 0
 # define TILE_SIZE 64
-# define SCREEN_W 64
-# define SCREEN_H 64
+# define SCREEN_W 640
+# define SCREEN_H 480
 
 /*
 cc -g init_textures.c -L../../minilibx-linux -lmlx_Linux -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
@@ -18,6 +18,7 @@ cc -g init_textures.c -L../../minilibx-linux -lmlx_Linux -L/usr/lib -Iminilibx-l
 # include <stdio.h>
 # include <stdlib.h>
 # include "../../minilibx-linux/mlx.h"
+# include "../../minilibx-linux/mlx_int.h"
 
 ///////////////////////////////////
 // REAL

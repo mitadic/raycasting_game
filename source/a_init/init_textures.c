@@ -37,22 +37,32 @@ void	fst_mlx_pixel_put(t_data *data, int x, int y, uint32_t color)
 	}
 }
 
-void	draw_single_column_px(t_data *data, int x, int y, uint32_t pixel)
+void	draw_single_column_px(t_data *data, int x, int y, uint32_t color)
 {
-	fst_mlx_pixel_put(data, x, y, pixel);
+	fst_mlx_pixel_put(data, x, y, color);
 }
 
-void	draw_columns(t_data *data)
+void	draw_columns(t_data *data, int size_x, int size_y)
 {
 	int		x;
 	int		y;
-
+	int		increment;
+	t_img	*img;
+	
+	img = (t_img *)(data->img_buff.img);
+	printf("size_line is: %d\n", img->size_line);
+	printf("bpp is: %d\n", img->bpp);
+	printf("size_x is: %d\n", size_x);
+	printf("size_y is: %d\n", size_y);
 	x = -1;
-	while (++x < SCREEN_W)
+	while (++x < size_x)
 	{
 		y = -1;
-		while (++y < SCREEN_H)
-			draw_single_column_px(data, x, y, data->texture[0].pixels[x][y]);
+		while (++y < size_y)
+		{
+			increment = (y * img->size_line) + (x * img->bpp / 8);
+			draw_single_column_px(data, x, y, *(uint32_t *)(img->data + increment));
+		}
 	}
 }
 
@@ -61,28 +71,30 @@ void	go_mlxing(t_data *data)
     data->mlx = mlx_init();
 	if (!data->mlx)
 		exit(1);
-	data->win = mlx_new_window(data->mlx, SCREEN_W, SCREEN_H, "cub3d");
+	data->win = mlx_new_window(data->mlx, SCREEN_W, SCREEN_H, "rendered");
 	if (!data->win)
 		exit(2);
     int size_x;
     int size_y;
     data->img_buff.img = mlx_xpm_file_to_image(data->mlx, "./textures/test.xpm", &size_x, &size_y);
-    if (!data->img_buff.img)
+	if (!data->img_buff.img)
         exit (3);
 	// data->img_buff.img = mlx_new_image(data->mlx, SCREEN_W, SCREEN_H);
 	data->img_buff.addr = mlx_get_data_addr(data->img_buff.img, &data->img_buff.bits_per_pixel, \
 		&data->img_buff.line_length, &data->img_buff.endian);
+	printf("addr: %p, bpp: %d, line_length: %d, endian: %d\n", data->img_buff.addr, data->img_buff.bits_per_pixel, data->img_buff.line_length, data->img_buff.endian);
     // FAST PUT PIXELS TO IMG BUFFER HERE
-    // draw_columns(data);
+    draw_columns(data, size_x, size_y);
     mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
     mlx_hook(data->win, 2, 1L << 0, close_esc, data);
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
-	// Start the MLX event loop
 	mlx_loop(data->mlx);
 }
 
 //////////////////////////////////////////////////////////////////////
 // REAL
+
+// draw_single_column_px(data, x, y, data->texture[0].pixels[x][y]);
 
 int main(void)
 {
