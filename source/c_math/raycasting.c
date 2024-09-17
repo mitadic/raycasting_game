@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/16 18:40:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:16:30 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,22 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player, float *hit_x, float *hit_
     }
 }
 
+/* void adjust_map_coords_for_index(t_rays *ray, t_pl_pos player)
+{
+	printf("player angle is: %f\n", player.player_angle_degree);
+	if (player.player_angle_degree < -90 || player.player_angle_degree > 90)
+	{
+		printf("hello\n");
+		ray->mapX += 1;
+	}
 
 
+	if (player.player_angle_degree < 0)
+	{
+		ray->mapY += 1;
+	}
+
+} */
 
 void adjust_map_coords_for_index(t_rays *ray, t_pl_pos player)
 {
@@ -133,23 +147,28 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 	float hit_y = 0.0;
 	float distance;
 	// (void)data;
+	
 	while(!hit) //loop as long as there is no wall found
 	{
 		
 		if(ray->sideDist_X < ray->sideDist_Y) //rather horizontal
 		{
-			if (!ray->side_delta_incr_X)
-				ray->side_delta_incr_X = ray->sideDist_X;
-			ray->side_delta_incr_X += ray->deltaDist_X;
+			/* if (!ray->sideDist_X)
+				ray->side_delta_incr_X = ray->sideDist_X; */
+			ray->sideDist_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
+			ray->side = 0;
+			printf("I calculate the intersections with horizontal lines\n");
 			// printf("in calculate distance mapX is: %d\n", ray->mapX);
 		}
 		else //rather vertical
 		{
-			if (!ray->side_delta_incr_Y)
-				ray->side_delta_incr_Y = ray->sideDist_Y;
-			ray->side_delta_incr_Y += ray->deltaDist_Y;
+			/*if (!ray->sideDist_Y)
+				ray->sideDist_Y = ray->sideDist_Y; */
+			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
+			ray->side = 1;
+			printf("I calculate the intersections with vertical lines\n");
 		} 
 		//  printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
 
@@ -158,16 +177,21 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
             if (map[ray->mapX][ray->mapY] == '1')
             {
                 hit = 1;
-				adjust_map_coords_for_index(ray, player);
+				//adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player, &hit_x, &hit_y);
-                printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
-				// printf("\nHitpoint(%f, %f)\n", hit_x, hit_y);
+                //printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
+				printf("\nHitpoint(%f, %f)\n", hit_x, hit_y);
 		
             }
 	}
 	// ray->distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
 	distance = sqrtf((pow(hit_x - player.x, 2.0)) + (pow(hit_y - player.y, 2.0)));
 	// printf("calculated distance to wall(without correction): %f\n", distance);
+	if (ray->side == 0) //horizontal line
+  distance = (ray->sideDist_X - ray->deltaDist_X); //we need to substract deltaDist to get to the last hitpoint
+else //vertical line
+distance = (ray->sideDist_Y - ray->deltaDist_Y);
+
 	adjust_for_fisheye_effect(player, ray, distance);
 }
 void calculate_delta_and_side(t_rays *ray, t_pl_pos player)

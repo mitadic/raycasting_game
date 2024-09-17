@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/16 17:38:03 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:52:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ typedef struct s_rays
 	float	deltaDist_Y;
 	float	sideDist_X;
 	float	sideDist_Y;
-	float	side_delta_incr_X;
-	float	side_delta_incr_Y;
+/* 	float	side_delta_incr_X;
+	float	side_delta_incr_Y; */
 	float 	distance;
 	int		mapX;
 	int		mapY;
@@ -101,6 +101,7 @@ typedef struct s_rays
 	int		stepY;
 	float	wall_height;
 	char	wall_to_the;
+	int		side;
 }	t_rays;
 
 /*
