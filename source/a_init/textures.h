@@ -25,7 +25,7 @@ cc -g init_textures.c -L../../minilibx-linux -lmlx_Linux -L/usr/lib -Iminilibx-l
 
 typedef struct  s_text
 {
-    int pixels[TILE_SIZE][TILE_SIZE];
+    uint32_t pixels[TILE_SIZE][TILE_SIZE];
 }   t_text;
 
 ///////////////////////////////////
