@@ -46,6 +46,8 @@ void	draw_columns_from_internal_ds(t_data *data)
 {
 	int		x;
 	int		y;
+	int		wall_w;
+	int		wall_h;
 
 	x = -1;
 	while (++x < TILE_SIZE)
@@ -77,6 +79,7 @@ void	load_pxls_to_internal_ds(t_data *data, int size_x, int size_y)
 		while (++y < size_y)
 		{
 			increment = (y * img->size_line) + (x * img->bpp / 8);
+			// printf("drawing pixel value: %lu for x: %d and for y: %d\n", *(uint32_t *)(img->data + increment), x, y);
 			data->texture[0].pixels[x][y] = *(uint32_t *)(img->data + increment);
 		}
 	}
@@ -147,3 +150,59 @@ int main(void)
 
     go_mlxing(&data);
 }
+
+
+/*
+PSEUDO
+
+void	draw_a_column(t_data *data, int ray_no, int texture_x_idx)
+{
+	int	texture;
+
+	texture = determine_the_texture(data, ray_no);
+}
+
+void	draw_a_wall(t_data *data, int *ray_no)
+{
+	int wall_start;
+	int	wall_w;
+	int	wall_w_scale_factor;
+	int	columns_to_repeat_count;
+	
+	wall_start = *ray_no;
+	wall_w = calculate_wall_w(data, *ray_no); // count how many rays hit this one wall
+	if (wall_w < TILE_SIZE)
+	{
+		wall_w_scale_factor = TILE_SIZE / (wall_w + 1); // let's assume w 3, so fct=16
+		// that means we need pixels[16][y], [32][y], [48][y]
+		while (*ray_no < wall_start + wall_w)
+		{
+			draw_a_column(data, *ray_no, ((*ray_no - wall_start + 1) * wall_w_scale_factor))
+			*ray_no += 1;
+		}
+	}
+	
+	else if (wall_w >= TILE_SIZE)
+	{
+		wall_w_scale_factor = wall_w; // let's assume w 80, so fct = 80
+		columns_to_repeat_count = wall_w_scale_factor - TILE_SIZE // 80 - 64 == 16
+		// that means we repeat 16 columns. Where? At increments of TILE_SIZE/16==4
+		// pixels[]
+		while (*ray_no < wall_start + wall_w)
+		{
+			;
+		}
+	}
+}
+
+
+void	draw_columns
+{
+	int	i;
+
+	i = 0;
+	while (i < SCREEN_W)
+		draw_a_wall(data, &i);
+}
+
+*/

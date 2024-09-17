@@ -11,7 +11,16 @@
 # define SCREEN_H 480
 
 /*
+
+::OG
 cc -g init_textures.c -L../../minilibx-linux -lmlx_Linux -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
+
+::-lmx instead of -lmx_Linux
+cc -g init_textures.c -L../../minilibx-linux -lmlx -L/usr/lib -Iminilibx-linux -lXext -lX11 -lm -lz
+
+::with -lXpm
+cc -g init_textures.c -L../../minilibx-linux -lmlx -L/usr/lib -Iminilibx-linux -lXext -lXpm -lX11 -lm -lz
+
 */
 
 # include <stdint.h>
