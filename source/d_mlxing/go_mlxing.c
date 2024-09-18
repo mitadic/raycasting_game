@@ -109,7 +109,30 @@ int	close_x(t_data *data)
 
 
 
+int	is_time_to_render(t_data *data)
+{
+	struct timeval	diff;
+	struct timeval	current;
+	struct timeval	last_render;
 
+	last_render = data->time.last_render;
+	if (last_render.tv_sec == 0)
+	{
+		gettimeofday(&data->time.last_render, NULL);
+		return (BOOL_YES);
+	}
+	gettimeofday(&current, NULL);
+	diff.tv_sec = current.tv_sec - last_render.tv_sec;
+	diff.tv_usec = current.tv_usec - last_render.tv_usec;
+	if (current.tv_usec < last_render.tv_usec)
+		diff.tv_usec = current.tv_usec + MICROSEC_PER_S - last_render.tv_usec;
+	if (diff.tv_usec >= MICROSEC_PER_S / CUB3D_FPS)
+	{
+		gettimeofday(&data->time.last_render, NULL);
+		return (BOOL_YES);
+	}
+	return (BOOL_NO);
+}
 
 
 int	continuous_rendering(void *param)
@@ -118,6 +141,8 @@ int	continuous_rendering(void *param)
 	
 	t_data *data = (t_data *)param;
 
+	if(!is_time_to_render(data))
+		return (0);
 	if (data->key_state.w) move_forward(data);
 	if (data->key_state.s) move_backward(data);
 	if (data->key_state.a) move_left(data);

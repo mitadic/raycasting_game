@@ -28,6 +28,9 @@
 # define ROT_SPEED 0.015
 # define MOV_SPEED 0.0125
 
+# define MICROSEC_PER_S 1000000
+# define CUB3D_FPS 30
+
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
 # define RED	0xFF0000
@@ -49,6 +52,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/time.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include "errors.h"
@@ -124,6 +128,11 @@ typedef struct s_img_buff
 	int		endian;
 }			t_img_buff;
 
+typedef struct s_fps
+{
+	struct timeval	last_render;
+}	t_fps;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
@@ -136,6 +145,7 @@ typedef struct s_data
 	void		*mlx;
 	void		*win;
 	t_img_buff	img_buff;
+	t_fps		time;
 }	t_data;
 
 // A

@@ -16,6 +16,9 @@
 # define OK 0
 # define KO 1
 
+# define BOOL_YES 1
+# define BOOL_NO 0
+
 # define PRINTUSAGE "Usage: ./cub3d map.cub"
 
 # define MALLOCFAIL "Malloc fail"
