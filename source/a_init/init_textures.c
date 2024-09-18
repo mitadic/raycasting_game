@@ -119,7 +119,7 @@ void	go_mlxing(t_data *data)
 		exit(2);
     int size_x;
     int size_y;
-    data->img_buff.img = mlx_xpm_file_to_image(data->mlx, "./textures/test.xpm", &size_x, &size_y);
+    data->img_buff.img = mlx_xpm_file_to_image(data->mlx, "./textures/icon.xpm", &size_x, &size_y);
 	if (!data->img_buff.img)
         exit (3);
 	// data->img_buff.img = mlx_new_image(data->mlx, SCREEN_W, SCREEN_H);
@@ -151,34 +151,50 @@ int main(void)
     go_mlxing(&data);
 }
 
-
 /*
+
 PSEUDO
 
-void	draw_a_column(t_data *data, int ray_no, int texture_x_idx)
+void	draw_a_column(t_data *data, int ray_idx, int texture_x_idx)
 {
 	int	texture;
 
-	texture = determine_the_texture(data, ray_no);
+	texture = determine_the_texture(data, ray_idx);
 }
 
-void	draw_a_wall(t_data *data, int *ray_no)
+// While either x or y of the hitpoint are the same, increment wall_w
+int	calculate_wall_w(t_data *data, int ray_idx)
+{
+	float	one_wall_hp_x;
+	float	one_wall_hp_y;
+	int		wall_w;
+
+	wall_w = 0;
+	one_wall_hp_x = data->rays[ray_idx].hp_x;
+	one_wall_hp_y = data->rays[ray_idx].hp_y;
+	while (data->rays[ray_idx + wall_w].hp_x == one_wall_hp_x || \
+			data->rays[ray_idx + wall_w].hp_y == one_wall_hp_y)
+		wall_w++;
+	return (wall_w);
+}
+
+void	draw_a_wall(t_data *data, int *ray_idx)
 {
 	int wall_start;
 	int	wall_w;
 	int	wall_w_scale_factor;
 	int	columns_to_repeat_count;
-	
-	wall_start = *ray_no;
-	wall_w = calculate_wall_w(data, *ray_no); // count how many rays hit this one wall
+
+	wall_start = *ray_idx;
+	wall_w = calculate_wall_w(data, *ray_idx); // count how many rays hit this one wall
 	if (wall_w < TILE_SIZE)
 	{
 		wall_w_scale_factor = TILE_SIZE / (wall_w + 1); // let's assume w 3, so fct=16
 		// that means we need pixels[16][y], [32][y], [48][y]
-		while (*ray_no < wall_start + wall_w)
+		while (*ray_idx < wall_start + wall_w)
 		{
-			draw_a_column(data, *ray_no, ((*ray_no - wall_start + 1) * wall_w_scale_factor))
-			*ray_no += 1;
+			draw_a_column(data, *ray_idx, ((*ray_idx - wall_start + 1) * wall_w_scale_factor))
+			*ray_idx += 1;
 		}
 	}
 	
