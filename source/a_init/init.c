@@ -58,12 +58,12 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 
 int	init_rays(t_data *data)
 {
-	int	i;
+	// int	i;
 
 	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
 	if (!data->rays)
 		return (error(MALLOCFAIL, KO));
-	i = -1;
+	// i = -1;
 /* 	while (++i < SCREEN_W)
 	{
 		data->rays[i].side_delta_incr_X = 0;
@@ -84,6 +84,7 @@ int	init(t_data *data, char *map_filename)
 	data->key_state.d = 0;
 	data->key_state.left = 0;
 	data->key_state.right = 0;
+	data->time.last_render.tv_sec = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
 			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
 		return (KO);
