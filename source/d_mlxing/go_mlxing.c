@@ -23,7 +23,7 @@ void	draw_single_column(t_data *data, int x, int y)
 	int		wall_start;
 	int		wall_end;
 	float	wall_h;
-	//int		color;
+	int		color;
 
 	wall_h = data->rays[x].wall_height;
 	wall_start = (SCREEN_H - wall_h) / 2;
@@ -34,17 +34,17 @@ void	draw_single_column(t_data *data, int x, int y)
 		fst_mlx_pixel_put(data, x, y, BLACK);
 	else
 	{
-		//  if (data->rays[x].wall_to_the == 'N')
-		// 	color = BLUE;
-		// else if (data->rays[x].wall_to_the == 'E')
-		// 	color = YELLOW;
-		// else if (data->rays[x].wall_to_the == 'S')
-		// 	color = RED;
-		// else if (data->rays[x].wall_to_the == 'W')
-		// 	color = ORANGE;
-		// else // corners
-		// 	color = WHITE; 
-		fst_mlx_pixel_put(data, x, y, BLUE);
+		 if (data->rays[x].wall_to_the == 'N')
+			color = BLUE;
+		else if (data->rays[x].wall_to_the == 'E')
+			color = YELLOW;
+		else if (data->rays[x].wall_to_the == 'S')
+			color = RED;
+		else if (data->rays[x].wall_to_the == 'W')
+			color = ORANGE;
+		else // corners
+			color = WHITE; 
+		fst_mlx_pixel_put(data, x, y, color);
 	}
 }
 
@@ -72,7 +72,7 @@ int	handle_keypress(int keycode, void *param)
 	if (keycode == KEY_ESC)
 	{
 		mlx_destroy_window(data->mlx, data->win);
-		exit(0);
+		bail(data, 0);
 	}
 	else if (keycode == KEY_W) data->key_state.w = 1;
 	else if (keycode == KEY_S) data->key_state.s = 1;
@@ -102,8 +102,9 @@ int	handle_keyrelease(int keycode, void *param)
 
 int	close_x(t_data *data)
 {
-	(void)data;
-	exit(0);
+	bail(data, 0);
+	return(0);
+	
 }
 
 

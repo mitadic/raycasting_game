@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/17 16:52:11 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:49:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ typedef struct s_rays
 	float	wall_height;
 	char	wall_to_the;
 	int		side;
+	float	hit_x;
+	float	hit_y;
 }	t_rays;
 
 /*

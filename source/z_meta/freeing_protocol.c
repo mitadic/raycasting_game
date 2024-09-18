@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_protocol.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:45 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:03:10 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/09/18 15:29:01 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ void    purge(t_data *data)
 {
     free_map_vals(data);
     if (data->rays)
-        free(data->rays);
+	{
+		free(data->rays);
+	}
+	mlx_destroy_image(data->mlx, data->img_buff.img);
 }
