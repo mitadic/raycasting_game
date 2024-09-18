@@ -126,7 +126,7 @@ int	is_time_to_render(t_data *data)
 	diff.tv_usec = current.tv_usec - last_render.tv_usec;
 	if (current.tv_usec < last_render.tv_usec)
 		diff.tv_usec = current.tv_usec + MICROSEC_PER_S - last_render.tv_usec;
-	if (diff.tv_usec >= MICROSEC_PER_S / CUB3D_FPS)
+	if (diff.tv_usec >= MICROSEC_PER_S / PLAY_FPS)
 	{
 		gettimeofday(&data->time.last_render, NULL);
 		return (BOOL_YES);

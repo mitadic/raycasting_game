@@ -25,11 +25,13 @@
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
-# define ROT_SPEED 0.015
-# define MOV_SPEED 0.0125
-
 # define MICROSEC_PER_S 1000000
-# define CUB3D_FPS 30
+# define MAX_FPS 120
+# define PLAY_FPS 30
+
+// scale up the speeds as PLAY_FPS is set lower
+# define ROT_SPEED 0.015 * MAX_FPS / PLAY_FPS
+# define MOV_SPEED 0.0125 * MAX_FPS / PLAY_FPS
 
 # define BLACK	0x000000
 # define WHITE	0xFFFFFF
