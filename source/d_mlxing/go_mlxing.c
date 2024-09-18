@@ -107,8 +107,6 @@ int	close_x(t_data *data)
 	
 }
 
-
-
 int	is_time_to_render(t_data *data)
 {
 	struct timeval	diff;
@@ -133,7 +131,6 @@ int	is_time_to_render(t_data *data)
 	}
 	return (BOOL_NO);
 }
-
 
 int	continuous_rendering(void *param)
 {
