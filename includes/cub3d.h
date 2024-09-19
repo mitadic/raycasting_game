@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jamin <jamin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/18 12:49:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/19 20:23:30 by jamin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ typedef struct s_data
 	t_fps		time;
 }	t_data;
 
+
 // A
 // init.c
 int		init(t_data *data, char *map_filename);
@@ -205,5 +206,6 @@ void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
 void	purge(t_data *data);
+void handle_sigint(int sig);
 
 #endif
