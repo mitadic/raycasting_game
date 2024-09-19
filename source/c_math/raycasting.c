@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/18 15:15:25 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:31:50 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 			ray->sideDist_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
 			ray->side = 0;
-			printf("I calculate the intersections with horizontal lines\n");
+			//printf("I calculate the intersections with horizontal lines\n");
 			// printf("in calculate distance mapX is: %d\n", ray->mapX);
 		}
 		else //rather vertical
@@ -219,7 +219,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
 			ray->side = 1;
-			printf("I calculate the intersections with vertical lines\n");
+			//printf("I calculate the intersections with vertical lines\n");
 		} 
 		//  printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
 
@@ -231,7 +231,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 				//adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player);
                 //printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
-				printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
+				//printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
 		
             }
 	}

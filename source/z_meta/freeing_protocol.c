@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:45 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/18 15:29:01 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:41:29 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,13 @@ void    purge(t_data *data)
 	{
 		free(data->rays);
 	}
-	mlx_destroy_image(data->mlx, data->img_buff.img);
+	if(data->img_buff.img)
+	{
+			mlx_destroy_image(data->mlx, data->img_buff.img);
+	}
+	if(data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		mlx_destroy_window(data->mlx, data->win);
+	}
 }
