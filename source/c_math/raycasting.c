@@ -19,6 +19,8 @@
 void calculate_wall_height(t_rays *ray)
 {
 	ray->wall_height = SCREEN_H / ray->distance;
+	if (ray->wall_height > SCREEN_H)
+		ray->wall_height = SCREEN_H;
 	// printf("calculated wall height: %f\n", ray->wall_height);
 }
 
@@ -209,7 +211,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 			ray->sideDist_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
 			ray->side = 0;
-			printf("I calculate the intersections with horizontal lines\n");
+			// printf("I calculate the intersections with horizontal lines\n");
 			// printf("in calculate distance mapX is: %d\n", ray->mapX);
 		}
 		else //rather vertical
@@ -219,7 +221,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
 			ray->side = 1;
-			printf("I calculate the intersections with vertical lines\n");
+			// printf("I calculate the intersections with vertical lines\n");
 		} 
 		//  printf("Ray position: mapX = %d, mapY = %d\n", ray->mapX, ray->mapY);
 
@@ -231,7 +233,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 				//adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player);
                 //printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
-				printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
+				// printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
 		
             }
 	}

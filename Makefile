@@ -8,6 +8,7 @@ INIT		= a_init/
 PARSING		= b_parsing/
 MATH		= c_math/
 MLXING		= d_mlxing/
+TEXTURES	= e_textures/
 META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
@@ -15,6 +16,7 @@ LIBMLXD 	= ./minilibx-linux/
 
 SRC = 		main.c \
 			$(INIT)init.c \
+			$(INIT)init_textures.c \
 			$(PARSING)map_parsing_control.c \
 			$(PARSING)map_parsing_flood_fill.c \
 			$(PARSING)map_parsing_flood_sim.c \
@@ -23,7 +25,8 @@ SRC = 		main.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
 			$(MLXING)go_mlxing.c \
-			$(MLXING)player_movements.c
+			$(MLXING)player_movements.c \
+			$(TEXTURES)draw_walls.c
 
 HFILES =	cub3d.h \
 			errors.h

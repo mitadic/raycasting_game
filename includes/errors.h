@@ -23,6 +23,8 @@
 
 # define MALLOCFAIL "Malloc fail"
 
+# define TEXTLOADFAIL "Loading of a *.xpm texture fail"
+
 # define CANTOPEN "Error opening map file"
 # define CANTCLOSE "Error closing map file"
 # define BADSUFF "Program only accepts < *.cub > files as maps"

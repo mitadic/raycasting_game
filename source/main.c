@@ -21,6 +21,5 @@ int	main(int argc, char **argv)
 	if (init(&data, argv[1]) != OK || validate_map(&data, argv[1]) != OK)
 		bail(&data, 2);
 	go_mlxing(&data); // makes call to math(data) for all rays
-	purge(&data);
 	return (OK);
 }

@@ -17,7 +17,6 @@
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
-# define TILE_SIZE 64
 # define SCREEN_W 512
 # define SCREEN_H 384
 # define M_PI           3.14159265358979323846  /* pi */
@@ -42,13 +41,18 @@
 # define ORANGE 0xBA8507
 
 // Linux key codes
-#define KEY_ESC		65307
-#define KEY_W		119
-#define KEY_A		97
-#define KEY_S		115
-#define KEY_D		100
-#define KEY_LEFT	65361
-#define KEY_RIGHT	65363
+# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
+# define KEY_LEFT	65361
+# define KEY_RIGHT	65363
+
+# define WALL_N 0
+# define WALL_E 1
+# define WALL_S 2
+# define WALL_W 3
 
 # include <stdio.h>
 # include <math.h>
@@ -57,6 +61,7 @@
 # include <sys/time.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
@@ -135,6 +140,13 @@ typedef struct s_fps
 	struct timeval	last_render;
 }	t_fps;
 
+typedef struct s_text
+{
+	void	*img;
+	int		size_x;
+	int		size_y;
+}	t_text;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
@@ -148,11 +160,14 @@ typedef struct s_data
 	void		*win;
 	t_img_buff	img_buff;
 	t_fps		time;
+	t_text		txt[4];
 }	t_data;
 
 // A
 // init.c
 int		init(t_data *data, char *map_filename);
+// init_textures.c
+int		init_textures(t_data *data, char *map_filename);
 
 // B
 // map_parsing_control.c
@@ -181,6 +196,10 @@ void	move_left(t_data *data);
 void	move_right(t_data *data);
 void	rotate_left(t_data *data);
 void	rotate_right(t_data *data);
+
+// E
+// draw_walls.c
+void	draw_walls(t_data *data);
 
 // Z
 // failure_management.c

@@ -6,6 +6,7 @@
 3	x * data->img_buff.bits_per_pixel / 8 - pixel column count
 Result: add them all up, you access a pixels's memory address by using x and y
 */
+/*
 void	fst_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -34,7 +35,7 @@ void	draw_single_column(t_data *data, int x, int y)
 		fst_mlx_pixel_put(data, x, y, BLACK);
 	else
 	{
-		 if (data->rays[x].wall_to_the == 'N')
+		if (data->rays[x].wall_to_the == 'N')
 			color = BLUE;
 		else if (data->rays[x].wall_to_the == 'E')
 			color = YELLOW;
@@ -61,6 +62,7 @@ void	draw_columns(t_data *data)
 			draw_single_column(data, x, y);
 	}
 }
+*/
 
 int	handle_keypress(int keycode, void *param)
 {
@@ -104,7 +106,6 @@ int	close_x(t_data *data)
 {
 	bail(data, 0);
 	return(0);
-	
 }
 
 int	is_time_to_render(t_data *data)
@@ -134,8 +135,6 @@ int	is_time_to_render(t_data *data)
 
 int	continuous_rendering(void *param)
 {
-
-	
 	t_data *data = (t_data *)param;
 
 	if(!is_time_to_render(data))
@@ -152,16 +151,15 @@ int	continuous_rendering(void *param)
 
 	// Do raycasting anew
 	math(data);
-	draw_columns(data);
+	// draw_columns(data);
+	draw_walls(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
 	return (0);
 }
 
+// init_mlx moved to where textures are initialized
 void	go_mlxing(t_data *data)
 {
-    data->mlx = mlx_init();
-	if (!data->mlx)
-		error_and_bail(data, "mlx_init fail", KO);
 	data->win = mlx_new_window(data->mlx, SCREEN_W, SCREEN_H, "cub3d");
 	if (!data->win)
 		error_and_bail(data, "mlx_new_window fail", KO);

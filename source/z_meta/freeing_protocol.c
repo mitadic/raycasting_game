@@ -26,10 +26,17 @@ static void    free_map_vals(t_data *data)
 
 void    purge(t_data *data)
 {
+    int i;
+
     free_map_vals(data);
     if (data->rays)
 	{
 		free(data->rays);
 	}
+    i = -1;
+    while (++i < 4)
+    {
+        mlx_destroy_image(data->mlx, data->txt[i].img);
+    }
 	mlx_destroy_image(data->mlx, data->img_buff.img);
 }
