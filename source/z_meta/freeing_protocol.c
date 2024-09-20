@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_protocol.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamin <jamin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:45 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/19 20:22:42 by jamin            ###   ########.fr       */
+/*   Updated: 2024/09/20 13:17:54 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void    free_map_vals(t_data *data)
 	}
 } */
 
-
+//new purge function
 void purge(t_data *data)
 {
     free_map_vals(data);

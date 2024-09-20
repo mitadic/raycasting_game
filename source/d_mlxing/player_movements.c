@@ -47,78 +47,6 @@ int is_wall(float new_x_pos, float new_y_pos, t_data *data)
     return 0;  // No wall detected
 } 
 
-
-
-
-// void	move_forward(t_data *data)
-// {
-// 	float	new_x;
-// 	float	new_y;
-
-// 	new_x = data->pl_pos.x += cos(data->pl_pos.player_angle_degree) * MOV_SPEED;
-// 	new_y = data->pl_pos.y += sin(data->pl_pos.player_angle_degree) * MOV_SPEED;
-	
-// 	    if (!is_wall(new_x, data->pl_pos.y, data))
-//         data->pl_pos.x = new_x;
-//     if (!is_wall(data->pl_pos.x, new_y, data))
-//         data->pl_pos.y = new_y;
-// }
-
-// 	// data->pl_pos.x = new_x;
-// 	// data->pl_pos.y = new_y;
-
-
-// void	move_backward(t_data *data)
-// {
-// 	float	new_x;
-// 	float	new_y;
-
-// 	new_x = data->pl_pos.x -= cos(data->pl_pos.player_angle_degree) * MOV_SPEED;
-// 	new_y = data->pl_pos.y -= sin(data->pl_pos.player_angle_degree) * MOV_SPEED;
-
-// 	    if (!is_wall(new_x, data->pl_pos.y, data))
-//         data->pl_pos.x = new_x;
-//     if (!is_wall(data->pl_pos.x, new_y, data))
-//         data->pl_pos.y = new_y;
-// }
-// 	// data->pl_pos.x = new_x;
-// 	// data->pl_pos.y = new_y;
- 
-
-// void	move_left(t_data *data)
-// {
-// 	float	new_x;
-// 	float	new_y;
-
-// 	new_x = data->pl_pos.x - cos(data->pl_pos.player_angle_degree + M_PI / 2) * MOV_SPEED;
-// 	new_y = data->pl_pos.y - sin(data->pl_pos.player_angle_degree + M_PI / 2) * MOV_SPEED;
-	
-//     if (!is_wall(new_x, data->pl_pos.y, data))
-//         data->pl_pos.x = new_x;
-//     if (!is_wall(data->pl_pos.x, new_y, data))
-//         data->pl_pos.y = new_y;
-// }
-// 	// data->pl_pos.x = new_x;
-// 	// data->pl_pos.y = new_y;
-
-
-// void	move_right(t_data *data)
-// {
-// 	float	new_x;
-// 	float	new_y;
-
-// 	new_x = data->pl_pos.x + cos(data->pl_pos.player_angle_degree + M_PI / 2) * MOV_SPEED;
-// 	new_y = data->pl_pos.y + sin(data->pl_pos.player_angle_degree + M_PI / 2) * MOV_SPEED;
-// 	    if (!is_wall(new_x, data->pl_pos.y, data))
-//         data->pl_pos.x = new_x;
-//     if (!is_wall(data->pl_pos.x, new_y, data))
-//         data->pl_pos.y = new_y;
-// }
-
-// 	// data->pl_pos.x = new_x;
-// 	// data->pl_pos.y = new_y;
-
-
 void	rotate_left(t_data *data)
 {
 	data->pl_pos.player_angle_degree -= ROT_SPEED * 50;
@@ -134,7 +62,6 @@ void	rotate_right(t_data *data)
 }
  
 ////////////////////////////////////////////////////
-
 
 void move_forward(t_data *data)
 {
@@ -199,22 +126,3 @@ void move_right(t_data *data)
         data->pl_pos.y = new_y;
 }
 
-// void rotate_left(t_data *data)
-// {
-
-//     data->pl_pos.player_angle_radian -= ROT_SPEED;
-
-
-//     if (data->pl_pos.player_angle_radian < -M_PI)
-//         data->pl_pos.player_angle_radian += 2 * M_PI;
-// }
-
-// void rotate_right(t_data *data)
-// {
-
-//     data->pl_pos.player_angle_radian += ROT_SPEED;
-
-
-//     if (data->pl_pos.player_angle_radian >= M_PI)
-//         data->pl_pos.player_angle_radian -= 2 * M_PI;
-// }

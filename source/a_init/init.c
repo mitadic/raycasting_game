@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/17 15:09:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:20:05 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,12 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 
 int	init_rays(t_data *data)
 {
-	// int	i;
+
 
 	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
 	if (!data->rays)
 		return (error(MALLOCFAIL, KO));
-	// i = -1;
-/* 	while (++i < SCREEN_W)
-	{
-		data->rays[i].side_delta_incr_X = 0;
-		data->rays[i].side_delta_incr_Y = 0;
-	} */
+
 	return (OK);
 }
 
