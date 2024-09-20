@@ -71,8 +71,9 @@ int	handle_keypress(int keycode, void *param)
 		return(1);
 	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(data->mlx, data->win);
+		//mlx_destroy_window(data->mlx, data->win);
 		bail(data, 0);
+		
 	}
 	else if (keycode == KEY_W) data->key_state.w = 1;
 	else if (keycode == KEY_S) data->key_state.s = 1;
