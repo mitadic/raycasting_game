@@ -61,6 +61,7 @@
 # include <sys/time.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
 # include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
