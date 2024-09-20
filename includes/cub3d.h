@@ -27,8 +27,13 @@
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
-# define HORIZONTAL 100
-# define VERTICAL 200
+# define HORIZONTAL 10
+# define VERTICAL 20
+
+# define WALL_N 100
+# define WALL_E 101
+# define WALL_S 102
+# define WALL_W 103
 
 # define MICROSEC_PER_S 1000000
 # define MAX_FPS 120
