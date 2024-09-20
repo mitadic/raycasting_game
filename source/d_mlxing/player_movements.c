@@ -1,14 +1,55 @@
 #include "../../includes/cub3d.h"
 #define WALL '1'
 #define PLAYER_RADIUS 0.1 // Small radius for the player to avoid "corner sticking"
+#define COLLISION_BUFFER 0.2 //can be modified
+
 
 // Function to check if a position is a wall
-int is_wall(float x, float y, t_data *data)
+/* int is_wall(float new_x_pos, float new_y_pos, t_data *data)
 {
-    int mapX = (int)x;
-    int mapY = (int)y;
-    return (data->map.vals[mapX][mapY] == WALL); // Note: map indexing might be map[mapX][mapY] depending on your map storage
-}
+    int mapX = (int)new_x_pos;
+    int mapY = (int)new_y_pos;
+
+
+	return(data->map.vals[mapX][mapY] == WALL);
+	
+
+}  */
+
+int is_wall(float new_x_pos, float new_y_pos, t_data *data)
+{
+    // Convert player's position to map coordinates
+    int mapX = (int)new_x_pos;
+    int mapY = (int)new_y_pos;
+
+    // Calculate buffered positions
+    float x_left = new_x_pos - COLLISION_BUFFER;
+    float x_right = new_x_pos + COLLISION_BUFFER;
+    float y_up = new_y_pos - COLLISION_BUFFER;
+    float y_down = new_y_pos + COLLISION_BUFFER;
+
+    // Convert buffered positions to map coordinates
+    int mapX_left = (int)x_left;
+    int mapX_right = (int)x_right;
+    int mapY_up = (int)y_up;
+    int mapY_down = (int)y_down;
+
+    // Check if any of these positions hit a wall
+    if (data->map.vals[mapX][mapY] == WALL ||  // Current position
+        data->map.vals[mapX_left][mapY] == WALL ||  // Left buffer
+        data->map.vals[mapX_right][mapY] == WALL ||  // Right buffer
+        data->map.vals[mapX][mapY_up] == WALL ||  // Up buffer
+        data->map.vals[mapX][mapY_down] == WALL)  // Down buffer
+    {
+        return 1;  // Wall detected
+    }
+
+    return 0;  // No wall detected
+} 
+
+
+
+
 // void	move_forward(t_data *data)
 // {
 // 	float	new_x;
