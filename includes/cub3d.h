@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamin <jamin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/19 20:23:30 by jamin            ###   ########.fr       */
+/*   Updated: 2024/09/20 13:01:45 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,12 @@ int		flood_simulation(t_data *data, char **map_copy);
 // C
 // raycasting.c
 int math(t_data *data);
+
+//raycasting2.c
+void calculate_hit_point(t_rays *ray, t_pl_pos player);
+void calculate_wall_height(t_rays *ray);
+void assign_wall_color(t_rays *ray);
+
 // helper_functions.c
 float ft_abs(float number);
 // map.c

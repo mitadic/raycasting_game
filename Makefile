@@ -22,6 +22,7 @@ SRC = 		main.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
+			$(MATH)raycasting2.c \
 			$(MLXING)go_mlxing.c \
 			$(MLXING)player_movements.c
 
