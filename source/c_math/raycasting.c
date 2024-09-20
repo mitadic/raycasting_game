@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/20 13:00:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:45:24 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 	
 	while(!hit) //loop as long as there is no wall found
 	{
-		if(ray->sideDist_X < ray->sideDist_Y) //rather horizontal
+		if(ray->sideDist_X < ray->sideDist_Y) //ray is rather horizontal
 		{
 			ray->sideDist_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
 			ray->side = 0;
 			//printf("I calculate the intersections with horizontal lines\n");
 		}
-		else //rather vertical
+		else //ray is rather vertical
 		{
 			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
@@ -60,15 +60,24 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 		
             }
 	}
-	distance = sqrtf((pow(ray->hit_x - player.x, 2.0)) + (pow(ray->hit_y - player.y, 2.0)));
+	distance = sqrtf((pow(ray->intermediate_hit_x - player.x, 2.0)) + (pow(ray->intermediate_hit_y - player.y, 2.0)));
 	// printf("calculated distance to wall(without correction): %f\n", distance);
 
 	 //we need to substract deltaDist to get to the last hitpoint
-	if (ray->side == 0) //horizontal line
-  	distance = (ray->sideDist_X - ray->deltaDist_X);
-	else //vertical line
-	distance = (ray->sideDist_Y - ray->deltaDist_Y);
-
+	if (ray->side == 0) //ray is horizontal 
+	{
+		distance = (ray->sideDist_X - ray->deltaDist_X);
+		// Calculate hitpoint on vertical wall
+       	ray->hit_x = ray->mapX;
+        ray->hit_y = player.y + (ray->mapX - player.x + (1 - ray->stepX) / 2) * ray->dir_y / ray->dir_x;
+	}
+  
+	else //ray is vertical line
+	{
+		distance = (ray->sideDist_Y - ray->deltaDist_Y);
+		ray->hit_y = ray->mapY;
+        ray->hit_x = player.x + (ray->mapY - player.y + (1 - ray->stepY) / 2) * ray->dir_x / ray->dir_y;
+	}
 	adjust_for_fisheye_effect(player, ray, distance);
 }
 void calculate_delta_and_side(t_rays *ray, t_pl_pos player)

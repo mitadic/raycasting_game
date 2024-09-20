@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:59:08 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/20 13:01:11 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:33:20 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player)
     {
 		// printf("in calculate hitpoint mapX is: %d\n", ray->mapX);
         // Ray hits vertical wall (x-boundary first)
-        ray->hit_x = ray->mapX; // X-position of the wall (since it's vertical)
-        ray->hit_y = player.y + ray->sideDist_X * ray->dir_y; // Calculate Y-position
+        ray->intermediate_hit_x = ray->mapX; // X-position of the wall (since it's vertical)
+        ray->intermediate_hit_y = player.y + ray->sideDist_X * ray->dir_y; // Calculate Y-position
     }
     else
     {
         // Ray hits horizontal wall (y-boundary first)
         if (ray->sideDist_Y != INFINITY) {
-            ray->hit_y = ray->mapY; // Y-position of the wall (since it's horizontal)
-            ray->hit_x = player.x + ray->sideDist_Y * ray->dir_x; // Calculate X-position
+            ray->intermediate_hit_y = ray->mapY; // Y-position of the wall (since it's horizontal)
+            ray->intermediate_hit_x = player.x + ray->sideDist_Y * ray->dir_x; // Calculate X-position
         } else {
             // In case sideDist_Y is infinity (no horizontal wall hit)
-            ray->hit_y = player.y; // Default to player's y-position
-            ray->hit_x = player.x + ray->sideDist_X * ray->dir_x; // Only consider X direction
+            ray->intermediate_hit_y = player.y; // Default to player's y-position
+            ray->intermediate_hit_x = player.x + ray->sideDist_X * ray->dir_x; // Only consider X direction
         }
     }
 }
