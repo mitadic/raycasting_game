@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/18 12:49:04 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:44:53 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_rays
 	int		side;
 	float	hit_x;
 	float	hit_y;
+	int		is_vertical;
 }	t_rays;
 
 /*
@@ -199,7 +200,7 @@ void	rotate_right(t_data *data);
 
 // E
 // draw_walls.c
-void	draw_walls(t_data *data);
+void	draw_columns(t_data *data);
 
 // Z
 // failure_management.c

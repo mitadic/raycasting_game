@@ -82,7 +82,7 @@ int	handle_keypress(int keycode, void *param)
 	else if (keycode == KEY_D) data->key_state.d = 1;
 	else if (keycode == KEY_LEFT) data->key_state.left = 1;
 	else if (keycode == KEY_RIGHT) data->key_state.right = 1;
-	printf("key pressed is %i\n", keycode);
+	// printf("key pressed is %i\n", keycode);
 	return (0);
 }
 
@@ -151,8 +151,7 @@ int	continuous_rendering(void *param)
 
 	// Do raycasting anew
 	math(data);
-	// draw_columns(data);
-	draw_walls(data);
+	draw_columns(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
 	return (0);
 }

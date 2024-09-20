@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/18 15:15:25 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:51:41 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player)
         // Ray hits vertical wall (x-boundary first)
         ray->hit_x = ray->mapX; // X-position of the wall (since it's vertical)
         ray->hit_y = player.y + ray->sideDist_X * ray->dir_y; // Calculate Y-position
+		ray->is_vertical = 1;
     }
     else
     {
@@ -70,6 +71,7 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player)
             ray->hit_y = player.y; // Default to player's y-position
             ray->hit_x = player.x + ray->sideDist_X * ray->dir_x; // Only consider X direction
         }
+		ray->is_vertical = 0;
     }
 }
 
@@ -231,7 +233,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 				//adjust_map_coords_for_index(ray, player);
 				calculate_hit_point(ray, player);
                 //printf("Hit a wall at (%d, %d)\n", ray->mapX, ray->mapY);
-				// printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
+				printf("\nHitpoint(%f, %f)\n", ray->hit_x, ray->hit_y);
 		
             }
 	}
@@ -335,6 +337,7 @@ int math(t_data *data)
 		data->rays[i].ray_angle = data->pl_pos.player_angle_radian - FOV / 2 + i * (FOV / (SCREEN_W - 1));
 		calculate_vector(&data->rays[i]); //only for the first ray for now
 		dda_algorithm(&data->rays[i], data->map.vals, data->pl_pos); //only for the first ray for now
+	
 	}
 	return(OK);
 }

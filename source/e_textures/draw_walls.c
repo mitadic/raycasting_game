@@ -38,7 +38,8 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 	wall_start = (SCREEN_H - data->rays[x].wall_height) / 2;
 	if (!tx_img)
 		return (WHITE);
-	tx_x = (int)round(get_the_float_component_of_hitp(data, x) / (1.0 / tx_img->width));
+	// tx_x = (int)round(get_the_float_component_of_hitp(data, x) / (1.0 / tx_img->width));
+	tx_x = (int)(get_the_float_component_of_hitp(data, x) * tx_img->width);
 	// tx_y = (int)round(tx_img->height / data->rays[x].wall_height) * ((y - wall_start + 1) % (int)(data->rays[x].wall_height));
 	tx_y = (int)((y - wall_start) / (float)data->rays[x].wall_height * tx_img->height);
 	increment = (tx_y * tx_img->size_line) + (tx_x * tx_img->bpp / 8);
@@ -69,142 +70,43 @@ void	draw_wall_texture_pxs(t_data *data, int x, int *y)
 	}
 }
 
-void	draw_column_pxs(t_data *data, int x, int *y, int wall_h)
+void	draw_a_column(t_data *data, int x, int wall_h)
 {
 	int		wall_start;
 	int		wall_end;
+	int		y;
 
 	wall_start = (SCREEN_H - wall_h) / 2;
 	wall_end = wall_start + wall_h - 1;
-	if (*y < wall_start)
-	{
-		fst_mlx_pixel_put(data, x, *y, WHITE);
-		*y += 1;
-	}
-	else if (*y > wall_end)
-	{
-		fst_mlx_pixel_put(data, x, *y, BLACK);
-		*y += 1;
-	}
-	else
-		draw_wall_texture_pxs(data, x, y);
-}
-
-void	draw_a_column(t_data *data, int x)
-{
-	int	y;
-
 	y = 0;
-	while (y < SCREEN_H)
-		draw_column_pxs(data, x, &y, data->rays[x].wall_height);
-}
-
-// While either x or y of the hitpoint are the same, increment wall_w
-int	calculate_wall_w(t_data *data, int ray_idx)
-{
-	float	one_wall_hp_x;
-	float	one_wall_hp_y;
-	int		wall_w;
-
-	wall_w = 0;
-	one_wall_hp_x = data->rays[ray_idx].hit_x;
-	one_wall_hp_y = data->rays[ray_idx].hit_y;
-	while (data->rays[ray_idx + wall_w].hit_x == one_wall_hp_x || \
-			data->rays[ray_idx + wall_w].hit_y == one_wall_hp_y)
-		wall_w++;
-	return (wall_w);
-}
-
-void	draw_a_wall(t_data *data, int *ray_idx)
-{
-	int wall_start;
-	int	wall_w;
-
-	wall_start = *ray_idx;
-	wall_w = calculate_wall_w(data, *ray_idx); // count how many rays hit this one wall
-	while (*ray_idx < wall_start + wall_w)
+	while (y < wall_start) // ceiling
 	{
-		draw_a_column(data, *ray_idx);
-		*ray_idx += 1;
+		fst_mlx_pixel_put(data, x, y, WHITE);
+		y++;
+	}
+	draw_wall_texture_pxs(data, x, &y); // texture
+	while (y > wall_end && y < SCREEN_H)
+	{
+		fst_mlx_pixel_put(data, x, y, BLACK); // floor
+		y++;
 	}
 }
 
-
-void	draw_walls(t_data *data)
+void	draw_columns(t_data *data)
 {
 	int	ray_idx;
 
-	ray_idx = 0;
-	while (ray_idx < SCREEN_W)
-		draw_a_wall(data, &ray_idx);
-}
-
-
-/*
-void	draw_columns_from_internal_ds(t_data *data)
-{
-	int		x;
-	int		y;
-	int		wall_w;
-	int		wall_h;
-
-	x = -1;
-	while (++x < TILE_SIZE)
+	ray_idx = -1;
+	while (++ray_idx < SCREEN_W)
 	{
-		y = -1;
-		while (++y < TILE_SIZE)
-		{
-			draw_single_column_px(data, x, y, data->texture[0].pixels[x][y]);
-		}
+		// printf("hit_x is: %f, hit_y is: %f\n", data->rays[ray_idx].hit_x, data->rays[ray_idx].hit_y);
+		// printf("is_vertical: %d, ray_idx: %d\n", data->rays[ray_idx].is_vertical, ray_idx);
+		if (ray_idx == 319)
+			exit(0);
+		// if (data->rays[ray_idx].hit_y >= 1.0 && data->rays[ray_idx].hit_y <= 1.999)
+		// 	printf("data->rays[x].hit_x is: %f\nx is: %d\n", data->rays[ray_idx].hit_x, ray_idx);
+		// if (data->rays[ray_idx].hit_x >= 2.0)
+		// 	exit(0);
+		draw_a_column(data, ray_idx, data->rays[ray_idx].wall_height);
 	}
 }
-
-void	load_pxls_to_internal_ds(t_data *data, int size_x, int size_y)
-{
-	int		x;
-	int		y;
-	int		increment;
-	t_img	*img;
-	
-	img = (t_img *)(data->img_buff.img);
-	// printf("size_line is: %d\n", img->size_line);
-	// printf("bpp is: %d\n", img->bpp);
-	// printf("size_x is: %d\n", size_x);
-	// printf("size_y is: %d\n", size_y);
-	x = -1;
-	while (++x < size_x)
-	{
-		y = -1;
-		while (++y < size_y)
-		{
-			increment = (y * img->size_line) + (x * img->bpp / 8);
-			// printf("drawing pixel value: %lu for x: %d and for y: %d\n", *(uint32_t *)(img->data + increment), x, y);
-			data->texture[0].pixels[x][y] = *(uint32_t *)(img->data + increment);
-		}
-	}
-}
-
-void	draw_columns_pristinely(t_data *data, int size_x, int size_y)
-{
-	int		x;
-	int		y;
-	int		increment;
-	t_img	*img;
-	
-	img = (t_img *)(data->img_buff.img);
-	// printf("size_line is: %d\n", img->size_line);
-	// printf("bpp is: %d\n", img->bpp);
-	// printf("size_x is: %d\n", size_x);
-	// printf("size_y is: %d\n", size_y);
-	x = -1;
-	while (++x < size_x)
-	{
-		y = -1;
-		while (++y < size_y)
-		{
-			increment = (y * img->size_line) + (x * img->bpp / 8);
-			draw_single_column_px(data, x, y, *(uint32_t *)(img->data + increment));
-		}
-	}
-}
-*/
