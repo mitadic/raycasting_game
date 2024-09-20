@@ -58,8 +58,6 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 
 int	init_rays(t_data *data)
 {
-
-
 	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
 	if (!data->rays)
 		return (error(MALLOCFAIL, KO));
@@ -67,18 +65,23 @@ int	init_rays(t_data *data)
 	return (OK);
 }
 
-/* control flow */
-int	init(t_data *data, char *map_filename)
+static void	init_key_states(t_data *data)
 {
-	data->map.max_x = 0;
-	data->map.max_y = 0;
-	data->map.vals = NULL;
 	data->key_state.w = 0;
 	data->key_state.a = 0;
 	data->key_state.s = 0;
 	data->key_state.d = 0;
 	data->key_state.left = 0;
 	data->key_state.right = 0;
+}
+
+/* control flow */
+int	init(t_data *data, char *map_filename)
+{
+	data->map.max_x = 0;
+	data->map.max_y = 0;
+	// data->map.vals = NULL;
+	init_key_states(data);
 	data->time.last_render.tv_sec = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
 			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
