@@ -40,14 +40,14 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 		{
 			ray->sideDist_X += ray->deltaDist_X;
 			ray->mapX += ray->stepX;
-			ray->side = 0;
+			ray->side = HORIZONTAL;
 			//printf("I calculate the intersections with horizontal lines\n");
 		}
 		else //ray is rather vertical
 		{
 			ray->sideDist_Y += ray->deltaDist_Y;
 			ray->mapY += ray->stepY;
-			ray->side = 1;
+			ray->side = VERTICAL;
 			//printf("I calculate the intersections with vertical lines\n");
 		} 
 		// Check if the current position is a wall
@@ -64,7 +64,7 @@ void calculate_distance(t_rays *ray, t_pl_pos player, char **map)
 	// printf("calculated distance to wall(without correction): %f\n", distance);
 
 	 //we need to substract deltaDist to get to the last hitpoint
-	if (ray->side == 0) //ray is horizontal 
+	if (ray->side == HORIZONTAL) //ray is horizontal 
 	{
 		distance = (ray->sideDist_X - ray->deltaDist_X);
 		// Calculate hitpoint on vertical wall

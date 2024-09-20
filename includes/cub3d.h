@@ -15,19 +15,23 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define LEGAL_CHARS " 10NESW"
-# define PLAYER_DIR "NESW"
-# define TILE_SIZE 64
+// Settings
 # define SCREEN_W 512
 # define SCREEN_H 384
+# define PLAY_FPS 30
+
+# define LEGAL_CHARS " 10NESW"
+# define PLAYER_DIR "NESW"
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
+# define HORIZONTAL 100
+# define VERTICAL 200
+
 # define MICROSEC_PER_S 1000000
 # define MAX_FPS 120
-# define PLAY_FPS 30
 
 // scale up the speeds as PLAY_FPS is set lower
 # define ROT_SPEED 0.015 * MAX_FPS / PLAY_FPS
