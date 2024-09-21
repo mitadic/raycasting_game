@@ -145,6 +145,13 @@ typedef struct s_fps
 	struct timeval	last_render;
 }	t_fps;
 
+typedef struct s_text
+{
+	void	*img;
+	int		size_x;
+	int		size_y;
+}	t_text;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
@@ -158,6 +165,7 @@ typedef struct s_data
 	void		*win;
 	t_img_buff	img_buff;
 	t_fps		time;
+	t_text		txt[4];
 }	t_data;
 
 
