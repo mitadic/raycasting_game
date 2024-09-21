@@ -86,13 +86,13 @@ void	draw_a_column(t_data *data, int x, int wall_h)
 	y = 0;
 	while (y < wall_start) // ceiling
 	{
-		fst_mlx_pixel_put(data, x, y, WHITE);
+		fst_mlx_pixel_put(data, x, y, CEILING_COLOR);
 		y++;
 	}
 	draw_wall_texture_pxs(data, x, &y); // texture
 	while (y > wall_end && y < SCREEN_H)
 	{
-		fst_mlx_pixel_put(data, x, y, BLACK); // floor
+		fst_mlx_pixel_put(data, x, y, FLOOR_COLOR); // floor
 		y++;
 	}
 }
