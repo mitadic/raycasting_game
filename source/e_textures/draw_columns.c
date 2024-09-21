@@ -1,5 +1,11 @@
 #include "../../includes/cub3d.h"
 
+/*
+1	data->img_buff.addr	- address of the very first pixel
+2	y * data->img_buff.line_length - pixel row count
+3	x * data->img_buff.bits_per_pixel / 8 - pixel column count
+Result: add them all up, you access a pixels's memory address by using x and y
+*/
 void	fst_mlx_pixel_put(t_data *data, int x, int y, uint32_t color)
 {
 	char	*dst;
@@ -9,7 +15,6 @@ void	fst_mlx_pixel_put(t_data *data, int x, int y, uint32_t color)
 		dst = data->img_buff.addr + (y * data->img_buff.line_length + x * \
 				(data->img_buff.bits_per_pixel / 8));
 		*(uint32_t *)dst = color;
-		// printf("color is: %d\n", color);
 	}
 }
 
@@ -43,6 +48,7 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 	// tx_y = (int)round(tx_img->height / data->rays[x].wall_height) * ((y - wall_start + 1) % (int)(data->rays[x].wall_height));
 	tx_y = (int)((y - wall_start) / (float)data->rays[x].wall_height * tx_img->height);
 	increment = (tx_y * tx_img->size_line) + (tx_x * tx_img->bpp / 8);
+	printf("here: %i\n", tx_img->size_line);
 	return (*(uint32_t *)(tx_img->data + increment));
 }
 
@@ -101,8 +107,8 @@ void	draw_columns(t_data *data)
 	{
 		// printf("hit_x is: %f, hit_y is: %f\n", data->rays[ray_idx].hit_x, data->rays[ray_idx].hit_y);
 		// printf("is_vertical: %d, ray_idx: %d\n", data->rays[ray_idx].is_vertical, ray_idx);
-		if (ray_idx == 319)
-			exit(0);
+		// if (ray_idx == 319)
+		// 	exit(0);
 		// if (data->rays[ray_idx].hit_y >= 1.0 && data->rays[ray_idx].hit_y <= 1.999)
 		// 	printf("data->rays[x].hit_x is: %f\nx is: %d\n", data->rays[ray_idx].hit_x, ray_idx);
 		// if (data->rays[ray_idx].hit_x >= 2.0)

@@ -1,66 +1,48 @@
 #include "../../includes/cub3d.h"
 
-/*
-1	data->img_buff.addr	- address of the very first pixel
-2	y * data->img_buff.line_length - pixel row count
-3	x * data->img_buff.bits_per_pixel / 8 - pixel column count
-Result: add them all up, you access a pixels's memory address by using x and y
-*/
-void	fst_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
+// void	draw_single_column(t_data *data, int x, int y)
+// {
+// 	int		wall_start;
+// 	int		wall_end;
+// 	float	wall_h;
+// 	int		color;
 
-	if (x >= 0 && x < SCREEN_W && y >= 0 && y < SCREEN_H)
-	{
-		dst = data->img_buff.addr + (y * data->img_buff.line_length + x * \
-				(data->img_buff.bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
-	}
-}
+// 	wall_h = data->rays[x].wall_height;
+// 	wall_start = (SCREEN_H - wall_h) / 2;
+// 	wall_end = wall_start + wall_h - 1;
+// 	if (y < wall_start)
+// 		fst_mlx_pixel_put(data, x, y, WHITE);
+// 	else if (y > wall_end)
+// 		fst_mlx_pixel_put(data, x, y, BLACK);
+// 	else
+// 	{
+// 		 if (data->rays[x].wall_to_the == 'N')
+// 			color = BLUE;
+// 		else if (data->rays[x].wall_to_the == 'E')
+// 			color = YELLOW;
+// 		else if (data->rays[x].wall_to_the == 'S')
+// 			color = RED;
+// 		else if (data->rays[x].wall_to_the == 'W')
+// 			color = ORANGE;
+// 		else // corners
+// 			color = WHITE; 
+// 		fst_mlx_pixel_put(data, x, y, color);
+// 	}
+// }
 
-void	draw_single_column(t_data *data, int x, int y)
-{
-	int		wall_start;
-	int		wall_end;
-	float	wall_h;
-	int		color;
+// void	draw_columns(t_data *data)
+// {
+// 	int		x;
+// 	int		y;
 
-	wall_h = data->rays[x].wall_height;
-	wall_start = (SCREEN_H - wall_h) / 2;
-	wall_end = wall_start + wall_h - 1;
-	if (y < wall_start)
-		fst_mlx_pixel_put(data, x, y, WHITE);
-	else if (y > wall_end)
-		fst_mlx_pixel_put(data, x, y, BLACK);
-	else
-	{
-		 if (data->rays[x].wall_to_the == 'N')
-			color = BLUE;
-		else if (data->rays[x].wall_to_the == 'E')
-			color = YELLOW;
-		else if (data->rays[x].wall_to_the == 'S')
-			color = RED;
-		else if (data->rays[x].wall_to_the == 'W')
-			color = ORANGE;
-		else // corners
-			color = WHITE; 
-		fst_mlx_pixel_put(data, x, y, color);
-	}
-}
-
-void	draw_columns(t_data *data)
-{
-	int		x;
-	int		y;
-
-	x = -1;
-	while (++x < SCREEN_W)
-	{
-		y = -1;
-		while (++y < SCREEN_H)
-			draw_single_column(data, x, y);
-	}
-}
+// 	x = -1;
+// 	while (++x < SCREEN_W)
+// 	{
+// 		y = -1;
+// 		while (++y < SCREEN_H)
+// 			draw_single_column(data, x, y);
+// 	}
+// }
 
 int	handle_keypress(int keycode, void *param)
 {

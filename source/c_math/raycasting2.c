@@ -47,7 +47,7 @@ void calculate_hit_point(t_rays *ray, t_pl_pos player)
 void assign_wall_color(t_rays *ray)
 {
     // check which side the ray is hitting
-    if (ray->side == 0) // ray is hitting a vertical wall
+    if (ray->side == VERTICAL) // ray is hitting a vertical wall
     {
         if (ray->stepX > 0) //ray goes to the right
             ray->wall_to_the = 'E'; 

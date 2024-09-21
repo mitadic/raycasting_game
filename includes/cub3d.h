@@ -27,13 +27,13 @@
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
-# define HORIZONTAL 10
-# define VERTICAL 20
+# define HORIZONTAL 100
+# define VERTICAL 200
 
-# define WALL_N 100
-# define WALL_E 101
-# define WALL_S 102
-# define WALL_W 103
+# define WALL_N 0
+# define WALL_E 1
+# define WALL_S 2
+# define WALL_W 3
 
 # define MICROSEC_PER_S 1000000
 # define MAX_FPS 120
@@ -206,6 +206,10 @@ void	move_left(t_data *data);
 void	move_right(t_data *data);
 void	rotate_left(t_data *data);
 void	rotate_right(t_data *data);
+
+// E
+// draw_columns.c
+void	draw_columns(t_data *data);
 
 // Z
 // failure_management.c
