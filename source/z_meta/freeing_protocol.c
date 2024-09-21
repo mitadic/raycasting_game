@@ -14,20 +14,20 @@
 
 static void    free_map_vals(t_data *data)
 {
-    int x;
+	int x;
 
-    x = -1;
-    if (!data->map.vals)
-        return ;
-    while (++x < data->map.max_x)
-        free(data->map.vals[x]);
-    free(data->map.vals);
+	x = -1;
+	if (!data->map.vals)
+		return ;
+	while (++x < data->map.max_x)
+		free(data->map.vals[x]);
+	free(data->map.vals);
 }
 
 /* void    purge(t_data *data)
 {
-    free_map_vals(data);
-    if (data->rays)
+	free_map_vals(data);
+	if (data->rays)
 	{
 		free(data->rays);
 	}
@@ -45,32 +45,41 @@ static void    free_map_vals(t_data *data)
 //new purge function
 void purge(t_data *data)
 {
-    free_map_vals(data);
+	int i;
 
-    if (data->img_buff.img)
-    {
-        mlx_destroy_image(data->mlx, data->img_buff.img);
-        data->img_buff.img = NULL; // Nullify after freeing to avoid double free
-    }
+	free_map_vals(data);
 
-    if (data->rays)
-    {
-        free(data->rays);
-        data->rays = NULL;
-    }
+	if (data->img_buff.img)
+	{
+		mlx_destroy_image(data->mlx, data->img_buff.img);
+		data->img_buff.img = NULL; // Nullify after freeing to avoid double free
+	}
 
-    if (data->win)
-    {
-        mlx_destroy_window(data->mlx, data->win);
-        data->win = NULL; 
-    }
+	i = -1;
+	while (++i < 4)
+	{
+		if (data->txt[i].img)
+			mlx_destroy_image(data->mlx, data->txt[i].img);
+	}
 
-    if (data->mlx)
-    {
-        mlx_destroy_display(data->mlx); //closing connection to physical screen
-        free(data->mlx); // Free the mlx pointer itself after destroying the display
-        data->mlx = NULL;
-    }
+	if (data->rays)
+	{
+		free(data->rays);
+		data->rays = NULL;
+	}
+
+	if (data->win)
+	{
+		mlx_destroy_window(data->mlx, data->win);
+		data->win = NULL; 
+	}
+
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx); //closing connection to physical screen
+		free(data->mlx); // Free the mlx pointer itself after destroying the display
+		data->mlx = NULL;
+	}
 }
 
 

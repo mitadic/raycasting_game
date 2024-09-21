@@ -30,7 +30,8 @@ SRC = 		main.c \
 			$(TEXTURES)draw_columns.c
 
 HFILES =	cub3d.h \
-			errors.h
+			errors.h \
+			color_codes.h
 
 all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
