@@ -33,6 +33,10 @@ float	get_the_float_component_of_hitp(t_data *data, int x)
 	return (hp_float_y);
 }
 
+/*
+tx_x: scaled hitpoint value vs. texture image width to determine the tx px row
+tx_y: scaled current image row px vs. tx_img->height to find tx_px[tx_x][tx_y]
+*/
 int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 {
 	int		tx_x;
@@ -43,10 +47,8 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 	wall_start = (SCREEN_H - data->rays[x].wall_height) / 2;
 	if (!tx_img)
 		return (WHITE);
-	// tx_x = (int)round(get_the_float_component_of_hitp(data, x) / (1.0 / tx_img->width));
 	tx_x = (int)(get_the_float_component_of_hitp(data, x) * tx_img->width);
-	// tx_y = (int)round(tx_img->height / data->rays[x].wall_height) * ((y - wall_start + 1) % (int)(data->rays[x].wall_height));
-	tx_y = (int)((y - wall_start) / (float)data->rays[x].wall_height * tx_img->height);
+	tx_y = (int)((y - wall_start) / data->rays[x].wall_height * tx_img->height);
 	if (tx_y == tx_img->height)
 		tx_y -= 1;
 	increment = (tx_y * tx_img->size_line) + (tx_x * tx_img->bpp / 8);
@@ -105,15 +107,5 @@ void	draw_columns(t_data *data)
 
 	ray_idx = -1;
 	while (++ray_idx < SCREEN_W)
-	{
-		// printf("hit_x is: %f, hit_y is: %f\n", data->rays[ray_idx].hit_x, data->rays[ray_idx].hit_y);
-		// printf("is_vertical: %d, ray_idx: %d\n", data->rays[ray_idx].is_vertical, ray_idx);
-		// if (ray_idx == 319)
-		// 	exit(0);
-		// if (data->rays[ray_idx].hit_y >= 1.0 && data->rays[ray_idx].hit_y <= 1.999)
-		// 	printf("data->rays[x].hit_x is: %f\nx is: %d\n", data->rays[ray_idx].hit_x, ray_idx);
-		// if (data->rays[ray_idx].hit_x >= 2.0)
-		// 	exit(0);
 		draw_a_column(data, ray_idx, data->rays[ray_idx].wall_height);
-	}
 }

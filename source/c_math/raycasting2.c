@@ -17,7 +17,7 @@
 
 void calculate_wall_height(t_rays *ray)
 {
-	ray->wall_height = SCREEN_H / ray->distance;
+	ray->wall_height = (SCREEN_H / ray->distance);
 	// printf("calculated wall height: %f\n", ray->wall_height);
 }
 

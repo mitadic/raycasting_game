@@ -1,49 +1,5 @@
 #include "../../includes/cub3d.h"
 
-// void	draw_single_column(t_data *data, int x, int y)
-// {
-// 	int		wall_start;
-// 	int		wall_end;
-// 	float	wall_h;
-// 	int		color;
-
-// 	wall_h = data->rays[x].wall_height;
-// 	wall_start = (SCREEN_H - wall_h) / 2;
-// 	wall_end = wall_start + wall_h - 1;
-// 	if (y < wall_start)
-// 		fst_mlx_pixel_put(data, x, y, WHITE);
-// 	else if (y > wall_end)
-// 		fst_mlx_pixel_put(data, x, y, BLACK);
-// 	else
-// 	{
-// 		 if (data->rays[x].wall_to_the == 'N')
-// 			color = BLUE;
-// 		else if (data->rays[x].wall_to_the == 'E')
-// 			color = YELLOW;
-// 		else if (data->rays[x].wall_to_the == 'S')
-// 			color = RED;
-// 		else if (data->rays[x].wall_to_the == 'W')
-// 			color = ORANGE;
-// 		else // corners
-// 			color = WHITE; 
-// 		fst_mlx_pixel_put(data, x, y, color);
-// 	}
-// }
-
-// void	draw_columns(t_data *data)
-// {
-// 	int		x;
-// 	int		y;
-
-// 	x = -1;
-// 	while (++x < SCREEN_W)
-// 	{
-// 		y = -1;
-// 		while (++y < SCREEN_H)
-// 			draw_single_column(data, x, y);
-// 	}
-// }
-
 int	handle_keypress(int keycode, void *param)
 {
 	t_data	*data;
@@ -52,11 +8,7 @@ int	handle_keypress(int keycode, void *param)
 	if (!data->mlx || !data->win)
 		return(1);
 	if (keycode == KEY_ESC)
-	{
-		//mlx_destroy_window(data->mlx, data->win);
-		bail(data, 0);
-		
-	}
+		bail(data, OK);
 	else if (keycode == KEY_W) data->key_state.w = 1;
 	else if (keycode == KEY_S) data->key_state.s = 1;
 	else if (keycode == KEY_A) data->key_state.a = 1;
@@ -90,8 +42,7 @@ int	close_x(t_data *data)
 	
 }
 
-
-
+// use gettimeofday() to store the time of last_render and limit the FPS
 int	is_time_to_render(t_data *data)
 {
 	struct timeval	diff;
@@ -117,7 +68,7 @@ int	is_time_to_render(t_data *data)
 	return (BOOL_NO);
 }
 
-
+// the core repeat logic of prg runtime, called forth by mlx_loop_hook() 
 int	continuous_rendering(void *param)
 {
 
@@ -143,11 +94,9 @@ int	continuous_rendering(void *param)
 	return (0);
 }
 
+// mlx_init happens earlier, because needed to load the textures
 void	go_mlxing(t_data *data)
 {
-    data->mlx = mlx_init();
-	if (!data->mlx)
-		error_and_bail(data, "mlx_init fail", KO);
 	data->win = mlx_new_window(data->mlx, SCREEN_W, SCREEN_H, "cub3d");
 	if (!data->win)
 		error_and_bail(data, "mlx_new_window fail", KO);
