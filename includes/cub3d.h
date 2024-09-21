@@ -15,10 +15,23 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <stdio.h>
+# include <math.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/time.h>
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
+# include "errors.h"
+# include "color_codes.h"
+
 // Settings
 # define SCREEN_W 512
 # define SCREEN_H 384
 # define PLAY_FPS 30
+# define CEILING_COLOR GRASS_GREEN
+# define FLOOR_COLOR DIRT_BROWN
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
@@ -42,14 +55,6 @@
 # define ROT_SPEED 0.015 * MAX_FPS / PLAY_FPS
 # define MOV_SPEED 0.0125 * MAX_FPS / PLAY_FPS
 
-# define BLACK	0x000000
-# define WHITE	0xFFFFFF
-# define RED	0xFF0000
-# define GREEN	0x00FF00
-# define BLUE	0x0000FF
-# define YELLOW	0xFAEE05
-# define ORANGE 0xBA8507
-
 // Linux key codes
 #define KEY_ESC		65307
 #define KEY_W		119
@@ -58,16 +63,6 @@
 #define KEY_D		100
 #define KEY_LEFT	65361
 #define KEY_RIGHT	65363
-
-# include <stdio.h>
-# include <math.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/time.h>
-# include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
-# include "../minilibx-linux/mlx_int.h"
-# include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map
