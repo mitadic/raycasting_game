@@ -26,12 +26,16 @@
 # include "errors.h"
 # include "color_codes.h"
 
-// Settings
-# define SCREEN_W 512
-# define SCREEN_H 384
+// **** Settings_start
+
+# define SCREEN_W 800
+# define SCREEN_H 600
 # define PLAY_FPS 30
 # define CEILING_COLOR GRASS_GREEN
 # define FLOOR_COLOR DIRT_BROWN
+
+// **** Settings_end
+
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
@@ -140,6 +144,20 @@ typedef struct s_fps
 	struct timeval	last_render;
 }	t_fps;
 
+/*
+Struct for textures. To be loaded as 'images', alongside their size_x & size_y
+-void *img
+	needs to be (void *) for MLX reasons, but when cast to (t_img *) reveals
+	its true nature and contents (def found in mlx_int.h):
+	- char	*data - binary image pixel information
+	- int	size_line - "scanline"
+	- int	bpp - bits per pixel
+	- int	width - pixel count along x for the image
+	- int	height - pixel count along y for the image
+	<<< the above is what mlx_xpm_file_to_image() returns >>>
+- size_x: needed to be passed to mlx_xpm_file_to_image()
+- size_y: needed to be passed to mlx_xpm_file_to_image()
+*/
 typedef struct s_text
 {
 	void	*img;

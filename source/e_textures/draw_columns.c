@@ -47,6 +47,8 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 	tx_x = (int)(get_the_float_component_of_hitp(data, x) * tx_img->width);
 	// tx_y = (int)round(tx_img->height / data->rays[x].wall_height) * ((y - wall_start + 1) % (int)(data->rays[x].wall_height));
 	tx_y = (int)((y - wall_start) / (float)data->rays[x].wall_height * tx_img->height);
+	if (tx_y == tx_img->height)
+		tx_y -= 1;
 	increment = (tx_y * tx_img->size_line) + (tx_x * tx_img->bpp / 8);
 	return (*(uint32_t *)(tx_img->data + increment));
 }
