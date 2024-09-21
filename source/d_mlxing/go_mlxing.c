@@ -63,7 +63,7 @@ int	handle_keypress(int keycode, void *param)
 	else if (keycode == KEY_D) data->key_state.d = 1;
 	else if (keycode == KEY_LEFT) data->key_state.left = 1;
 	else if (keycode == KEY_RIGHT) data->key_state.right = 1;
-	printf("key pressed is %i\n", keycode);
+	// printf("key pressed is %i\n", keycode);
 	return (0);
 }
 
