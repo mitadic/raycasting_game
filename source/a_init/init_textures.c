@@ -19,7 +19,8 @@ int	init_textures(t_data *data, char *map_filename)
 	i = -1;
 	while (++i < 4)
 	{
-		if (!data->txt[i].img)
+		t_img *tx_img = data->txt[i].img;
+		if (!tx_img || !tx_img->data)
 			return (error(TEXTLOADFAIL, KO));
 	}
 	return (OK);

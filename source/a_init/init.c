@@ -84,7 +84,8 @@ int	init(t_data *data, char *map_filename)
 	init_key_states(data);
 	data->time.last_render.tv_sec = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
-			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
+			malloc_for_map_vals(data) != OK || init_rays(data) != OK ||\
+			init_textures(data, map_filename) != OK)
 		return (KO);
 	return (OK);
 }

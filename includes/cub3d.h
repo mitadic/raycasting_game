@@ -171,7 +171,9 @@ typedef struct s_data
 
 // A
 // init.c
-int		init(t_data *data, char *map_filename);
+int	init(t_data *data, char *map_filename);
+// init_textures.c
+int	init_textures(t_data *data, char *map_filename);
 
 // B
 // map_parsing_control.c

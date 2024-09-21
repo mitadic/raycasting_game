@@ -43,7 +43,7 @@ all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
-	-L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
+	-L$(LIBMLXD) -lmlx -L/usr/lib -Iminilibx-linux \
 	-lXext -lXpm -lX11 -lm -lz -o $(NAME)
 
 init_submodules:

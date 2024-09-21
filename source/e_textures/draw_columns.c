@@ -28,7 +28,7 @@ float	get_the_float_component_of_hitp(t_data *data, int x)
 
 	hp_float_x = modf(data->rays[x].hit_x, &throwaway_int_x);
 	hp_float_y = modf(data->rays[x].hit_y, &throwaway_int_y);
-	if (data->rays[x].side == HORIZONTAL)
+	if (data->rays[x].side == VERTICAL)
 		return (hp_float_x);
 	return (hp_float_y);
 }
@@ -48,7 +48,6 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 	// tx_y = (int)round(tx_img->height / data->rays[x].wall_height) * ((y - wall_start + 1) % (int)(data->rays[x].wall_height));
 	tx_y = (int)((y - wall_start) / (float)data->rays[x].wall_height * tx_img->height);
 	increment = (tx_y * tx_img->size_line) + (tx_x * tx_img->bpp / 8);
-	printf("here: %i\n", tx_img->size_line);
 	return (*(uint32_t *)(tx_img->data + increment));
 }
 
