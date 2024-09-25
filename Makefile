@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror -g
 NAME		= cub3d
 LIBFT		= libft.a
 MLX			= libmlx_Linux.a
@@ -45,7 +45,7 @@ all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
 	-L$(LIBMLXD) -lmlx -L/usr/lib -Iminilibx-linux \
-	-lXext -lXpm -lX11 -lm -lz -o $(NAME)
+	-lXext -lX11 -lm -lz -o $(NAME)
 
 init_submodules:
 	git submodule init
