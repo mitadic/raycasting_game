@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_control.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:14 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:03:21 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/09/20 18:34:36 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	validate_map_symbols(t_data *data)
 	}
 	return (OK);
 }
-
+			
 /* I think the check for "no line" is redundant, I think I checked for '< 3'
 Captures the case where a line is shorter than max_x, stores ' '
  */
@@ -88,8 +88,8 @@ static int	extract_map_values(t_data *data, int fd)
 
 	y = -1;
 	line = get_next_line(fd);
-	if (!line)
-		return(error(BADMAP, KO));
+	//if (!line)
+		//return(error(BADMAP, KO));
 	while (line)
 	{
 		y += 1;
@@ -120,6 +120,8 @@ static int	verify_filename(char *map_filename)
 	return (OK);
 }
 
+
+
 /* reopen map, populate char **map and read for invalidities */
 int	validate_map(t_data *data, char *map_filename)
 {
@@ -140,5 +142,5 @@ int	validate_map(t_data *data, char *map_filename)
 		return (KO);
 	if (flood_fill(data) != OK)
 		return (KO);
-	return (OK);
+	return (OK); 
 }

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/11 14:46:42 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:20:05 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,21 @@ static int	set_max_vector_values(t_data *data, char *map_filename)
 
 int	init_rays(t_data *data)
 {
-	int	i;
-
 	data->rays = malloc(sizeof(t_rays) * SCREEN_W);
 	if (!data->rays)
 		return (error(MALLOCFAIL, KO));
-	i = -1;
-	while (++i < SCREEN_W)
-	{
-		data->rays[i].side_delta_incr_X = 0;
-		data->rays[i].side_delta_incr_Y = 0;
-	}
+
 	return (OK);
+}
+
+static void	init_key_states(t_data *data)
+{
+	data->key_state.w = 0;
+	data->key_state.a = 0;
+	data->key_state.s = 0;
+	data->key_state.d = 0;
+	data->key_state.left = 0;
+	data->key_state.right = 0;
 }
 
 /* control flow */
@@ -77,15 +80,12 @@ int	init(t_data *data, char *map_filename)
 {
 	data->map.max_x = 0;
 	data->map.max_y = 0;
-	data->map.vals = NULL;
-	data->key_state.w = 0;
-	data->key_state.a = 0;
-	data->key_state.s = 0;
-	data->key_state.d = 0;
-	data->key_state.left = 0;
-	data->key_state.right = 0;
+	// data->map.vals = NULL;
+	init_key_states(data);
+	data->time.last_render.tv_sec = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
-			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
+			malloc_for_map_vals(data) != OK || init_rays(data) != OK ||\
+			init_textures(data, map_filename) != OK)
 		return (KO);
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/16 17:38:03 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:36:17 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,49 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <stdio.h>
+# include <math.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/time.h>
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx_int.h"
+# include "errors.h"
+# include "color_codes.h"
+
+// **** Settings_start
+
+# define SCREEN_W 800
+# define SCREEN_H 600
+# define PLAY_FPS 30
+# define CEILING_COLOR GRASS_GREEN
+# define FLOOR_COLOR DIRT_BROWN
+
+// **** Settings_end
+
+
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
-# define TILE_SIZE 64
-# define SCREEN_W 512
-# define SCREEN_H 384
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
 # define FOV (M_PI / 3)
 # define ENDLINE 1
 
-# define ROT_SPEED 0.015
-# define MOV_SPEED 0.0125
+# define HORIZONTAL 100
+# define VERTICAL 200
 
-# define BLACK	0x000000
-# define WHITE	0xFFFFFF
-# define RED	0xFF0000
-# define GREEN	0x00FF00
-# define BLUE	0x0000FF
-# define YELLOW	0xFAEE05
-# define ORANGE 0xBA8507
+# define WALL_N 0
+# define WALL_E 1
+# define WALL_S 2
+# define WALL_W 3
+
+# define MICROSEC_PER_S 1000000
+# define MAX_FPS 120
+
+// scale up the speeds as PLAY_FPS is set lower
+# define ROT_SPEED 0.015 * MAX_FPS / PLAY_FPS
+# define MOV_SPEED 0.0125 * MAX_FPS / PLAY_FPS
 
 // Linux key codes
 #define KEY_ESC		65307
@@ -44,14 +67,6 @@
 #define KEY_D		100
 #define KEY_LEFT	65361
 #define KEY_RIGHT	65363
-
-# include <stdio.h>
-# include <math.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
-# include "errors.h"
 
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map
@@ -92,8 +107,6 @@ typedef struct s_rays
 	float	deltaDist_Y;
 	float	sideDist_X;
 	float	sideDist_Y;
-	float	side_delta_incr_X;
-	float	side_delta_incr_Y;
 	float 	distance;
 	int		mapX;
 	int		mapY;
@@ -101,6 +114,11 @@ typedef struct s_rays
 	int		stepY;
 	float	wall_height;
 	char	wall_to_the;
+	int		side;
+	float	intermediate_hit_x;
+	float	intermediate_hit_y;
+	float	hit_x;
+	float	hit_y;
 }	t_rays;
 
 /*
@@ -121,6 +139,32 @@ typedef struct s_img_buff
 	int		endian;
 }			t_img_buff;
 
+typedef struct s_fps
+{
+	struct timeval	last_render;
+}	t_fps;
+
+/*
+Struct for textures. To be loaded as 'images', alongside their size_x & size_y
+-void *img
+	needs to be (void *) for MLX reasons, but when cast to (t_img *) reveals
+	its true nature and contents (def found in mlx_int.h):
+	- char	*data - binary image pixel information
+	- int	size_line - "scanline"
+	- int	bpp - bits per pixel
+	- int	width - pixel count along x for the image
+	- int	height - pixel count along y for the image
+	<<< the above is what mlx_xpm_file_to_image() returns >>>
+- size_x: needed to be passed to mlx_xpm_file_to_image()
+- size_y: needed to be passed to mlx_xpm_file_to_image()
+*/
+typedef struct s_text
+{
+	void	*img;
+	int		size_x;
+	int		size_y;
+}	t_text;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
@@ -133,11 +177,16 @@ typedef struct s_data
 	void		*mlx;
 	void		*win;
 	t_img_buff	img_buff;
+	t_fps		time;
+	t_text		txt[4];
 }	t_data;
+
 
 // A
 // init.c
-int		init(t_data *data, char *map_filename);
+int	init(t_data *data, char *map_filename);
+// init_textures.c
+int	init_textures(t_data *data, char *map_filename);
 
 // B
 // map_parsing_control.c
@@ -151,6 +200,12 @@ int		flood_simulation(t_data *data, char **map_copy);
 // C
 // raycasting.c
 int math(t_data *data);
+
+//raycasting2.c
+void calculate_hit_point(t_rays *ray, t_pl_pos player);
+void calculate_wall_height(t_rays *ray);
+void assign_wall_color(t_rays *ray);
+
 // helper_functions.c
 float ft_abs(float number);
 // map.c
@@ -166,6 +221,10 @@ void	move_left(t_data *data);
 void	move_right(t_data *data);
 void	rotate_left(t_data *data);
 void	rotate_right(t_data *data);
+
+// E
+// draw_columns.c
+void	draw_columns(t_data *data);
 
 // Z
 // failure_management.c
@@ -190,5 +249,6 @@ void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
 void	purge(t_data *data);
+void handle_sigint(int sig);
 
 #endif

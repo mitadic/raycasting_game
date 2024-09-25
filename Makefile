@@ -8,6 +8,7 @@ INIT		= a_init/
 PARSING		= b_parsing/
 MATH		= c_math/
 MLXING		= d_mlxing/
+TEXTURES	= e_textures/
 META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
@@ -15,6 +16,7 @@ LIBMLXD 	= ./minilibx-linux/
 
 SRC = 		main.c \
 			$(INIT)init.c \
+			$(INIT)init_textures.c \
 			$(PARSING)map_parsing_control.c \
 			$(PARSING)map_parsing_flood_fill.c \
 			$(PARSING)map_parsing_flood_sim.c \
@@ -22,11 +24,14 @@ SRC = 		main.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
+			$(MATH)raycasting2.c \
 			$(MLXING)go_mlxing.c \
-			$(MLXING)player_movements.c
+			$(MLXING)player_movements.c \
+			$(TEXTURES)draw_columns.c
 
 HFILES =	cub3d.h \
-			errors.h
+			errors.h \
+			color_codes.h
 
 all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
@@ -39,8 +44,8 @@ all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
-	-L$(LIBMLXD) -lmlx_Linux -L/usr/lib -Iminilibx-linux \
-	-lXext -lX11 -lm -lz -o $(NAME)
+	-L$(LIBMLXD) -lmlx -L/usr/lib -Iminilibx-linux \
+	-lXext -lXpm -lX11 -lm -lz -o $(NAME)
 
 init_submodules:
 	git submodule init
