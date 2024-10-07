@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/20 18:36:17 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:47:34 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map
 {
+	char	*no;
+	char	*ea;
+	char	*so;
+	char	*we;
+	int		ceiling[3];
+	int		floor[3];
 	int		max_x;
 	int		max_y;
 	char	**vals;
