@@ -17,7 +17,7 @@ LIBMLXD 	= ./minilibx-linux/
 SRC = 		main.c \
 			$(INIT)init.c \
 			$(INIT)init_textures.c \
-			$(PARSING)map_parsing_control.c \
+			$(PARSING)dotcub_parsing_control.c \
 			$(PARSING)map_parsing_flood_fill.c \
 			$(PARSING)map_parsing_flood_sim.c \
 			$(META)failure_management.c \

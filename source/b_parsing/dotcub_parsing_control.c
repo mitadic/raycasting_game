@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parsing_control.c                              :+:      :+:    :+:   */
+/*   dotcub_parsing_control.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:14 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/20 18:34:36 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:52:06 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,13 @@ static int	validate_map_symbols(t_data *data)
 	}
 	return (OK);
 }
-			
-/* I think the check for "no line" is redundant, I think I checked for '< 3'
-Captures the case where a line is shorter than max_x, stores ' '
- */
-static int	extract_map_values(t_data *data, int fd)
+
+static int	extract_map_values(t_data *data, int fd, char *line)
 {
-	char *line;
 	int	x;
 	int	y;
 
 	y = -1;
-	line = get_next_line(fd);
-	//if (!line)
-		//return(error(BADMAP, KO));
 	while (line)
 	{
 		y += 1;
@@ -101,6 +94,45 @@ static int	extract_map_values(t_data *data, int fd)
 			else
 				data->map.vals[x][y] = ' ';
 		}
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
+static int	textures_and_rgbs_complete(t_data *data)
+{
+	int	i;
+
+	if (!data->map.no || !data->map.ea || !data->map.so || data->map.we)
+		return (BOOL_NO);
+	i = -1;
+	while (++i < 3)
+	{
+		if (data->map.ceiling[i] == -1 || data->map.floor[i] == -1)
+			return (BOOL_NO);
+	}
+	return (BOOL_YES);
+}
+
+static int extract_textures_and_rgbs(t_data *data, char *line)
+{
+	
+}
+			
+/* I think the check for "no line" is redundant, I think I checked for '< 3'
+Captures the case where a line is shorter than max_x, stores ' '
+ */
+static int	extract_dotcub_values(t_data *data, int fd)
+{
+	char *line;
+
+	line = get_next_line(fd);
+	if (!line)
+		return(error(GNLFAIL, KO));
+	while ((line != NULL && !textures_and_rgbs_complete(data)) || \
+		ft_strlen(line) == 1 && !ft_strncmp(line, '\n', 1))
+	{
+		extract_textures_and_rgbs(data, line);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -120,10 +152,8 @@ static int	verify_filename(char *map_filename)
 	return (OK);
 }
 
-
-
 /* reopen map, populate char **map and read for invalidities */
-int	validate_map(t_data *data, char *map_filename)
+int	validate_dotcub(t_data *data, char *map_filename)
 {
 	int	fd;
 
@@ -132,7 +162,7 @@ int	validate_map(t_data *data, char *map_filename)
 	fd = open(map_filename, O_RDONLY);
 	if (fd < 0)
 		return (error(CANTOPEN, KO));
-	if (extract_map_values(data, fd) != OK)
+	if (extract_dotcub_values(data, fd) != OK)
 		return (KO);
 	if (close(fd) < 0)
 		return (error(CANTCLOSE, KO));

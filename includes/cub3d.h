@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/07 13:47:34 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/07 13:58:59 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,8 +195,8 @@ int	init(t_data *data, char *map_filename);
 int	init_textures(t_data *data, char *map_filename);
 
 // B
-// map_parsing_control.c
-int		validate_map(t_data *data, char *map_filename);
+// dotcub_parsing_control.c
+int		validate_dotcub(t_data *data, char *map_filename);
 // map_parsing_flood_fill.c
 int		flood_fill(t_data *data);
 void	free_map_copy(char **map_copy, int columns_allocated);
