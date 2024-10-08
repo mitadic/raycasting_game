@@ -1,9 +1,19 @@
 #include "../../includes/cub3d.h"
 
+void	finish_reading_the_file(char *line, int fd)
+{
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+}
+
 /* I think the check for "no line" is redundant, I think I checked for '< 3'
 Captures the case where a line is shorter than max_x, stores ' '
  */
-static void	extract_map_values(t_data *data, int fd, char *line)
+static int	extract_map_values(t_data *data, int fd, char *line)
 {
 	int	x;
 	int	y;
@@ -23,6 +33,7 @@ static void	extract_map_values(t_data *data, int fd, char *line)
 		free(line);
 		line = get_next_line(fd);
 	}
+	return (OK);
 }
 
 static int	is_empty_line(char *line)
@@ -33,26 +44,29 @@ static int	is_empty_line(char *line)
 }
 
 /* Continue rotation while missing txt/rgb, or line == '\n' */
-static void	extract_textures_and_rgbs(t_data *data, int fd, char **line)
+static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 {
-	char *minus_the_endline;
+	char	*minus_the_endline;
 
 	while (((*line) != NULL && !is_textures_and_rgbs_complete(data)) || \
 		is_empty_line(*line))
 	{
 		minus_the_endline = ft_strtrim(*line, "\n");
-		free(*line);
-		if (!minus_the_endline)
-			void_error("malloc fail while trimming the endline");
-		extract_single_texture_or_rgb(data, minus_the_endline);
+		// if (!minus_the_endline)
+		// 	return (error(MALLOCFAIL, KO));
+		if (extract_single_texture_or_rgb(data, minus_the_endline) != OK)
+		{
+			free(minus_the_endline);
+			return (KO);
+		}
 		free(minus_the_endline);
+		free(*line);
 		*line = get_next_line(fd);
 	}
+	return (OK);
 }
 
-/* Finish extracting txt and rgbs first, then move on to the map
-!!! NOT returning OK or KO while extracting (only if GNL fails),
-because we gotta finish reading the file! */
+/* Finish extracting txt and rgbs first, then move on to the map */
 int	extract_dotcub_values(t_data *data, int fd)
 {
 	char *line;
@@ -60,8 +74,11 @@ int	extract_dotcub_values(t_data *data, int fd)
 	line = get_next_line(fd);
 	if (!line)
 		return(error(GNLFAIL, KO));
-	extract_textures_and_rgbs(data, fd, &line);
-	printf("done with rgb, now line is %s\n", line);
-	extract_map_values(data, fd, line);
+	if (extract_textures_and_rgbs(data, fd, &line) != OK || \
+				extract_map_values(data, fd, line) != OK)
+	{
+		finish_reading_the_file(line, fd);
+		return (KO);
+	}
 	return (OK);
 }

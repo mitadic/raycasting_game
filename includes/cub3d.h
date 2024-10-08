@@ -203,11 +203,11 @@ int		parse_dotcub(t_data *data, char *map_filename);
 // dotcub_parsing_extraction.c
 int		extract_dotcub_values(t_data *data, int fd);
 // dotcub_parsing_getsingle_txtrgb.c
-void	extract_single_texture_or_rgb(t_data *data, char *line);
+int		extract_single_texture_or_rgb(t_data *data, char *line);
 // dotcub_parsing_rgb.c
-void	extract_rgb(t_data *data, char *line, char where);
+int		extract_rgb(t_data *data, char *line, char where);
 // dotcub_parsing_txt.c
-void	extract_texture(t_data *data, char *line, char where);
+int		extract_texture(t_data *data, char *line, char where);
 // dotcub_valinit_map.c
 int		val_init_map(t_data *data);
 // dotcub_valinit_txtrgb.c

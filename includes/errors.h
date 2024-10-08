@@ -19,22 +19,25 @@
 # define BOOL_YES 1
 # define BOOL_NO 0
 
-# define PRINTUSAGE "Usage: ./cub3d map.cub"
+# define PRINTUSAGE "Usage: ./cub3d *.cub"
 
 # define MALLOCFAIL "Malloc fail"
 
 # define TEXTLOADFAIL "Could not load texture"
+# define BADTXTPATH "Bad filepath, loading up of texture failed"
 # define NOTSQUARE "XPM image not square shaped"
 
-# define CANTOPEN "Error opening map file"
-# define CANTCLOSE "Error closing map file"
-# define BADSUFF "Program only accepts < *.cub > files as maps"
+# define CANTOPEN "Error opening *.cub file"
+# define CANTCLOSE "Error closing *.cub file"
+# define BADSUFF "Program requires < *.cub > files as arguments"
 # define BADDOTCUB "The .cub file does not allow meaningful value extraction"
 # define GNLFAIL "get_next_line returned no line"
 # define NOCEILING "Missing RGB values for the ceiling"
 # define NOFLOOR "Missing RGB values for the floor"
 # define NOTXT "Missing textures. Specify 4."
 # define EXTRAINFO "Found unexpected pieces of data in .cub, keep it (c)lean"
+# define BADSPEC "Unexpected specification in *.cub file"
+# define ALREADYSTORED "Too many instances of a single wall direction"
 
 # define MAPTOOTINY "Map not spatious enough to render meaningfully"
 # define ILLEGAL "Map file contains invalid symbols"

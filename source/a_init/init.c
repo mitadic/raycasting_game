@@ -74,6 +74,15 @@ int	init(t_data *data, char *map_filename)
 	init_map_struct(data);
 	init_key_states(data);
 	data->time.last_render.tv_sec = 0;
+
+	data->img_buff.img = NULL;
+	data->txt[0].img = NULL;
+	data->txt[1].img = NULL;
+	data->txt[2].img = NULL;
+	data->txt[3].img = NULL;
+	data->win = NULL;
+	data->mlx = NULL;
+	
 	if (set_max_vector_values(data, map_filename) != OK || \
 			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
 		return (KO);
