@@ -67,31 +67,55 @@ int	is_time_to_render(t_data *data)
 	}
 	return (BOOL_NO);
 }
+void clear_image_buffer(t_img_buff *buffer) 
+{
+    // Assuming minimap is initialized correctly
+    if (buffer == NULL) return; // Prevent null dereference
+
+    int total_pixels = buffer->width * buffer->height;
+    unsigned int *data_ptr = (unsigned int *)buffer;
+
+    for (int i = 0; i < total_pixels; i++) 
+    {
+        data_ptr[i] = 0xFFFFFF; // Clear to white or any color you want for empty space
+    }
+}
 
 // the core repeat logic of prg runtime, called forth by mlx_loop_hook() 
-int	continuous_rendering(void *param)
+int continuous_rendering(void *param)
 {
+    t_data *data = (t_data *)param;
 
-	
-	t_data *data = (t_data *)param;
+    if (!is_time_to_render(data))
+        return (0);
+    if (data->key_state.w) move_forward(data);
+    if (data->key_state.s) move_backward(data);
+    if (data->key_state.a) move_left(data);
+    if (data->key_state.d) move_right(data);
+    if (data->key_state.left) rotate_left(data);
+    if (data->key_state.right) rotate_right(data);
 
-	if(!is_time_to_render(data))
-		return (0);
-	if (data->key_state.w) move_forward(data);
-	if (data->key_state.s) move_backward(data);
-	if (data->key_state.a) move_left(data);
-	if (data->key_state.d) move_right(data);
-	if (data->key_state.left) rotate_left(data);
-	if (data->key_state.right) rotate_right(data);
+    // clear  image buffer
+    clear_image_buffer(&data->img_buff);
+    math(data);
+    // draw  main game to the image buffer
+    draw_columns(data);
+    // If BONUS is enabled, draw the minimap
+    if (BONUS)
+    {
+        initialize_minimap(data);
+        draw_minimap_on_image(data, &data->minimap); 
+    }
+    // put main game image buffer to window first
+    mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
 
-	// Clear the image buffer? Seems to be acting glitchy
-	// mlx_clear_window(data->mlx, data->win);
+    // put minimap on top of it
+    if (BONUS)
+    {
+        mlx_put_image_to_window(data->mlx, data->win, data->minimap.img, 10, 10); // display minimap at (10,10)
+    }
 
-	// Do raycasting anew
-	math(data);
-	draw_columns(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
-	return (0);
+    return (0);
 }
 
 // mlx_init happens earlier, because needed to load the textures

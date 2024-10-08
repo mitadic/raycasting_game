@@ -26,6 +26,7 @@ SRC = 		main.c \
 			$(MATH)raycasting.c \
 			$(MATH)raycasting2.c \
 			$(MLXING)go_mlxing.c \
+			$(MLXING)bonus_minimap.c \
 			$(MLXING)player_movements.c \
 			$(TEXTURES)draw_columns.c
 

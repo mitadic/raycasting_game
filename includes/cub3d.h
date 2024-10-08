@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/20 18:36:17 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:01:49 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@
 
 // **** Settings_end
 
+
+///BONUS
+#ifndef BONUS
+#define BONUS 1
+#endif
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
@@ -137,6 +142,8 @@ typedef struct s_img_buff
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int 	width;
+	int		height;
 }			t_img_buff;
 
 typedef struct s_fps
@@ -165,12 +172,26 @@ typedef struct s_text
 	int		size_y;
 }	t_text;
 
+
+
+
+
+typedef struct s_minimap
+{
+    void    *img;
+    char    *data;
+    int     bpp;        // Bits per pixel
+    int     size_line;  // Line size (number of bytes per row)
+    int     endian;     // Endian (0 for little endian, 1 for big endian)
+    int     width;
+    int     height;
+} t_minimap;
+
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
 {
-	t_map		
-	map;
+	t_map		map;
 	t_pl_pos	pl_pos;
 	t_key_state	key_state;
 	t_rays		*rays;
@@ -179,6 +200,7 @@ typedef struct s_data
 	t_img_buff	img_buff;
 	t_fps		time;
 	t_text		txt[4];
+	t_minimap	minimap;
 }	t_data;
 
 
@@ -214,6 +236,9 @@ char **generate_bogus_map(void);
 // D
 // go_mlxing.c
 void	go_mlxing(t_data *data);
+void initialize_minimap(t_data *data);
+void		draw_minimap_on_image(t_data *data, t_minimap *minimap);
+
 // player_movements.c
 void	move_forward(t_data *data);
 void	move_backward(t_data *data);
