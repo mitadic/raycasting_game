@@ -79,6 +79,7 @@ void	draw_wall_texture_pxs(t_data *data, int x, int *y)
 	}
 }
 
+/* Draw ceiling pixels, then texture pixels, then floor pixels */
 void	draw_a_column(t_data *data, int x, int wall_h)
 {
 	int		wall_start;
@@ -90,13 +91,13 @@ void	draw_a_column(t_data *data, int x, int wall_h)
 	y = 0;
 	while (y < wall_start) // ceiling
 	{
-		fst_mlx_pixel_put(data, x, y, CEILING_COLOR);
+		fst_mlx_pixel_put(data, x, y, data->map.rgb_c);
 		y++;
 	}
 	draw_wall_texture_pxs(data, x, &y); // texture
 	while (y > wall_end && y < SCREEN_H)
 	{
-		fst_mlx_pixel_put(data, x, y, FLOOR_COLOR); // floor
+		fst_mlx_pixel_put(data, x, y, data->map.rgb_f); // floor
 		y++;
 	}
 }

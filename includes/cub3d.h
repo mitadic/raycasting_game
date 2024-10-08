@@ -31,14 +31,13 @@
 # define SCREEN_W 800
 # define SCREEN_H 600
 # define PLAY_FPS 30
-# define CEILING_COLOR GRASS_GREEN
-# define FLOOR_COLOR DIRT_BROWN
 
 // **** Settings_end
 
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIR "NESW"
+# define WHITESPACES " \t\v\f\r"
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
 # define FOV (M_PI / 3)
@@ -77,6 +76,8 @@ typedef struct s_map
 	char	*we;
 	int		ceiling[3];
 	int		floor[3];
+	int		rgb_c;
+	int		rgb_f;
 	int		max_x;
 	int		max_y;
 	char	**vals;
@@ -190,32 +191,52 @@ typedef struct s_data
 
 // A
 // init.c
-int	init(t_data *data, char *map_filename);
+int		init(t_data *data, char *map_filename);
 // init_textures.c
-int	init_textures(t_data *data, char *map_filename);
+int		init_textures(t_data *data);
+// set_max_vector_values.c
+int		set_max_vector_values(t_data *data, char *map_filename);
 
 // B
 // dotcub_parsing_control.c
-int		validate_dotcub(t_data *data, char *map_filename);
+int		parse_dotcub(t_data *data, char *map_filename);
+// dotcub_parsing_extraction.c
+int		extract_dotcub_values(t_data *data, int fd);
+// dotcub_parsing_getsingle_txtrgb.c
+void	extract_single_texture_or_rgb(t_data *data, char *line);
+// dotcub_parsing_rgb.c
+void	extract_rgb(t_data *data, char *line, char where);
+// dotcub_parsing_txt.c
+void	extract_texture(t_data *data, char *line, char where);
+// dotcub_valinit_map.c
+int		val_init_map(t_data *data);
+// dotcub_valinit_txtrgb.c
+int		val_init_txtrgb(t_data *data);
 // map_parsing_flood_fill.c
 int		flood_fill(t_data *data);
 void	free_map_copy(char **map_copy, int columns_allocated);
 // map_parsing_flood_sim.c
 int		flood_simulation(t_data *data, char **map_copy);
+// utils.c
+void	free_strarr(char **strarr);
+int		get_strings_count(char **strarr);
+int		get_char_count(char *str, char c);
+int		atoi_cub3d_rgb(const char *nptr);
+int		is_textures_and_rgbs_complete(t_data *data);
 
 // C
 // raycasting.c
 int math(t_data *data);
 
 //raycasting2.c
-void calculate_hit_point(t_rays *ray, t_pl_pos player);
-void calculate_wall_height(t_rays *ray);
-void assign_wall_color(t_rays *ray);
+void	calculate_hit_point(t_rays *ray, t_pl_pos player);
+void	calculate_wall_height(t_rays *ray);
+void	assign_wall_color(t_rays *ray);
 
 // helper_functions.c
-float ft_abs(float number);
+float	ft_abs(float number);
 // map.c
-char **generate_bogus_map(void);
+char	**generate_bogus_map(void);
 
 // D
 // go_mlxing.c
@@ -237,9 +258,7 @@ void	draw_columns(t_data *data);
 /*
 	- error() usage:
 		return(error(err_msg, passthrough_return_value));
-	- bail() typedef struct s_rays
-
-usage:
+	- bail() usage:
 		pass the data to free and the exit code. It will exit();
 	- error_and_bail() usage:
 		pass the data to free, the msg to print, the exit code. It will exit();
@@ -249,6 +268,7 @@ In summary:
 	- bail() frees and exits
 	- error_and_bail() prints, frees and exits
 */
+void    void_error(char* err_msg);
 int		error(char* err_msg, int return_value);
 void    bail(t_data *data, int exit_status);
 void	error_and_bail(t_data *data, char *err_msg, int exit_status);

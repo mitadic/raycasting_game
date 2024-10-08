@@ -16,10 +16,17 @@ LIBMLXD 	= ./minilibx-linux/
 
 SRC = 		main.c \
 			$(INIT)init.c \
-			$(INIT)init_textures.c \
+			$(INIT)set_max_vector_values.c \
 			$(PARSING)dotcub_parsing_control.c \
+			$(PARSING)dotcub_parsing_extraction.c \
+			$(PARSING)dotcub_parsing_getsingle_txtrgb.c \
+			$(PARSING)dotcub_parsing_rgb.c \
+			$(PARSING)dotcub_parsing_txt.c \
+			$(PARSING)dotcub_valinit_map.c \
+			$(PARSING)dotcub_valinit_txtrgb.c \
 			$(PARSING)map_parsing_flood_fill.c \
 			$(PARSING)map_parsing_flood_sim.c \
+			$(PARSING)utils.c \
 			$(META)failure_management.c \
 			$(META)freeing_protocol.c \
 			$(MATH)helper_functions.c \

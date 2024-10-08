@@ -1,3 +1,11 @@
+NO ./textures/dirt_n.xpm
+EA ./textures/dirt_e.xpm
+SO ./textures/dirt_s.xpm
+WE ./textures/dirt_w.xpm
+
+C 251,252,253
+F 11,12,13
+
   11111
   10001
   11101

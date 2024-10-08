@@ -24,6 +24,7 @@
 # define MALLOCFAIL "Malloc fail"
 
 # define TEXTLOADFAIL "Could not load texture"
+# define NOTSQUARE "XPM image not square shaped"
 
 # define CANTOPEN "Error opening map file"
 # define CANTCLOSE "Error closing map file"
