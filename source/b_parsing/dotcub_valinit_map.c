@@ -29,7 +29,7 @@ int	locate_player(t_data *data)
         x = -1;
         while (++x < data->map.max_x)
 		{
-			if (ft_strchr(PLAYER_DIR, data->map.vals[x][y]))
+			if (ft_strchr(PLAYER_DIRS, data->map.vals[x][y]))
 			{
 				init_player(data, x, y, data->map.vals[x][y]);
 				pl_pos_count++;

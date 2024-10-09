@@ -62,7 +62,7 @@ int	atoi_cub3d_rgb(const char *nptr)
 	return (l / 10 * minus);
 }
 
-int	is_textures_and_rgbs_complete(t_data *data)
+int	is_textures_and_rgbs_extr_complete(t_data *data)
 {
 	int	i;
 

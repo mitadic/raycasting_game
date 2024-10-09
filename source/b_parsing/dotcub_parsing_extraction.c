@@ -48,7 +48,7 @@ static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 {
 	char	*minus_the_endline;
 
-	while (((*line) != NULL && !is_textures_and_rgbs_complete(data)) || \
+	while (((*line) != NULL && !is_textures_and_rgbs_extr_complete(data)) || \
 		is_empty_line(*line))
 	{
 		minus_the_endline = ft_strtrim(*line, "\n");

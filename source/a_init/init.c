@@ -55,7 +55,7 @@ static void	init_map_struct(t_data *data)
 
 	data->map.max_x = 0;
 	data->map.max_y = 0;
-	// data->map.vals = NULL;
+	data->map.vals = NULL;
 	data->map.no = NULL;
 	data->map.ea = NULL;
 	data->map.so = NULL;

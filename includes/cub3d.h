@@ -36,7 +36,7 @@
 
 
 # define LEGAL_CHARS " 10NESW"
-# define PLAYER_DIR "NESW"
+# define PLAYER_DIRS "NESW"
 # define WHITESPACES " \t\v\f\r"
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
@@ -221,7 +221,7 @@ void	free_strarr(char **strarr);
 int		get_strings_count(char **strarr);
 int		get_char_count(char *str, char c);
 int		atoi_cub3d_rgb(const char *nptr);
-int		is_textures_and_rgbs_complete(t_data *data);
+int		is_textures_and_rgbs_extr_complete(t_data *data);
 
 // C
 // raycasting.c

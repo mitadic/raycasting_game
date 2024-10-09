@@ -56,7 +56,7 @@ static int	copy_map(t_data *data, char ***map_copy)
 		while (++y < data->map.max_y)
 		{
 			(*map_copy)[x][y] = data->map.vals[x][y];
-			if (ft_strchr(PLAYER_DIR, data->map.vals[x][y]))
+			if (ft_strchr(PLAYER_DIRS, data->map.vals[x][y]))
 				(*map_copy)[x][y] = '0';
 		}
 	}

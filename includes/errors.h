@@ -25,7 +25,7 @@
 
 # define TEXTLOADFAIL "Could not load at least 1 texture"
 # define BADTXTPATH "Bad filepath, loading up of texture failed"
-# define NOTSQUARE "at least one XPM texture not square shaped"
+# define NOTSQUARE "At least one XPM texture not square shaped"
 
 # define CANTOPEN "Error opening *.cub file"
 # define CANTCLOSE "Error closing *.cub file"
@@ -38,16 +38,25 @@
 # define EXTRAINFO "Found unexpected pieces of data in .cub, keep it (c)lean"
 # define BADSPEC "Unexpected specification in *.cub file"
 # define ALREADYSTORED "Too many instances of a single wall direction"
+# define NOTTWOCOMMAS "Expected 2x ',' separating the RGB"
+# define NOTTHREE_RGB "Bad number of values for [R,G,B]"
+# define ALREADYINIT_RGB "Too many instances of F or C specification"
+# define NONDIGIT "Non-digits found in one of [R,G,B]"
+# define RGBTOOLONG "String suspiciously long for one of [R,G,B]"
+# define MALLOCFAIL_GB "Malloc fail while extracting [G,B] of [R,G,B]"
+# define MALLOCFAIL_R "Malloc fail while extracting [R] of [R,G,B]"
+# define MALLOCFAIL_RGB "Malloc fail while extracting [R,G,B]"
+# define GENERICBAD_RGB "Illegal specifications within [R,G,B]"
 
 # define MAPTOOTINY "Map not spatious enough to render meaningfully"
 # define ILLEGAL "Map file contains invalid symbols"
 
 # define LEAKYMAP "Map not walled off"
 # define AIRPOCKETS "Map contains unreachable areas"
-# define UNRENDERABLE "Map contains unrenderable tiles, this doesn't work: " \
-"11111" \
-"10 01" \
-"11111"
+# define UNRENDERABLE "Map contains unrenderable tiles, these don't work: \n" \
+"11111  11111\n" \
+"10 01  1000 \n" \
+"11111  11111"
 
 # define NOPL "Player position and orientation not specified"
 # define TOOMANYPL "Conflicting player positions and orientations"
