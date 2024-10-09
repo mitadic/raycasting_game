@@ -1,9 +1,11 @@
 #include "../../includes/cub3d.h"
 
-/* deep-copied texture path gets stored, or freed if conflicts */
+/* strtrimmed (deep-copied) texture path gets stored, or freed if conflicts */
 static int	store_one_txt(t_data *data, char *txt_str, char where)
 {
 	char	**struct_ptr;
+
+	struct_ptr = NULL;
 	if (where == 'N')
 		struct_ptr = &(data->map.no);
 	else if (where == 'E')

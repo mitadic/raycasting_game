@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:11 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/07 15:21:34 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:09:56 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 # define MALLOCFAIL "Malloc fail"
 
-# define TEXTLOADFAIL "Could not load texture"
+# define TEXTLOADFAIL "Could not load at least 1 texture"
 # define BADTXTPATH "Bad filepath, loading up of texture failed"
-# define NOTSQUARE "XPM image not square shaped"
+# define NOTSQUARE "at least one XPM texture not square shaped"
 
 # define CANTOPEN "Error opening *.cub file"
 # define CANTCLOSE "Error closing *.cub file"
@@ -44,6 +44,10 @@
 
 # define LEAKYMAP "Map not walled off"
 # define AIRPOCKETS "Map contains unreachable areas"
+# define UNRENDERABLE "Map contains unrenderable tiles, this doesn't work: " \
+"11111" \
+"10 01" \
+"11111"
 
 # define NOPL "Player position and orientation not specified"
 # define TOOMANYPL "Conflicting player positions and orientations"

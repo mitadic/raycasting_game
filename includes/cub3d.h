@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/07 13:58:59 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/09 16:41:56 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,7 @@ typedef struct s_text
 	though map->vals will need malloc, map itself needs not be a pointer */
 typedef struct s_data
 {
-	t_map		
-	map;
+	t_map		map;
 	t_pl_pos	pl_pos;
 	t_key_state	key_state;
 	t_rays		*rays;

@@ -6,12 +6,17 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:29 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:03:33 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/09 14:36:11 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+/* Inside the loop, do 3 things:
+	1. check if there's a field with 0, i.e. unflooded (== AIRPOCKETS)
+	1. check if there's W(ater) in the very edgewalls (== LEAKYMAP)
+	2. check if there's W(ater) touching ' ' (== UNRENDERABLE)
+*/
 static int	scan_for_dry_fields(t_data *data, char **map)
 {
 	int y;
@@ -26,15 +31,21 @@ static int	scan_for_dry_fields(t_data *data, char **map)
 			if (map[x][y] == '0')
 				return (error(AIRPOCKETS, KO));
 			if ((y == 0 || y == data->map.max_y - 1 || \
-					x== 0 || x == data->map.max_x - 1) && \
-					map[x][y] == 'W')
+					x== 0 || x == data->map.max_x - 1) \
+					&& !ft_strchr(" 1", map[x][y]))
 				return (error(LEAKYMAP, KO));
+			if (map[x][y] == 'W' && (\
+				(x > 1 && !ft_strchr("W1", map[x - 1][y])) || \
+				(y > 1 && !ft_strchr("W1", map[x][y - 1])) || \
+				(x < data->map.max_x - 1 && !ft_strchr("W1", map[x + 1][y])) || \
+				(y < data->map.max_y - 1 && !ft_strchr("W1", map[x][y + 1]))))
+				return (error(UNRENDERABLE, KO));
 		}
 	}
 	return (OK);
 }
 
-/* recursive Paint fill tool, NESW */
+/* recursive Paint fill tool, NESW: fill '0' with 'W'(ater) */
 static void	flood_fields(t_data *data, char **map, int x, int y)
 {
 	if (map[x][y] == '0')

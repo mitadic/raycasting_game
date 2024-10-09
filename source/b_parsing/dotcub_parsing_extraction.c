@@ -66,6 +66,24 @@ static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 	return (OK);
 }
 
+void	print_map(t_data *data)
+{
+	int	y;
+	int	x;
+
+	y = -1;
+	printf("max_x: %d, max_y: %d b4 printing\n", data->map.max_x, data->map.max_y);
+	while (++y < data->map.max_y)
+	{
+		x = -1;
+		while (++x < data->map.max_x)
+		{
+			printf("%c", data->map.vals[x][y]);
+		}
+		printf("\n");
+	}
+}
+
 /* Finish extracting txt and rgbs first, then move on to the map */
 int	extract_dotcub_values(t_data *data, int fd)
 {
@@ -80,5 +98,6 @@ int	extract_dotcub_values(t_data *data, int fd)
 		finish_reading_the_file(line, fd);
 		return (KO);
 	}
+	print_map(data);
 	return (OK);
 }
