@@ -19,9 +19,6 @@ int    extract_single_texture_or_rgb(t_data *data, char *line)
 	int		qc_flag;
 
 	trimmed = ft_strtrim(line, WHITESPACES);
-	// printf("len: %li, line: %strimmed: %s", ft_strlen(line), line, trimmed);
-	// if (!trimmed)
-	// 	return (error("malloc fail while extracting single txt/rgb", KO));
 	if (trimmed[0] == 0)
 		qc_flag = OK;
 	else if (!ft_strncmp(trimmed, "C ", 2))
@@ -37,10 +34,7 @@ int    extract_single_texture_or_rgb(t_data *data, char *line)
 	else if (!ft_strncmp(trimmed, "WE ", 3))
         qc_flag = extract_texture(data, trimmed, 'W');
 	else
-	{
 		qc_flag = (error(BADSPEC, KO));
-		printf("Unexpected specification in *.cub file, len: %ld, line: %s\n", ft_strlen(trimmed), trimmed);
-	}
 	free(trimmed);
 	return (qc_flag);
 }
