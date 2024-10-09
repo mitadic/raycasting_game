@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/08 16:01:49 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:03:33 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../minilibx-linux/mlx_int.h"
 # include "errors.h"
 # include "color_codes.h"
+# include "signal.h"
 
 // **** Settings_start
 

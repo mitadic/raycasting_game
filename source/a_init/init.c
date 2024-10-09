@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/20 13:20:05 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:39:50 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,11 @@ int	init(t_data *data, char *map_filename)
 			malloc_for_map_vals(data) != OK || init_rays(data) != OK ||\
 			init_textures(data, map_filename) != OK)
 		return (KO);
+	if(BONUS)
+	{
+		data->minimap.img = NULL;
+		// data->img_buff.width = SCREEN_W;
+		// data->img_buff.height = SCREEN_H;
+	}
 	return (OK);
 }

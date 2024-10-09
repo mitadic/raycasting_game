@@ -67,18 +67,23 @@ int	is_time_to_render(t_data *data)
 	}
 	return (BOOL_NO);
 }
-void clear_image_buffer(t_img_buff *buffer) 
+void clear_image_buffer(t_img_buff *buffer, t_data *data) 
 {
-    // Assuming minimap is initialized correctly
-    if (buffer == NULL) return; // Prevent null dereference
+	int i = 0;
+    // assuming minimap is initialized correctly
+    if (buffer == NULL) return; // pprevent null dereference
 
+
+(void)data;
     int total_pixels = buffer->width * buffer->height;
     unsigned int *data_ptr = (unsigned int *)buffer;
 
-    for (int i = 0; i < total_pixels; i++) 
+    while (i < total_pixels) 
     {
         data_ptr[i] = 0xFFFFFF; // Clear to white or any color you want for empty space
+		i++;
     }
+	
 }
 
 // the core repeat logic of prg runtime, called forth by mlx_loop_hook() 
@@ -96,7 +101,8 @@ int continuous_rendering(void *param)
     if (data->key_state.right) rotate_right(data);
 
     // clear  image buffer
-    clear_image_buffer(&data->img_buff);
+    //clear_image_buffer(&data->img_buff, data);
+
     math(data);
     // draw  main game to the image buffer
     draw_columns(data);

@@ -6,13 +6,12 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/08 17:42:21 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:23:57 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-#define MINIMAP_SIZE 180 // Size of the minimap
 #define SCALE_FACTOR 10
 #define WALL_COLOR 0x669966 // Color for walls (greenish)
 #define EMPTY_COLOR 0x11111 // Color for empty space (black)
@@ -153,12 +152,19 @@ void draw_minimap_on_image(t_data *data, t_minimap *minimap)
 
 void initialize_minimap(t_data *data)
 {
-	
-	data->minimap.img = mlx_new_image(data->mlx, MINIMAP_SIZE, MINIMAP_SIZE);
+	if (BONUS) 
+	{
+    	if (data->minimap.img != NULL) 
+		{
+       	 	mlx_destroy_image(data->mlx, data->minimap.img);
+        	data->minimap.img = NULL;
+    	}
+	}
+	data->minimap.img = mlx_new_image(data->mlx, data->map.max_x * SCALE_FACTOR, data->map.max_y * SCALE_FACTOR);
     data->minimap.data = mlx_get_data_addr(data->minimap.img, &data->minimap.bpp,
             &data->minimap.size_line, &data->minimap.endian);
-    data->minimap.width = MINIMAP_SIZE;
-    data->minimap.height = MINIMAP_SIZE;
+    data->minimap.width = data->map.max_x *SCALE_FACTOR;
+    data->minimap.height = data->map.max_y * SCALE_FACTOR;
 	
 }
 

@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamin <jamin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:58:50 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/19 20:22:31 by jamin            ###   ########.fr       */
+/*   Updated: 2024/10/09 13:16:43 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+
 int	main(int argc, char **argv)
 {
-
 	t_data  data;
+
 
 	if (argc != 2)
 		return (error(PRINTUSAGE, 1));
