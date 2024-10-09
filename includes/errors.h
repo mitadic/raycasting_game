@@ -57,6 +57,7 @@
 "11111  11111\n" \
 "10 01  1000 \n" \
 "11111  11111"
+# define DIRTYBOTTOM "Artefacts found beyond map's southern end"
 
 # define NOPL "Player position and orientation not specified"
 # define TOOMANYPL "Conflicting player positions and orientations"

@@ -35,7 +35,7 @@ static int	extract_map_values(t_data *data, int fd, char **line)
 		if (y > 0 && *line && (*line)[0] == '\n')
 			map_end_flag = BOOL_YES;
 		if (map_end_flag && *line && (*line)[0] != '\n')
-			return (error("map after map", KO));
+			return (error(DIRTYBOTTOM, KO));
 	}
 	return (OK);
 }
@@ -47,7 +47,7 @@ static int	is_empty_line(char *line)
 	return (BOOL_NO);
 }
 
-/* Continue rotation while missing txt/rgb, or line == '\n' */
+/* Continue rotation while not all txt+rgb complete, or line == '\n' */
 static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 {
 	char	*minus_the_endline;
