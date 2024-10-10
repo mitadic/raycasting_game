@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_protocol.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:45 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/10 13:11:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:31:56 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ void purge(t_data *data)
 		mlx_destroy_image(data->mlx, data->img_buff.img);
 		data->img_buff.img = NULL; // Nullify after freeing to avoid double free
 	}
-/* 	if(BONUS && data->minimap.img != NULL)
+	if(BONUS && data->minimap.img != NULL)
 	{
 		mlx_destroy_image(data->mlx, data->minimap.img);
 		data->minimap.img = NULL;
-	} */
-
+	}
+	
 	i = -1;
 	while (++i < 4)
 	{

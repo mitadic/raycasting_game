@@ -56,8 +56,8 @@ $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT
 	-lXext -lX11 -lm -lz -o $(NAME)
 
 init_submodules:
-	git submodule init
-	git submodule update
+# git submodule init
+# git submodule update
 
 $(LIBFT):
 	make -C $(LIBFTD) all
