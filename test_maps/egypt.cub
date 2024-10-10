@@ -1,12 +1,15 @@
-NO ./textures/dirt_n.xpm
-EA ./textures/dirt_e.xpm
-SO ./textures/dirt_s.xpm
-WE ./textures/dirt_w.xpm
-C 20,20,80
-F 20,80,2
+F 88,1,2
+
+WE ./textures/tile13.xpm
+C 255,33,22
 
 
-  11111
+NO ./textures/tile10.xpm 
+
+SO ./textures/tile12.xpm
+EA ./textures/tile11.xpm
+
+  111111
   10001
   11101
     101
@@ -17,11 +20,7 @@ F 20,80,2
 101110100001
 101000000001
 101010100001
-101110100001
+101110100011
 101110100001
 111000100001
 111111111111
-
-
-
-

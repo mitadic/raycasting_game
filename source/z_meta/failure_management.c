@@ -19,6 +19,13 @@ protocols lends us control over when we're printing an error and returning
 vs. printing an error, freeing and exiting, vs. just freeing and exiting.
 */
 
+/* The void returnable */
+void    void_error(char* err_msg)
+{
+    printf("Error:\n");
+	printf("%s\n", err_msg);
+}
+
 /* print err_msg and return the passthrough return_value. Space-saving */
 int error(char* err_msg, int return_value)
 {

@@ -22,6 +22,10 @@ static void    free_map_vals(t_data *data)
 	while (++x < data->map.max_x)
 		free(data->map.vals[x]);
 	free(data->map.vals);
+	free(data->map.no);
+	free(data->map.ea);
+	free(data->map.so);
+	free(data->map.we);
 }
 
 /* void    purge(t_data *data)

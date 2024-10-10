@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:58:50 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/10 14:41:33 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:07:10 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (error(PRINTUSAGE, 1));
-	if (init(&data, argv[1]) != OK || validate_map(&data, argv[1]) != OK)
+	if (init(&data, argv[1]) != OK || parse_dotcub(&data, argv[1]) != OK)
 		bail(&data, 2);
 	go_mlxing(&data); // makes call to math(data) for all rays
 	purge(&data);
