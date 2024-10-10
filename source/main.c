@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:58:50 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/09 13:16:43 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:41:33 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	main(int argc, char **argv)
 {
 	t_data  data;
-
 
 	if (argc != 2)
 		return (error(PRINTUSAGE, 1));

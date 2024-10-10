@@ -1,5 +1,56 @@
 #include "../../includes/cub3d.h"
 
+int handle_mouse_scroll_up(int button, int x, int y, void *param)
+{
+    t_data *data = (t_data *)param; // Cast to your data structure
+	
+	// printf("x is: %i\n", x);
+	// printf("y is: %i\n", y);
+	(void)x;
+	(void)y;
+	
+
+    if (!data)
+    {
+        printf("data uninitialized\n");
+        return (1);
+    }
+
+    printf("angle degree in handler function: %f\n", data->pl_pos.player_angle_degree);
+
+    // Handle mouse scroll up
+    if (button == 4) // Assuming button 4 is for scroll up
+    {
+        rotate_left(data);
+    }
+
+    return (0);
+}
+int handle_mouse_scroll_down(int button, int x, int y, void *param)
+{
+    t_data *data = (t_data *)param; // Cast to your data structure
+
+	// printf("x is: %i\n", x);
+	// printf("y is: %i\n", y);
+
+	(void)x;
+	(void)y;
+    if (!data)
+    {
+        printf("data uninitialized\n");
+        return (1);
+    }
+
+    //printf("angle degree in handler function: %f\n", data->pl_pos.player_angle_degree);
+
+    // Handle mouse scroll down
+    if (button == 5) // Assuming button 4 is for scroll up
+    {
+        rotate_right(data);
+    }
+
+    return (0);
+}
 int	handle_keypress(int keycode, void *param)
 {
 	t_data	*data;
@@ -15,6 +66,7 @@ int	handle_keypress(int keycode, void *param)
 	else if (keycode == KEY_D) data->key_state.d = 1;
 	else if (keycode == KEY_LEFT) data->key_state.left = 1;
 	else if (keycode == KEY_RIGHT) data->key_state.right = 1;
+
 	// printf("key pressed is %i\n", keycode);
 	return (0);
 }
@@ -32,6 +84,7 @@ int	handle_keyrelease(int keycode, void *param)
 	else if (keycode == KEY_D) data->key_state.d = 0;
 	else if (keycode == KEY_LEFT) data->key_state.left = 0;
 	else if (keycode == KEY_RIGHT) data->key_state.right = 0;
+
 	return (0);
 }
 
@@ -99,7 +152,7 @@ int continuous_rendering(void *param)
     if (data->key_state.d) move_right(data);
     if (data->key_state.left) rotate_left(data);
     if (data->key_state.right) rotate_right(data);
-
+	
     // clear  image buffer
     //clear_image_buffer(&data->img_buff, data);
 
@@ -124,6 +177,9 @@ int continuous_rendering(void *param)
     return (0);
 }
 
+
+
+
 // mlx_init happens earlier, because needed to load the textures
 void	go_mlxing(t_data *data)
 {
@@ -134,9 +190,21 @@ void	go_mlxing(t_data *data)
 	data->img_buff.addr = mlx_get_data_addr(data->img_buff.img, &data->img_buff.bits_per_pixel, \
 		&data->img_buff.line_length, &data->img_buff.endian);
     // FAST PUT PIXELS TO IMG BUFFER HERE
+	
+
     mlx_hook(data->win, 2, 1L << 0, handle_keypress, data); // Key press (mov, Esc...)
 	mlx_hook(data->win, 3, 1L << 1, handle_keyrelease, data);  // Key release event
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
+	
+	//mlx_mouse_hook(data->win, handle_mouse_scroll, (void *)data);
+	if (BONUS)
+	{
+			//printf("angle degree in bonus: %f\n", data->pl_pos.player_angle_degree);
+		  // mlx_hook(data->win, 6, 1L << 3, handle_mouse_scroll, data);
+	mlx_hook(data->win, 4, 1L << 2, handle_mouse_scroll_up, data); // Mouse wheel up
+	mlx_hook(data->win, 5, 1L << 3,handle_mouse_scroll_down, data); 
+	}
+     
 	// Register the continuous rendering loop
     mlx_loop_hook(data->mlx, continuous_rendering, data);
 	// Start the MLX event loop

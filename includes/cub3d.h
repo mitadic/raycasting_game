@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/09 13:03:33 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:04:17 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@
 #define KEY_D		100
 #define KEY_LEFT	65361
 #define KEY_RIGHT	65363
+#define SCROLL_UP   4
+#define SCROLL_DOWN 5
 
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map
@@ -91,6 +93,7 @@ typedef struct s_key_state
 	int	d;
 	int	left;
 	int	right;
+
 }	t_key_state;
 
 /* Player position expressed as a 2D vector */

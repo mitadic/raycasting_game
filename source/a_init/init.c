@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/09 12:39:50 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:21:51 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,12 @@ int	init(t_data *data, char *map_filename)
 {
 	data->map.max_x = 0;
 	data->map.max_y = 0;
-	// data->map.vals = NULL;
+	data->map.vals = NULL;
+	data->win = NULL;
+	data->mlx = NULL;
+
+data->pl_pos.player_angle_degree = 0.0; // Initialize player angle
+
 	init_key_states(data);
 	data->time.last_render.tv_sec = 0;
 	if (set_max_vector_values(data, map_filename) != OK || \
@@ -90,8 +95,6 @@ int	init(t_data *data, char *map_filename)
 	if(BONUS)
 	{
 		data->minimap.img = NULL;
-		// data->img_buff.width = SCREEN_W;
-		// data->img_buff.height = SCREEN_H;
 	}
 	return (OK);
 }
