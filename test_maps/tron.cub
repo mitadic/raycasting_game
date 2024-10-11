@@ -1,9 +1,9 @@
 F 0,0,0
 C 0,0,0
 
-NO ./textures/tron0_64.xpm
+NO ./textures/tron1_128.xpm
 EA ./textures/tron1_128.xpm
-SO ./textures/tron22_128.xpm
+SO ./textures/tron3_128.xpm
 WE ./textures/tron3_128.xpm
 
   11111
