@@ -58,6 +58,5 @@ int	set_max_vector_values(t_data *data, char *map_filename)
 		return (error(CANTCLOSE, KO));
 	if (data->map.max_x < 3 || data->map.max_y < 3)
 		return (error(MAPTOOTINY, KO));
-	printf("max_x: %d, max_y: %d\n", data->map.max_x, data->map.max_y);
 	return (OK);
 }
