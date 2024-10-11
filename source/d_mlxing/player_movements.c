@@ -1,4 +1,6 @@
 #include "../../includes/cub3d.h"
+
+
 #define WALL '1'
 #define PLAYER_RADIUS 0.1 // Small radius for the player to avoid "corner sticking"
 #define COLLISION_BUFFER 0.2 //can be modified
