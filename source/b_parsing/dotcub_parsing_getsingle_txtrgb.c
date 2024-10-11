@@ -11,7 +11,7 @@
     1. nothing (for newline)
     2. fetch RGB (for C, F)
     3. fetch texture (for NO, EA, SO, WE)
-    4. complain (else)
+    4. complain (else), though currently this also catches malloc fail of trim
 Each scenario leaves <trimmed> freed below, nobody touches <line> */
 int    extract_single_texture_or_rgb(t_data *data, char *line)
 {
@@ -19,7 +19,7 @@ int    extract_single_texture_or_rgb(t_data *data, char *line)
 	int		qc_flag;
 
 	trimmed = ft_strtrim(line, WHITESPACES);
-	if (trimmed[0] == 0)
+	if (trimmed && trimmed[0] == 0)
 		qc_flag = OK;
 	else if (!ft_strncmp(trimmed, "C ", 2))
         qc_flag = extract_rgb(data, trimmed, 'C');

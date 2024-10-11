@@ -57,8 +57,8 @@ static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 		is_empty_line(*line))
 	{
 		minus_the_endline = ft_strtrim(*line, "\n");
-		// if (!minus_the_endline)
-		// 	return (error(MALLOCFAIL, KO));
+		if (!minus_the_endline)
+			return (error(MALLOCFAIL, KO));
 		if (extract_single_texture_or_rgb(data, minus_the_endline) != OK)
 		{
 			free(minus_the_endline);
