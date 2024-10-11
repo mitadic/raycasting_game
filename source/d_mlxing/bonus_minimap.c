@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/11 12:47:59 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:31:56 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,11 @@ void draw_minimap_on_image(t_data *data, t_minimap *minimap)
 }
 
 
-void initialize_minimap(t_data *data)
+ void initialize_minimap(t_data *data)
 {
+	int minimap_width;
+	int minimap_height;
+
 	if (BONUS_ENABLED) 
 	{
     	if (data->minimap.img != NULL) 
@@ -160,13 +163,45 @@ void initialize_minimap(t_data *data)
         	data->minimap.img = NULL;
     	}
 	}
-	data->minimap.img = mlx_new_image(data->mlx, data->map.max_x * SCALE_FACTOR, data->map.max_y * SCALE_FACTOR);
+
+	//capping size of minimap if necessary
+	if(data->map.max_x * SCALE_FACTOR > 200)
+	{
+		data->minimap.width = 200;
+	}
+	else
+	{
+		data->minimap.width = data->map.max_x * SCALE_FACTOR;
+	}
+
+if(data->map.max_y * SCALE_FACTOR > 200)
+	{
+		data->minimap.height = 200;
+	}
+	else
+	{
+		data->minimap.height = data->map.max_y * SCALE_FACTOR;
+	}
+
+	data->minimap.img = mlx_new_image(data->mlx,  data->minimap.width, data->minimap.height);
     data->minimap.data = mlx_get_data_addr(data->minimap.img, &data->minimap.bpp,
             &data->minimap.size_line, &data->minimap.endian);
-    data->minimap.width = data->map.max_x *SCALE_FACTOR;
-    data->minimap.height = data->map.max_y * SCALE_FACTOR;
-	
-}
+   	// data->minimap.width = data->map.max_x *SCALE_FACTOR;
+    // data->minimap.height = data->map.max_y * SCALE_FACTOR;
 
-//don't forget to add at the end:
-///extra rule for BONUS in MAKEfile needed!!!!
+
+    //  to maintain proper scaling even if the minimap is capped
+  /*   float width_scale = (float)data->minimap.width / (float)(data->map.max_x * SCALE_FACTOR);
+    float height_scale = (float)data->minimap.height / (float)(data->map.max_y * SCALE_FACTOR);
+
+	
+    //data->minimap.scale = (width_scale < height_scale) ? width_scale : height_scale;
+	if(width_scale < height_scale)
+	{
+		data->minimap.scale = width_scale;
+	}
+	else
+	{
+		data->minimap.scale = height_scale;
+	} */
+}

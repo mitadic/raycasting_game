@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/11 12:05:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:53:02 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define SCREEN_W 800
 # define SCREEN_H 600
 # define PLAY_FPS 30
+# define MINIMAP_MAX_W 200
+# define MINIMAP_MAX_H 200
 
 // **** Settings_end
 
@@ -195,6 +197,7 @@ typedef struct s_minimap
     int     endian;     // Endian (0 for little endian, 1 for big endian)
     int     width;
     int     height;
+	float	scale;
 } t_minimap;
 
 /* Encapsulating other structs as abstractions / groups
