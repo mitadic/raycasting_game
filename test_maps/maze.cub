@@ -2,6 +2,7 @@ NO ./textures/dirt_n.xpm
 EA ./textures/dirt_e.xpm
 SO ./textures/dirt_s.xpm
 WE ./textures/dirt_w.xpm
+
 C 20,20,80
 F 20,80,2
 
@@ -20,8 +21,5 @@ F 20,80,2
 101110100001
 101110100001
 111000100001
-111111111111
-
-
-
+111111111111 
 

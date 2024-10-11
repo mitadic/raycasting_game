@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/09 13:23:57 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:47:59 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void draw_minimap_on_image(t_data *data, t_minimap *minimap)
 
 void initialize_minimap(t_data *data)
 {
-	if (BONUS) 
+	if (BONUS_ENABLED) 
 	{
     	if (data->minimap.img != NULL) 
 		{

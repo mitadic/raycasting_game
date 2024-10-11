@@ -160,7 +160,7 @@ int continuous_rendering(void *param)
     // draw  main game to the image buffer
     draw_columns(data);
     // If BONUS is enabled, draw the minimap
-    if (BONUS)
+    if (BONUS_ENABLED)
     {
         initialize_minimap(data);
         draw_minimap_on_image(data, &data->minimap); 
@@ -169,7 +169,7 @@ int continuous_rendering(void *param)
     mlx_put_image_to_window(data->mlx, data->win, data->img_buff.img, 0, 0);
 
     // put minimap on top of it
-    if (BONUS)
+    if (BONUS_ENABLED)
     {
         mlx_put_image_to_window(data->mlx, data->win, data->minimap.img, 10, 10); // display minimap at (10,10)
     }
@@ -197,7 +197,7 @@ void	go_mlxing(t_data *data)
 	mlx_hook(data->win, 17, 1L << 3, close_x, (void *)data);
 	
 	//mlx_mouse_hook(data->win, handle_mouse_scroll, (void *)data);
-	if (BONUS)
+	if (BONUS_ENABLED)
 	{
 			//printf("angle degree in bonus: %f\n", data->pl_pos.player_angle_degree);
 		  // mlx_hook(data->win, 6, 1L << 3, handle_mouse_scroll, data);

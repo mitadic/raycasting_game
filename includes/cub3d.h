@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/10 15:07:03 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:05:28 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@
 // **** Settings_end
 
 
-///BONUS
-#ifndef BONUS
-#define BONUS 1
+#ifdef BONUS
+#define BONUS_ENABLED 1
+#else
+#define BONUS_ENABLED 0
 #endif
 
 # define LEGAL_CHARS " 10NESW"
@@ -265,8 +266,8 @@ char	**generate_bogus_map(void);
 // D
 // go_mlxing.c
 void	go_mlxing(t_data *data);
-void initialize_minimap(t_data *data);
-void		draw_minimap_on_image(t_data *data, t_minimap *minimap);
+void 	initialize_minimap(t_data *data);
+void	draw_minimap_on_image(t_data *data, t_minimap *minimap);
 
 // player_movements.c
 void	move_forward(t_data *data);

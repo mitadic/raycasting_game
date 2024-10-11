@@ -13,7 +13,7 @@ META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
 LIBMLXD 	= ./minilibx-linux/
-
+BONUS_MODE  = 0
 SRC = 		main.c \
 			$(INIT)init.c \
 			$(INIT)set_max_vector_values.c \
@@ -33,22 +33,26 @@ SRC = 		main.c \
 			$(MATH)raycasting.c \
 			$(MATH)raycasting2.c \
 			$(MLXING)go_mlxing.c \
-			$(MLXING)bonus_minimap.c \
 			$(MLXING)player_movements.c \
 			$(TEXTURES)draw_columns.c
+
 
 HFILES =	cub3d.h \
 			errors.h \
 			color_codes.h
 
+ifeq ($(BONUS_MODE), 1)
+	SRC += $(MLXING)bonus_minimap.c
+endif
+
 all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
 
 # delete this once submodule minilibx thoroughly tested:
-# $(LIBMLXD):
-# 	@if [ ! -d $(LIBMLXD) ]; then \
-# 		echo "Cloning minilibx-linux..."; \
-# 		git clone git@github.com:42Paris/minilibx-linux.git $(LIBMLXD); \
-# 	fi
+$(LIBMLXD):
+	@if [ ! -d $(LIBMLXD) ]; then \
+		echo "Cloning minilibx-linux..."; \
+		git clone git@github.com:42Paris/minilibx-linux.git $(LIBMLXD); \
+	fi
 
 $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
@@ -56,14 +60,17 @@ $(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT
 	-lXext -lX11 -lm -lz -o $(NAME)
 
 init_submodules:
-	git submodule init
-	git submodule update
+# git submodule init
+# git submodule update
 
 $(LIBFT):
 	make -C $(LIBFTD) all
 
 $(MLX):
 	make -C $(LIBMLXD) all
+
+bonus:$(MLX)  # Ensure MinilibX is built when running make bonus
+	@$(MAKE) BONUS_MODE=1 CFLAGS="-DBONUS=1" all
 
 # libminilibx Makefile (and its 'configure') do not
 # handle *.o files, it's essentially fclean only 
@@ -79,4 +86,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all re clean fclean init_submodules
+.PHONY: all re clean fclean bonus init_submodules

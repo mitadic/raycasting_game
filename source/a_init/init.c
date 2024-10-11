@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/10 15:08:40 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:07:05 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	init(t_data *data, char *map_filename)
 	if (set_max_vector_values(data, map_filename) != OK || \
 			malloc_for_map_vals(data) != OK || init_rays(data) != OK)
 		return (KO);
-	if(BONUS)
+	if(BONUS_ENABLED)
 	{
 		data->minimap.img = NULL;
 	}
