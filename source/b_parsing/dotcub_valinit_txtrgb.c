@@ -14,7 +14,6 @@ int val_init_rgbs(t_data *data)
 	i = -1;
 	while (++i < 3)
 	{
-		printf("ceiling[%d]: %d, floor[%d]: %d\n", i, data->map.ceiling[i], i, data->map.floor[i]);
 		if (data->map.ceiling[i] < 0 || data->map.floor[i] < 0 || \
 			data->map.ceiling[i] > 255 || data->map.floor[i] > 255)
 			return (error("bad RGB values", KO));
