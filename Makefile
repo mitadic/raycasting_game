@@ -13,7 +13,6 @@ META		= z_meta/
 INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
 LIBMLXD 	= ./minilibx-linux/
-BONUS_MODE  = 0
 SRC = 		main.c \
 			$(INIT)init.c \
 			$(INIT)set_max_vector_values.c \
@@ -36,40 +35,55 @@ SRC = 		main.c \
 			$(MLXING)player_movements.c \
 			$(TEXTURES)draw_columns.c
 
+NC		:=	\033[0m
+GOLD	:=	\033[0;33m
+CYAN	:=	\033[0;36m
+
+ifdef BONUS_MODE
+	SRC += $(MLXING)bonus_minimap.c
+	NAME = cub3d_bonus
+endif
 
 HFILES =	cub3d.h \
 			errors.h \
 			color_codes.h
 
-ifeq ($(BONUS_MODE), 1)
-	SRC += $(MLXING)bonus_minimap.c
-endif
+# needed to move LIBFT and MLX dependences from NAME: to all: to prevent relinking
+# due to @if. One other side-effect of @if: no "Nothing to be done" printout.
+all: $(LIBFT) $(MLX) $(NAME)
 
-all: init_submodules $(LIBFT) $(LIBMLXD) $(NAME)
-
-# delete this once submodule minilibx thoroughly tested:
-$(LIBMLXD):
-	@if [ ! -d $(LIBMLXD) ]; then \
-		echo "Cloning minilibx-linux..."; \
-		git clone git@github.com:42Paris/minilibx-linux.git $(LIBMLXD); \
-	fi
-
-$(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES)) $(LIBFT) $(MLX)
+$(NAME): $(addprefix $(SRCD),$(SRC)) $(addprefix $(INCLUDESD),$(HFILES))
 	$(CC) $(CFLAGS) $(addprefix $(SRCD),$(SRC)) -I$(INCLUDESD) -L$(LIBFTD) -lft -o $(NAME) -lm \
 	-L$(LIBMLXD) -lmlx -L/usr/lib -Iminilibx-linux \
 	-lXext -lX11 -lm -lz -o $(NAME)
 
-init_submodules:
-# git submodule init
-# git submodule update
-
 $(LIBFT):
-	make -C $(LIBFTD) all
+	@if [ ! -d ./libft ]; then \
+		echo -e "Cloning $(CYAN)libft$(NC)..."; \
+		git clone git@github.com:MilosTadic01/my_library.git libft; \
+		make -sC $(LIBFTD) all; \
+		echo -e "-----\n$(CYAN)Libft$(NC) cloning done!\n-----"; \
+	fi
+	@if [ ! -f ./libft/libft.a ]; then \
+		echo -e "Making $(CYAN)libft$(NC)..."; \
+		make -sC $(LIBFTD) all; \
+		echo -e "-----\n$(CYAN)Libft$(NC) making done!\n-----"; \
+	fi
 
 $(MLX):
-	make -C $(LIBMLXD) all
+	@if [ ! -d ./minilibx-linux ]; then \
+		echo -e "Cloning $(CYAN)minilibx-linux$(NC)..."; \
+		git clone git@github.com:MilosTadic01/minilibx-linux.git; \
+		echo -e "-----\n$(CYAN)Minilibx$(NC) done!\n-----"; \
+	fi
+	@if [ ! -f ./minilibx-linux/libmlx_Linux.a ]; then \
+		echo -e "Making $(CYAN)Minilibx$(NC)..."; \
+		make -sC $(LIBMLXD) all; \
+		echo -e "-----\n$(CYAN)Minilibx$(NC) making done!\n-----"; \
+	fi
 
-bonus:$(MLX)  # Ensure MinilibX is built when running make bonus
+# We're not sure why ar fails for MLX in recursive MAKE call, better to depend
+bonus: $(LIBFT) $(MLX) 
 	@$(MAKE) BONUS_MODE=1 CFLAGS="-DBONUS=1" all
 
 # libminilibx Makefile (and its 'configure') do not
@@ -83,7 +97,10 @@ fclean:	clean
 	rm -f $(NAME)
 	make -C $(LIBFTD) fclean
 	make -C $(LIBMLXD) clean
+	@if [ -f cub3d_bonus ]; then \
+		rm cub3d_bonus; \
+	fi
 
 re:	fclean all
 
-.PHONY: all re clean fclean bonus init_submodules
+.PHONY: all re clean fclean bonus

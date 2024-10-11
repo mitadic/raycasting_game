@@ -36,9 +36,9 @@
 
 
 #ifdef BONUS
-#define BONUS_ENABLED 1
-#else
-#define BONUS_ENABLED 0
+# define BONUS_ENABLED 1
+# else
+# define BONUS_ENABLED 0
 #endif
 
 # define LEGAL_CHARS " 10NESW"

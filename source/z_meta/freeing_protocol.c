@@ -58,7 +58,7 @@ void purge(t_data *data)
 		mlx_destroy_image(data->mlx, data->img_buff.img);
 		data->img_buff.img = NULL; // Nullify after freeing to avoid double free
 	}
-	if(BONUS && data->minimap.img != NULL)
+	if(BONUS_ENABLED && data->minimap.img != NULL)
 	{
 		mlx_destroy_image(data->mlx, data->minimap.img);
 		data->minimap.img = NULL;

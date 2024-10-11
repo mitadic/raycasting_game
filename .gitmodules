@@ -1,8 +1,0 @@
-[submodule "libft"]
-	path = libft
-	url = git@github.com:MilosTadic01/my_library.git
-	branch = main
-
-[submodule "minilibx-linux"]
-	path = minilibx-linux
-	url = git@github.com:MilosTadic01/minilibx-linux.git
