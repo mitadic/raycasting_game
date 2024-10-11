@@ -1,15 +1,12 @@
-F 0,0,50
+F 0,0,0
 C 0,0,0
 
-WE ./textures/tile13.xpm
+NO ./textures/tron0_64.xpm
+EA ./textures/tron1_128.xpm
+SO ./textures/tron22_128.xpm
+WE ./textures/tron3_128.xpm
 
-
-NO ./textures/tile10.xpm 
-
-SO ./textures/tile12.xpm
-EA ./textures/tile11.xpm
-
-  111111
+  11111
   10001
   11101
     101
