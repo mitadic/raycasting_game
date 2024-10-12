@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:22:07 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/12 17:21:00 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/12 17:27:23 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	adjust_for_fisheye_effect(t_pl_pos player, t_rays *ray,
 	else
 		ray->distance = distance_without_correction * correction_factor;
 }
-/*
-we loop as long as there is no wall found
-if(ray->sideDist_X < ray->sideDist_Y) //ray is rather horizontal
-if(ray->sideDist_Y < ray->sideDist_X) //ray is rather vertical
-to avoid skipping over hitpoints we need to substract deltaDist to get to the last hitpoint
-*/
 
+/* we loop as long as there is no wall found */
+/* if(ray->sideDist_X < ray->sideDist_Y) //ray is rather horizontal */
+/* if(ray->sideDist_Y < ray->sideDist_X) //ray is rather vertical */
+/* to avoid skipping over hitpoints we need to 
+substract deltaDist to get to the last hitpoint */
 void	raycasting_loop(t_rays *ray, t_pl_pos player, char **map)
 {
 	int		hit;
@@ -143,9 +142,9 @@ int	calculate_vector(t_rays *ray)
 	return (OK);
 }
 
-/*	
-1. we determine the direction the player is looking (value is relative to the x-axis) in radian
-	2. calculate the ray angle for each ray (angle relative to player_angle) */
+/* 1. we determine the direction the player is looking */
+/* (value is relative to the x-axis) in radian */
+/* 	2. calculate the ray angle for each ray (angle relative to player_angle) */
 int	math(t_data *data)
 {
 	int	i;
