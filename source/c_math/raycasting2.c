@@ -6,14 +6,13 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:59:08 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/20 18:33:20 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/12 17:22:04 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include <math.h>
 #include <stdio.h>
-
 
 void calculate_wall_height(t_rays *ray)
 {
