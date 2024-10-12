@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/12 02:42:56 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/12 10:04:38 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,8 @@ void	rotate_right(t_data *data);
 // E
 // draw_columns.c
 void	draw_columns(t_data *data);
+// utils.c
+float	get_the_float_component_of_hitp(t_data *data, int x);
 
 // Z
 // failure_management.c
@@ -293,7 +295,7 @@ void	draw_columns(t_data *data);
 		pass the data to free, the msg to print, the exit code. It will exit();
 
 In summary:
-	- error() prints and returns, doesn't free
+	- error() prints and returns KO / OK, doesn't free
 	- bail() frees and exits
 	- error_and_bail() prints, frees and exits
 */
@@ -304,6 +306,6 @@ void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
 void	purge(t_data *data);
-void handle_sigint(int sig);
+void 	handle_sigint(int sig);
 
 #endif

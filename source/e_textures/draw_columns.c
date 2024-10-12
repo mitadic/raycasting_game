@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_columns.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 10:02:03 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 10:08:37 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 /*
@@ -18,26 +30,11 @@ void	fst_mlx_pixel_put(t_data *data, int x, int y, uint32_t color)
 	}
 }
 
-// determines the float to use to scale & determine the x idx of texture
-float	get_the_float_component_of_hitp(t_data *data, int x)
-{
-	double	hp_float_x;
-	double	hp_float_y;
-	double	throwaway_int_x;
-	double	throwaway_int_y;
-
-	hp_float_x = modf(data->rays[x].hit_x, &throwaway_int_x);
-	hp_float_y = modf(data->rays[x].hit_y, &throwaway_int_y);
-	if (data->rays[x].side == VERTICAL)
-		return (hp_float_x);
-	return (hp_float_y);
-}
-
 /*
 tx_x: scaled hitpoint value vs. texture image width to determine the tx px row
 tx_y: scaled current image row px vs. tx_img->height to find tx_px[tx_x][tx_y]
 */
-int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
+int	determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 {
 	int		tx_x;
 	int		tx_y;
@@ -49,7 +46,7 @@ int		determine_wrp_texture_pixel(t_data *data, int x, int y, t_img *tx_img)
 		return (WHITE);
 	tx_x = (int)(get_the_float_component_of_hitp(data, x) * tx_img->width);
 	if (tx_x >= tx_img->width)
-    	tx_x = tx_img->width - 1;
+		tx_x = tx_img->width - 1;
 	tx_y = (int)((y - wall_start) / data->rays[x].wall_height * tx_img->height);
 	if (tx_y >= tx_img->height)
 		tx_y = tx_img->height - 1;
@@ -91,19 +88,20 @@ void	draw_a_column(t_data *data, int x, int wall_h)
 	wall_start = (SCREEN_H - wall_h) / 2;
 	wall_end = wall_start + wall_h - 1;
 	y = 0;
-	while (y < wall_start) // ceiling
+	while (y < wall_start)
 	{
 		fst_mlx_pixel_put(data, x, y, data->map.rgb_c);
 		y++;
 	}
-	draw_wall_texture_pxs(data, x, &y); // texture
+	draw_wall_texture_pxs(data, x, &y);
 	while (y > wall_end && y < SCREEN_H)
 	{
-		fst_mlx_pixel_put(data, x, y, data->map.rgb_f); // floor
+		fst_mlx_pixel_put(data, x, y, data->map.rgb_f);
 		y++;
 	}
 }
 
+/* Loop through n of rays to draw a column for each */
 void	draw_columns(t_data *data)
 {
 	int	ray_idx;
