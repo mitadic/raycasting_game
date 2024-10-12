@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/11 18:31:56 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:46:59 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,47 +38,6 @@ void draw_square(t_minimap *minimap, int x, int y, int size, int color)
         }
     }
 }
-
-
-
-
-/* void draw_square(void *mlx_ptr, void *win_ptr, int x, int y, int size, int color) {
-    int i;
-    int j;
-
-	i = 0;
-	j = 0;
-    // Loop through each pixel in the square
-    while (i < size) 
-	{
-        while (j < size) 
-		{
-            // Draw the pixel at the calculated position
-            mlx_pixel_put(mlx_ptr, win_ptr, x + i, y + j, color);
-			j++;
-        }
-		i++;
-    }
-} */
-
-
-/* 
-void clear_minimap_area(t_data *data)
-{
-	int x = 0;
-	int y = 0;
-
-	while(y < data->map.max_y)
-	{
-		x = 0;
-		while(x < data->map.max_x)
-		{
-			mlx_pixel_put(data->mlx, data->win, x, y, EMPTY_COLOR);
-			x++;
-		}
-		y++;
-	}
-} */
 
 void draw_player_dot(t_data *data, t_minimap *minimap, int player_mini_x, int player_mini_y)
 {
@@ -150,6 +109,7 @@ void draw_minimap_on_image(t_data *data, t_minimap *minimap)
 }
 
 
+
  void initialize_minimap(t_data *data)
 {
 	int minimap_width;
@@ -174,7 +134,7 @@ void draw_minimap_on_image(t_data *data, t_minimap *minimap)
 		data->minimap.width = data->map.max_x * SCALE_FACTOR;
 	}
 
-if(data->map.max_y * SCALE_FACTOR > 200)
+	if(data->map.max_y * SCALE_FACTOR > 200)
 	{
 		data->minimap.height = 200;
 	}
@@ -184,24 +144,12 @@ if(data->map.max_y * SCALE_FACTOR > 200)
 	}
 
 	data->minimap.img = mlx_new_image(data->mlx,  data->minimap.width, data->minimap.height);
-    data->minimap.data = mlx_get_data_addr(data->minimap.img, &data->minimap.bpp,
+   data->minimap.data = mlx_get_data_addr(data->minimap.img, &data->minimap.bpp,
             &data->minimap.size_line, &data->minimap.endian);
    	// data->minimap.width = data->map.max_x *SCALE_FACTOR;
     // data->minimap.height = data->map.max_y * SCALE_FACTOR;
 
-
-    //  to maintain proper scaling even if the minimap is capped
-  /*   float width_scale = (float)data->minimap.width / (float)(data->map.max_x * SCALE_FACTOR);
-    float height_scale = (float)data->minimap.height / (float)(data->map.max_y * SCALE_FACTOR);
-
-	
-    //data->minimap.scale = (width_scale < height_scale) ? width_scale : height_scale;
-	if(width_scale < height_scale)
-	{
-		data->minimap.scale = width_scale;
-	}
-	else
-	{
-		data->minimap.scale = height_scale;
-	} */
 }
+
+
+
