@@ -33,7 +33,8 @@ SRC = 		main.c \
 			$(MATH)raycasting2.c \
 			$(MLXING)go_mlxing.c \
 			$(MLXING)player_movements.c \
-			$(TEXTURES)draw_columns.c
+			$(TEXTURES)draw_columns.c \
+			$(TEXTURES)utils.c
 
 NC		:=	\033[0m
 GOLD	:=	\033[0;33m
