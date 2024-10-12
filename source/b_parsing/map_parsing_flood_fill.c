@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:03:27 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/12 02:10:42 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ manipulate data, for the purposes of flood_sim(), using <map_copy> as a copy.
 */
 int	flood_fill(t_data *data)
 {
-	char    **map_copy;
+	char	**map_copy;
 
 	if (copy_map(data, &map_copy) != OK)
 		return (KO);

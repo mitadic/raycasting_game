@@ -1,10 +1,20 @@
-111
-101
-101
-101
-101
-101
-101
-101
-1N1
-111
+NO ./textures/dirt_n.xpm
+EA ./textures/dirt_e.xpm
+SO ./textures/dirt_s.xpm
+WE ./textures/dirt_w.xpm
+
+F 20,80,2
+C 20,20,80
+
+
+ 1111
+ 1001
+ 1001
+ 1001
+ 1001
+ 1011
+ 101
+ 1011
+ 1N11
+ 1111
+  11

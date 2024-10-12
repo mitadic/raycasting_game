@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dotcub_parsing_txt.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 01:21:47 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 02:21:17 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 /* strtrimmed (deep-copied) texture path gets stored, or freed if conflicts */
@@ -27,7 +39,7 @@ static int	store_one_txt(t_data *data, char *txt_str, char where)
 int	extract_texture(t_data *data, char *line, char where)
 {
 	char	**identifier_and_txt;
-	char    *txt_str;
+	char	*txt_str;
 	int		qc_flag;
 
 	identifier_and_txt = ft_split(line, ' ');

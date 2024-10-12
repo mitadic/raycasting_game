@@ -1,5 +1,5 @@
-F 0,0,0
-C 0,0,0
+F 0,0,10
+C 0,0,10
 
 NO ./textures/tronlined0_128.xpm
 EA ./textures/tronlined1_128.xpm

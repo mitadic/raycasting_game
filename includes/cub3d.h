@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/11 12:05:28 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/12 02:42:56 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ int		extract_rgb(t_data *data, char *line, char where);
 int		extract_texture(t_data *data, char *line, char where);
 // dotcub_valinit_map.c
 int		val_init_map(t_data *data);
+void	print_map(t_data *data);
 // dotcub_valinit_txtrgb.c
 int		val_init_txtrgb(t_data *data);
 // map_parsing_flood_fill.c

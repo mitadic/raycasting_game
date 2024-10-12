@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:29 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/09 14:36:11 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/12 02:13:58 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 	2. check if there's W(ater) touching ' ' (== UNRENDERABLE) */
 static int	scan_for_dry_fields(t_data *data, char **map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = -1;
 	while (++y < data->map.max_y)
@@ -30,7 +30,7 @@ static int	scan_for_dry_fields(t_data *data, char **map)
 			if (map[x][y] == '0')
 				return (error(AIRPOCKETS, KO));
 			if ((y == 0 || y == data->map.max_y - 1 || \
-					x== 0 || x == data->map.max_x - 1) \
+					x == 0 || x == data->map.max_x - 1) \
 					&& !ft_strchr(" 1", map[x][y]))
 				return (error(LEAKYMAP, KO));
 			if (map[x][y] == 'W' && (\
@@ -64,8 +64,8 @@ At this point, we know that at the very least the player field exist,
 which at this stage has been replaced with a '0' so we will find sth. */
 static void	get_start_coords(t_data *data, char **map_copy, int (*coords)[2])
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = -1;
 	while (++y < data->map.max_y)
@@ -86,7 +86,7 @@ static void	get_start_coords(t_data *data, char **map_copy, int (*coords)[2])
 /* get_start_coords and flood_fields guarranteed to be yielding. Go. */
 int	flood_simulation(t_data *data, char **map_copy)
 {
-	int start_coords[2];
+	int	start_coords[2];
 
 	get_start_coords(data, map_copy, &start_coords);
 	flood_fields(data, map_copy, start_coords[0], start_coords[1]);
