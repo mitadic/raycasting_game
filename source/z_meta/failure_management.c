@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   failure_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:35 by mitadic           #+#    #+#             */
-/*   Updated: 2024/09/05 14:02:43 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/13 20:19:14 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,32 @@ vs. printing an error, freeing and exiting, vs. just freeing and exiting.
 */
 
 /* The void returnable */
-void    void_error(char* err_msg)
+void	void_error(char *err_msg)
 {
-    printf("Error:\n");
+	printf("Error:\n");
 	printf("%s\n", err_msg);
 }
 
 /* print err_msg and return the passthrough return_value. Space-saving */
-int error(char* err_msg, int return_value)
+int	error(char *err_msg, int return_value)
 {
-    printf("Error:\n");
+	printf("Error:\n");
 	printf("%s\n", err_msg);
 	return (return_value);
 }
 
 /* purge(), then exit(); */
-void    bail(t_data *data, int exit_status)
+void	bail(t_data *data, int exit_status)
 {
-    purge(data);
-    exit(exit_status);
+	purge(data);
+	exit(exit_status);
 }
 
 /* print err_msg, then purge(), then exit(); */
-void    error_and_bail(t_data *data, char *err_msg, int exit_status)
+void	error_and_bail(t_data *data, char *err_msg, int exit_status)
 {
-    printf("Error:\n");
-    printf("%s\n", err_msg);
-    purge(data);
-    exit(exit_status);
+	printf("Error:\n");
+	printf("%s\n", err_msg);
+	purge(data);
+	exit(exit_status);
 }

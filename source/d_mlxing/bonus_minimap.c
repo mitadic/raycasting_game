@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/12 16:46:59 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:17:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,140 +16,107 @@
 #define WALL_COLOR 0x669966 // Color for walls (greenish)
 #define EMPTY_COLOR 0x11111 // Color for empty space (black)
 
-void put_pixel_to_image(t_minimap *minimap, int x, int y, int color)
+void	locate_player_on_minimap(t_data *data)
 {
-    if (x >= 0 && x < minimap->width && y >= 0 && y < minimap->height)
-    {
-        int pixel_offset = (y * minimap->size_line) + (x * (minimap->bpp / 8));
-        *(unsigned int *)(minimap->data + pixel_offset) = color;
-    }
+	data->minimap.player_mini_x = data->pl_pos.x * SCALE_FACTOR;
+	data->minimap.player_mini_y = data->pl_pos.y * SCALE_FACTOR;
 }
 
-// Function to draw a square on the minimap image buffer
-void draw_square(t_minimap *minimap, int x, int y, int size, int color)
+int	is_within_bounds(t_minimap *minimap, int x, int y)
 {
-    int i, j;
-
-    for (i = 0; i < size; i++)
-    {
-        for (j = 0; j < size; j++)
-        {
-            put_pixel_to_image(minimap, x + i, y + j, color);
-        }
-    }
+	if (minimap->player_mini_x + x >= 0 
+		&& minimap->player_mini_x + x < minimap->width 
+		&& minimap->player_mini_y + y >= 0 
+		&& minimap->player_mini_y + y < minimap->height)
+	{
+		return (1);
+	}
+	else
+	{
+		return (-1);
+	}
 }
 
-void draw_player_dot(t_data *data, t_minimap *minimap, int player_mini_x, int player_mini_y)
+void	draw_player_dot(t_data *data, t_minimap *minimap)
 {
-	(void)data;
-	int dot_size = 4;
-	int y = -dot_size / 2;
-	int x = -dot_size / 2;
-	while(y <= dot_size/2)
-	{ 
-		x = -dot_size / 2; // Reset x for each row of the dot
-		while(x <= dot_size/2)
+	int	dot_size;
+	int	y;
+	int	x;
+
+	dot_size = 4;
+	y = -dot_size / 2;
+	x = -dot_size / 2;
+	locate_player_on_minimap(data);
+	while (y <= dot_size / 2)
+	{
+		x = -dot_size / 2;
+		while (x <= dot_size / 2)
 		{
-
-            // Ensure the pixel is within the minimap bounds before drawing
-            if (player_mini_x + x >= 0 && player_mini_x + x < minimap->width && player_mini_y + y >= 0 && player_mini_y + y < minimap->height) 
-            {
-                put_pixel_to_image(minimap, player_mini_x + x, player_mini_y + y, 0xFF7C0);
-            }
+			if (is_within_bounds(minimap, x, y) == 1) 
+			{
+				put_pixel_to_image(minimap, data->minimap.player_mini_x 
+					+ x, data->minimap.player_mini_y + y, 0xFF7C0);
+			}
 			x++;
 		}
 		y++;
 	}
 }
-void draw_minimap_on_image(t_data *data, t_minimap *minimap) 
-{
-    int mini_x, mini_y;
 
-    // clear the minimap area before drawing // not implemented yet
-  // clear_minimap_area(data);
+/*  scale map coordinates to minimap coordinates */
+/*  draw the player's position on the minimap (as a dot) */
+void	draw_minimap_on_image(t_data *data, t_minimap *minimap)
+{
+	int	mini_x;
+	int	mini_y;
+	int	x;
+	int	y;
 
 	(void)minimap;
-	int x = 0; // to iterate through the actual map
-	int y = 0;
-
-
-	while(y < data->map.max_y) 
+	x = 0;
+	y = 0;
+	while (y < data->map.max_y) 
 	{
 		x = 0;
-        while (x < data->map.max_x) 
+		while (x < data->map.max_x) 
 		{
-            // scale map coordinates to minimap coordinates
-            mini_x = x * SCALE_FACTOR;
-            mini_y = y * SCALE_FACTOR;
-
-            // check for wall or empty space
-            if (data->map.vals[x][y] == '1') 
-			{
-                // draw wall on minimap
-                draw_square(minimap, mini_x, mini_y, SCALE_FACTOR, WALL_COLOR);
-            } 
-			else 
-			{
-                // draw empty space on minimap
-                draw_square(minimap, mini_x, mini_y, SCALE_FACTOR, EMPTY_COLOR);
-            }
+			mini_x = x * SCALE_FACTOR;
+			mini_y = y * SCALE_FACTOR;
+			if (data->map.vals[x][y] == '1') 
+				draw_square(minimap, mini_x, mini_y, WALL_COLOR);
+			else
+				draw_square(minimap, mini_x, mini_y, EMPTY_COLOR);
 			x++;
-        }
+		}
 		y++;
-    }
-
-    // draw the player's position on the minimap (as a dot)
-
-    int player_mini_x = data->pl_pos.x * SCALE_FACTOR;
-    int player_mini_y = data->pl_pos.y * SCALE_FACTOR;
-	draw_player_dot(data, minimap, player_mini_x, player_mini_y);
-    //put_pixel_to_image(&data->minimap, player_mini_x, player_mini_y, 0xFF7C00); 
-
-   // draw_square(minimap, (int)data->pl_pos.x * SCALE_FACTOR, data->pl_pos.y * SCALE_FACTOR, SCALE_FACTOR, 0xff7c00); //orange square for player
+	}
+	draw_player_dot(data, minimap);
 }
 
-
-
- void initialize_minimap(t_data *data)
+void	initialize_minimap(t_data *data)
 {
-	int minimap_width;
-	int minimap_height;
+	int	minimap_width;
+	int	minimap_height;
 
 	if (BONUS_ENABLED) 
 	{
-    	if (data->minimap.img != NULL) 
+		if (data->minimap.img != NULL)
 		{
-       	 	mlx_destroy_image(data->mlx, data->minimap.img);
-        	data->minimap.img = NULL;
-    	}
+			mlx_destroy_image(data->mlx, data->minimap.img);
+			data->minimap.img = NULL;
+		}
 	}
-
-	//capping size of minimap if necessary
-	if(data->map.max_x * SCALE_FACTOR > 200)
-	{
+	if (data->map.max_x * SCALE_FACTOR > 200)
 		data->minimap.width = 200;
-	}
 	else
-	{
 		data->minimap.width = data->map.max_x * SCALE_FACTOR;
-	}
-
-	if(data->map.max_y * SCALE_FACTOR > 200)
-	{
+	if (data->map.max_y * SCALE_FACTOR > 200)
 		data->minimap.height = 200;
-	}
 	else
-	{
 		data->minimap.height = data->map.max_y * SCALE_FACTOR;
-	}
-
-	data->minimap.img = mlx_new_image(data->mlx,  data->minimap.width, data->minimap.height);
-   data->minimap.data = mlx_get_data_addr(data->minimap.img, &data->minimap.bpp,
-            &data->minimap.size_line, &data->minimap.endian);
-   	// data->minimap.width = data->map.max_x *SCALE_FACTOR;
-    // data->minimap.height = data->map.max_y * SCALE_FACTOR;
-
+	data->minimap.img = mlx_new_image(data->mlx, data->minimap.width,
+			data->minimap.height);
+	data->minimap.data = mlx_get_data_addr(data->minimap.img,
+			&data->minimap.bpp,
+			&data->minimap.size_line, &data->minimap.endian);
 }
-
-
-

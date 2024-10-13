@@ -31,8 +31,11 @@ SRC = 		main.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
 			$(MATH)raycasting2.c \
+			$(MATH)raycasting3.c \
 			$(MLXING)go_mlxing.c \
+			$(MLXING)key_handling.c \
 			$(MLXING)player_movements.c \
+			$(MLXING)player_movements2.c \
 			$(TEXTURES)draw_columns.c
 
 NC		:=	\033[0m
@@ -41,6 +44,8 @@ CYAN	:=	\033[0;36m
 
 ifdef BONUS_MODE
 	SRC += $(MLXING)bonus_minimap.c
+	SRC += $(MLXING)bonus_minimap2.c
+	SRC += $(MLXING)bonus_mouse_rotation.c
 	NAME = cub3d_bonus
 endif
 

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/11 16:53:02 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:11:58 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,15 @@ typedef struct s_pl_pos
 	char		direction;
 	float		player_angle_degree;
 	float		player_angle_radian;
+	float		buffered_x_left;
+	float		buffered_x_right;
+	float		buffered_y_up;
+	float		buffered_y_down;
+	int			map_x_left;
+	int			map_x_right;
+	int			map_y_up;
+	int			map_y_down;
+	
 }	t_pl_pos;
 
 /* Rays, will need (screen width) number of those */
@@ -186,19 +195,23 @@ typedef struct s_text
 
 
 
-
-
+/*bpp: bits per pixel*/
+/*size_line: line size(number of bytes per row)*/
+/*endian (0 for little endian, 1 for big endian)*/
 typedef struct s_minimap
 {
-    void    *img;
-    char    *data;
-    int     bpp;        // Bits per pixel
-    int     size_line;  // Line size (number of bytes per row)
-    int     endian;     // Endian (0 for little endian, 1 for big endian)
-    int     width;
-    int     height;
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	int		width;
+	int		height;
 	float	scale;
-} t_minimap;
+	int		player_mini_x;
+	int		player_mini_y;
+
+}	t_minimap;
 
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
@@ -254,12 +267,18 @@ int		is_textures_and_rgbs_extr_complete(t_data *data);
 
 // C
 // raycasting.c
-int math(t_data *data);
+int		math(t_data *data);
 
 //raycasting2.c
-void	calculate_hit_point(t_rays *ray, t_pl_pos player);
+void	calculate_intermediate_hitpoint(t_rays *ray, t_pl_pos player);
 void	calculate_wall_height(t_rays *ray);
 void	assign_wall_color(t_rays *ray);
+void	adjust_for_fisheye_effect(t_pl_pos player, t_rays *ray, 
+			float distance_without_correction);
+void	raycasting_loop(t_rays *ray, t_pl_pos player, char **map);
+
+//raycasting3.c
+void	calculate_distance(t_rays *ray, t_pl_pos player, char **map);
 
 // helper_functions.c
 float	ft_abs(float number);
@@ -269,9 +288,21 @@ char	**generate_bogus_map(void);
 // D
 // go_mlxing.c
 void	go_mlxing(t_data *data);
-void 	initialize_minimap(t_data *data);
-void	draw_minimap_on_image(t_data *data, t_minimap *minimap);
 
+//key_handling.c
+int		handle_keypress(int keycode, void *param);
+int		handle_keyrelease(int keycode, void *param);
+int		close_x(t_data *data);
+//bonus_minimap.c
+void	initialize_minimap(t_data *data);
+void	draw_minimap_on_image(t_data *data, t_minimap *minimap);
+//bonus_minimap2.c
+void	draw_square(t_minimap *minimap, int x, int y, int color);
+void	put_pixel_to_image(t_minimap *minimap, int x, int y, int color);
+
+//bonus_mouse_rotation.c
+int		handle_mouse_scroll_up(int button, int x, int y, void *param);
+int		handle_mouse_scroll_down(int button, int x, int y, void *param);
 // player_movements.c
 void	move_forward(t_data *data);
 void	move_backward(t_data *data);
@@ -280,6 +311,9 @@ void	move_right(t_data *data);
 void	rotate_left(t_data *data);
 void	rotate_right(t_data *data);
 
+//player_movements2.c
+void	rotate_right(t_data *data);
+void	rotate_left(t_data *data);
 // E
 // draw_columns.c
 void	draw_columns(t_data *data);
