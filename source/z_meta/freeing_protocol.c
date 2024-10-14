@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_protocol.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:45 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/13 20:19:44 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:41:15 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_images(t_data *data)
 /* Destroy display and free MLX instance */
 void	free_mlx_and_window(t_data *data)
 {
-	if (data->rays)
+	if ((*data).rays)
 	{
 		free(data->rays);
 		data->rays = NULL;

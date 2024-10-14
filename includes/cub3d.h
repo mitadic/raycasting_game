@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 19:30:11 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/14 20:42:33 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,35 +227,61 @@ typedef struct s_data
 }	t_data;
 
 // A
+
 // init.c
+
 int		init(t_data *data, char *map_filename);
-// init_textures.c
-int		init_textures(t_data *data);
+
+// init_nullify.c
+
+void	init_nullify(t_data *data);
+
 // set_max_vector_values.c
+
 int		set_max_vector_values(t_data *data, char *map_filename);
 
 // B
+
 // dotcub_parsing_control.c
+
 int		parse_dotcub(t_data *data, char *map_filename);
+
 // dotcub_parsing_extraction.c
+
 int		extract_dotcub_values(t_data *data, int fd);
+
 // dotcub_parsing_getsingle_txtrgb.c
+
 int		extract_single_texture_or_rgb(t_data *data, char *line);
+
 // dotcub_parsing_rgb.c
+
 int		extract_rgb(t_data *data, char *line, char where);
+
 // dotcub_parsing_txt.c
+
 int		extract_texture(t_data *data, char *line, char where);
+
 // dotcub_valinit_map.c
+
 int		val_init_map(t_data *data);
 void	print_map(t_data *data);
+
 // dotcub_valinit_txtrgb.c
+
 int		val_init_txtrgb(t_data *data);
+
 // map_parsing_flood_fill.c
+
 int		flood_fill(t_data *data);
 void	free_map_copy(char **map_copy, int columns_allocated);
+
 // map_parsing_flood_sim.c
+
 int		flood_simulation(t_data *data, char **map_copy);
+
 // utils.c
+
 void	free_strarr(char **strarr);
 int		get_strings_count(char **strarr);
 int		get_char_count(char *str, char c);
@@ -263,44 +289,61 @@ int		atoi_cub3d_rgb(const char *nptr);
 int		is_textures_and_rgbs_extr_complete(t_data *data);
 
 // C
+
 // raycasting.c
+
 int		math(t_data *data);
 
 //raycasting2.c
+
 void	calculate_intermediate_hitpoint(t_rays *ray, t_pl_pos player);
 void	calculate_wall_height(t_rays *ray);
 void	assign_wall_color(t_rays *ray);
-void	adjust_for_fisheye_effect(t_pl_pos player, t_rays *ray, 
+void	adjust_for_fisheye_effect(t_pl_pos player, t_rays *ray,
 			float distance_without_correction);
 void	raycasting_loop(t_rays *ray, t_pl_pos player, char **map);
 
 //raycasting3.c
+
 void	calculate_distance(t_rays *ray, t_pl_pos player, char **map);
 
 // helper_functions.c
+
 float	ft_abs(float number);
+
 // map.c
+
 char	**generate_bogus_map(void);
 
 // D
+
 // go_mlxing.c
+
 void	go_mlxing(t_data *data);
 
 //key_handling.c
+
 int		handle_keypress(int keycode, void *param);
 int		handle_keyrelease(int keycode, void *param);
 int		close_x(t_data *data);
+
 //bonus_minimap.c
+
 void	initialize_minimap(t_data *data);
 void	draw_minimap_on_image(t_data *data, t_minimap *minimap);
+
 //bonus_minimap2.c
+
 void	draw_square(t_minimap *minimap, int x, int y, int color);
 void	put_pixel_to_image(t_minimap *minimap, int x, int y, int color);
 
 //bonus_mouse_rotation.c
+
 int		handle_mouse_scroll_up(int button, int x, int y, void *param);
 int		handle_mouse_scroll_down(int button, int x, int y, void *param);
+
 // player_movements.c
+
 void	move_forward(t_data *data);
 void	move_backward(t_data *data);
 void	move_left(t_data *data);
@@ -309,15 +352,22 @@ void	rotate_left(t_data *data);
 void	rotate_right(t_data *data);
 
 //player_movements2.c
+
 void	rotate_right(t_data *data);
 void	rotate_left(t_data *data);
+
 // E
+
 // draw_columns.c
+
 void	draw_columns(t_data *data);
+
 // utils.c
+
 float	get_the_float_component_of_hitp(t_data *data, int x);
 
 // Z
+
 // failure_management.c
 /*
 	- error() usage:
@@ -332,12 +382,14 @@ In summary:
 	- bail() frees and exits
 	- error_and_bail() prints, frees and exits
 */
+
 void	void_error(char *err_msg);
 int		error(char *err_msg, int return_value);
 void	bail(t_data *data, int exit_status);
 void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
+
 void	purge(t_data *data);
 
 #endif

@@ -14,7 +14,8 @@ INCLUDESD	= ./includes/
 LIBFTD		= ./libft/
 LIBMLXD 	= ./minilibx-linux/
 SRC = 		main.c \
-			$(INIT)init.c \
+			$(INIT)init_control.c \
+			$(INIT)init_nullify.c \
 			$(INIT)set_max_vector_values.c \
 			$(PARSING)dotcub_parsing_control.c \
 			$(PARSING)dotcub_parsing_extraction.c \
