@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 13:08:50 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:55:08 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "../minilibx-linux/mlx.h"
 # include "../minilibx-linux/mlx_int.h"
 # include "errors.h"
-# include "color_codes.h"
 
 // Settings
 # define SCREEN_W 800
@@ -65,6 +64,9 @@
 # define KEY_RIGHT	65363
 # define SCROLL_UP   4
 # define SCROLL_DOWN 5
+
+//colors
+# define WHITE 0x000000
 
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map

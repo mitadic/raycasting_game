@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:00:44 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/14 12:55:26 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:49:32 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_wall(float new_x_pos, float new_y_pos, t_data *data)
 	data->pl_pos.buffered_y_down = new_y_pos + COLLISION_BUFFER;
 	data->pl_pos.map_x_left = (int)data->pl_pos.buffered_x_left;
 	data->pl_pos.map_x_right = (int)data->pl_pos.buffered_x_right;
-	data->pl_pos.map_y_up = (int)data->pl_pos.buffered_y_down;
+	data->pl_pos.map_y_up = (int)data->pl_pos.buffered_y_up;
 	data->pl_pos.map_y_down = (int)data->pl_pos.buffered_y_down;
 	if (data->map.vals[map_x][map_y] == '1' ||
 		data->map.vals[data->pl_pos.map_x_left][map_y] == '1' || 

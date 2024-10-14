@@ -51,8 +51,7 @@ ifdef BONUS_MODE
 endif
 
 HFILES =	cub3d.h \
-			errors.h \
-			color_codes.h
+			errors.h
 
 # needed to move LIBFT and MLX dependences from NAME: to all: to prevent relinking
 # due to @if. One other side-effect of @if: no "Nothing to be done" printout.
