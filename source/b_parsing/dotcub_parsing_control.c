@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:14 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/07 15:52:06 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/12 01:25:42 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	parse_dotcub(t_data *data, char *map_filename)
 		return (KO);
 	if (flood_fill(data) != OK)
 		return (KO);
-	return (OK); 
+	return (OK);
 }

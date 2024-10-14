@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dotcub_parsing_extraction.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 01:19:59 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 02:41:33 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
+/* If error found during reading a line, gotta finish reading */
 void	finish_reading_the_file(char *line, int fd)
 {
 	while (line)
@@ -15,7 +28,7 @@ static int	extract_map_values(t_data *data, int fd, char **line)
 {
 	int	x;
 	int	y;
-	int map_end_flag;
+	int	map_end_flag;
 
 	map_end_flag = BOOL_NO;
 	y = -1;
@@ -71,38 +84,19 @@ static int	extract_textures_and_rgbs(t_data *data, int fd, char **line)
 	return (OK);
 }
 
-// void	print_map(t_data *data)
-// {
-// 	int	y;
-// 	int	x;
-
-// 	y = -1;
-// 	printf("max_x: %d, max_y: %d b4 printing\n", data->map.max_x, data->map.max_y);
-// 	while (++y < data->map.max_y)
-// 	{
-// 		x = -1;
-// 		while (++x < data->map.max_x)
-// 		{
-// 			printf("%c", data->map.vals[x][y]);
-// 		}
-// 		printf("\n");
-// 	}
-// }
-
 /* Finish extracting txt and rgbs first, then move on to the map */
 int	extract_dotcub_values(t_data *data, int fd)
 {
-	char *line;
+	char	*line;
 
 	line = get_next_line(fd);
 	if (!line)
-		return(error(GNLFAIL, KO));
+		return (error(GNLFAIL, KO));
 	if (extract_textures_and_rgbs(data, fd, &line) != OK || \
 				extract_map_values(data, fd, &line) != OK)
 	{
 		finish_reading_the_file(line, fd);
 		return (KO);
 	}
-	// print_map(data);
 	return (OK);
 }

@@ -31,9 +31,13 @@ SRC = 		main.c \
 			$(MATH)helper_functions.c \
 			$(MATH)raycasting.c \
 			$(MATH)raycasting2.c \
+			$(MATH)raycasting3.c \
 			$(MLXING)go_mlxing.c \
+			$(MLXING)key_handling.c \
 			$(MLXING)player_movements.c \
-			$(TEXTURES)draw_columns.c
+			$(MLXING)player_movements2.c \
+			$(TEXTURES)draw_columns.c \
+			$(TEXTURES)utils.c
 
 NC		:=	\033[0m
 GOLD	:=	\033[0;33m
@@ -41,12 +45,13 @@ CYAN	:=	\033[0;36m
 
 ifdef BONUS_MODE
 	SRC += $(MLXING)bonus_minimap.c
+	SRC += $(MLXING)bonus_minimap2.c
+	SRC += $(MLXING)bonus_mouse_rotation.c
 	NAME = cub3d_bonus
 endif
 
 HFILES =	cub3d.h \
-			errors.h \
-			color_codes.h
+			errors.h
 
 # needed to move LIBFT and MLX dependences from NAME: to all: to prevent relinking
 # due to @if. One other side-effect of @if: no "Nothing to be done" printout.

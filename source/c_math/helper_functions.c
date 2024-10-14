@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:24:02 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/09/06 12:03:37 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/12 18:08:15 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <math.h>
 #include <stdio.h>
 
-float ft_abs(float number)
+float	ft_abs(float number)
 {
-	if(number < 0)
+	if (number < 0)
 	{
-		return(-number);
+		return (-number);
 	}
 	else
 	{
-		return(number);
+		return (number);
 	}
 }

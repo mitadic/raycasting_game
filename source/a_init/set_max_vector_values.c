@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_max_vector_values.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 00:46:34 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 01:18:24 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
+/* If first non-space char is [0,1], we've started the map, return YES */
 static int	is_map_start(char *line)
 {
 	int	i;
@@ -28,14 +41,13 @@ static int	set_max_y_and_max_x(t_data *data, int fd)
 	while (line)
 	{
 		if (is_map_start(line))
-			break;
+			break ;
 		free(line);
 		line = get_next_line(fd);
 	}
 	data->map.max_x = ft_strlen(line) - ENDLINE;
 	while (line)
 	{
-		// printf("incrementing max_y for line: %s\n", line);
 		data->map.max_y += 1;
 		if ((int)(ft_strlen(line) - ENDLINE) > data->map.max_x)
 			data->map.max_x = ft_strlen(line) - ENDLINE;
