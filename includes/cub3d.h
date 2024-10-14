@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/13 20:11:58 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:08:50 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,22 @@
 # include "errors.h"
 # include "color_codes.h"
 
-// **** Settings_start
-
+// Settings
 # define SCREEN_W 800
 # define SCREEN_H 600
 # define PLAY_FPS 30
-# define MINIMAP_MAX_W 200
-# define MINIMAP_MAX_H 200
 
-// **** Settings_end
-
-
-#ifdef BONUS
-# define BONUS_ENABLED 1
+# ifdef BONUS
+#  define BONUS_ENABLED 1
 # else
-# define BONUS_ENABLED 0
-#endif
+#  define BONUS_ENABLED 0
+# endif
 
 # define LEGAL_CHARS " 10NESW"
 # define PLAYER_DIRS "NESW"
 # define WHITESPACES " \t\v\f\r"
 # define M_PI           3.14159265358979323846  /* pi */
 # define BOGENMASS 1.047
-# define FOV (M_PI / 3)
 # define ENDLINE 1
 
 # define HORIZONTAL 100
@@ -62,20 +55,16 @@
 # define MICROSEC_PER_S 1000000
 # define MAX_FPS 120
 
-// scale up the speeds as PLAY_FPS is set lower
-# define ROT_SPEED 0.015 * MAX_FPS / PLAY_FPS
-# define MOV_SPEED 0.0125 * MAX_FPS / PLAY_FPS
-
 // Linux key codes
-#define KEY_ESC		65307
-#define KEY_W		119
-#define KEY_A		97
-#define KEY_S		115
-#define KEY_D		100
-#define KEY_LEFT	65361
-#define KEY_RIGHT	65363
-#define SCROLL_UP   4
-#define SCROLL_DOWN 5
+# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
+# define KEY_LEFT	65361
+# define KEY_RIGHT	65363
+# define SCROLL_UP   4
+# define SCROLL_DOWN 5
 
 /*Map file analysis information and internal ds storage*/
 typedef struct s_map
@@ -91,7 +80,7 @@ typedef struct s_map
 	int		max_x;
 	int		max_y;
 	char	**vals;
-} t_map;
+}	t_map;
 
 /* Key statuses (0 or 1) */
 typedef struct s_key_state
@@ -120,7 +109,6 @@ typedef struct s_pl_pos
 	int			map_x_right;
 	int			map_y_up;
 	int			map_y_down;
-	
 }	t_pl_pos;
 
 /* Rays, will need (screen width) number of those */
@@ -129,15 +117,15 @@ typedef struct s_rays
 	float	dir_x;
 	float	dir_y;
 	float	ray_angle;
-	float 	deltaDist_X;
-	float	deltaDist_Y;
-	float	sideDist_X;
-	float	sideDist_Y;
-	float 	distance;
-	int		mapX;
-	int		mapY;
-	int		stepX;
-	int		stepY;
+	float	delta_dist_x;
+	float	delta_dist_y;
+	float	side_dist_x;
+	float	side_dist_y;
+	float	distance;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
 	float	wall_height;
 	char	wall_to_the;
 	int		side;
@@ -163,7 +151,7 @@ typedef struct s_img_buff
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int 	width;
+	int		width;
 	int		height;
 }			t_img_buff;
 
@@ -193,8 +181,6 @@ typedef struct s_text
 	int		size_y;
 }	t_text;
 
-
-
 /*bpp: bits per pixel*/
 /*size_line: line size(number of bytes per row)*/
 /*endian (0 for little endian, 1 for big endian)*/
@@ -210,8 +196,16 @@ typedef struct s_minimap
 	float	scale;
 	int		player_mini_x;
 	int		player_mini_y;
-
+	int		minimap_max_w;
+	int		minimap_max_h;
 }	t_minimap;
+
+typedef struct s_settings
+{
+	float	fov;
+	float	rot_speed;
+	float	mov_speed;
+}	t_settings;
 
 /* Encapsulating other structs as abstractions / groups
 	though map->vals will need malloc, map itself needs not be a pointer */
@@ -227,8 +221,8 @@ typedef struct s_data
 	t_fps		time;
 	t_text		txt[4];
 	t_minimap	minimap;
+	t_settings	settings;
 }	t_data;
-
 
 // A
 // init.c
@@ -251,6 +245,7 @@ int		extract_rgb(t_data *data, char *line, char where);
 int		extract_texture(t_data *data, char *line, char where);
 // dotcub_valinit_map.c
 int		val_init_map(t_data *data);
+void	print_map(t_data *data);
 // dotcub_valinit_txtrgb.c
 int		val_init_txtrgb(t_data *data);
 // map_parsing_flood_fill.c
@@ -317,6 +312,8 @@ void	rotate_left(t_data *data);
 // E
 // draw_columns.c
 void	draw_columns(t_data *data);
+// utils.c
+float	get_the_float_component_of_hitp(t_data *data, int x);
 
 // Z
 // failure_management.c
@@ -329,17 +326,17 @@ void	draw_columns(t_data *data);
 		pass the data to free, the msg to print, the exit code. It will exit();
 
 In summary:
-	- error() prints and returns, doesn't free
+	- error() prints and returns KO / OK, doesn't free
 	- bail() frees and exits
 	- error_and_bail() prints, frees and exits
 */
-void    void_error(char* err_msg);
-int		error(char* err_msg, int return_value);
-void    bail(t_data *data, int exit_status);
+void	void_error(char *err_msg);
+int		error(char *err_msg, int return_value);
+void	bail(t_data *data, int exit_status);
 void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
 void	purge(t_data *data);
-void handle_sigint(int sig);
+void	handle_sigint(int sig);
 
 #endif

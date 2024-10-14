@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dotcub_parsing_getsingle_txtrgb.c                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 01:19:53 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 02:23:19 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 // static int	is_empty_line(char *line)
@@ -8,12 +20,19 @@
 // }
 
 /* Do one of these things with the trimmed line, then go back to control:
+<<<<<<< HEAD
     1. nothing (for newline)
     2. fetch RGB (for C, F)
     3. fetch texture (for NO, EA, SO, WE)
     4. complain (else), though currently this also catches malloc fail of trim
+=======
+	1. nothing (for newline)
+	2. fetch RGB (for C, F)
+	3. fetch texture (for NO, EA, SO, WE)
+	4. complain (else)
+>>>>>>> norm_milos
 Each scenario leaves <trimmed> freed below, nobody touches <line> */
-int    extract_single_texture_or_rgb(t_data *data, char *line)
+int	extract_single_texture_or_rgb(t_data *data, char *line)
 {
 	char	*trimmed;
 	int		qc_flag;
@@ -22,17 +41,17 @@ int    extract_single_texture_or_rgb(t_data *data, char *line)
 	if (trimmed && trimmed[0] == 0)
 		qc_flag = OK;
 	else if (!ft_strncmp(trimmed, "C ", 2))
-        qc_flag = extract_rgb(data, trimmed, 'C');
+		qc_flag = extract_rgb(data, trimmed, 'C');
 	else if (!ft_strncmp(trimmed, "F ", 2))
-        qc_flag = extract_rgb(data, trimmed, 'F');
+		qc_flag = extract_rgb(data, trimmed, 'F');
 	else if (!ft_strncmp(trimmed, "NO ", 3))
-        qc_flag = extract_texture(data, trimmed, 'N');
-    else if (!ft_strncmp(trimmed, "EA ", 3))
-        qc_flag = extract_texture(data, trimmed, 'E');
+		qc_flag = extract_texture(data, trimmed, 'N');
+	else if (!ft_strncmp(trimmed, "EA ", 3))
+		qc_flag = extract_texture(data, trimmed, 'E');
 	else if (!ft_strncmp(trimmed, "SO ", 3))
-        qc_flag = extract_texture(data, trimmed, 'S');
+		qc_flag = extract_texture(data, trimmed, 'S');
 	else if (!ft_strncmp(trimmed, "WE ", 3))
-        qc_flag = extract_texture(data, trimmed, 'W');
+		qc_flag = extract_texture(data, trimmed, 'W');
 	else
 		qc_flag = (error(BADSPEC, KO));
 	free(trimmed);

@@ -6,12 +6,11 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:58:50 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/13 17:47:10 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:30:22 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
 
 int	main(int argc, char **argv)
 {

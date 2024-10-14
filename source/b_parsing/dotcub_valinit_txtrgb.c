@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dotcub_valinit_txtrgb.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 01:22:00 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 02:09:06 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 static int	pack_rgb(int red, int green, int blue)
 {
-    return ((red << 16) | (green << 8) | blue) & 0xFFFFFF;
+	return (((red << 16) | (green << 8) | blue) & 0xFFFFFF);
 }
 
-int val_init_rgbs(t_data *data)
+int	val_init_rgbs(t_data *data)
 {
-    int	i;
+	int	i;
 
 	if (!is_textures_and_rgbs_extr_complete(data))
 		return (KO);
@@ -25,7 +37,7 @@ int val_init_rgbs(t_data *data)
 	return (OK);
 }
 
-int verify_texture_paths(t_data *data)
+int	verify_texture_paths(t_data *data)
 {
 	int	i;
 	int	fd[4];

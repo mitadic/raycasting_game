@@ -36,7 +36,8 @@ SRC = 		main.c \
 			$(MLXING)key_handling.c \
 			$(MLXING)player_movements.c \
 			$(MLXING)player_movements2.c \
-			$(TEXTURES)draw_columns.c
+			$(TEXTURES)draw_columns.c \
+			$(TEXTURES)utils.c
 
 NC		:=	\033[0m
 GOLD	:=	\033[0;33m

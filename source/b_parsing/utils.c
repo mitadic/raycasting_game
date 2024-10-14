@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 01:22:14 by mitadic           #+#    #+#             */
+/*   Updated: 2024/10/12 02:23:44 by mitadic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 void	free_strarr(char **strarr)
@@ -11,7 +23,7 @@ void	free_strarr(char **strarr)
 	free(strarr);
 }
 
-int get_strings_count(char **strarr)
+int	get_strings_count(char **strarr)
 {
 	int	i;
 
@@ -33,7 +45,7 @@ int	get_char_count(char *str, char c)
 		if (str[i] == c)
 			count++;
 	}
-	return count;
+	return (count);
 }
 
 int	atoi_cub3d_rgb(const char *nptr)

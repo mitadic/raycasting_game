@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:00:44 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/13 20:16:32 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:55:26 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	move_forward(t_data *data)
 	float	new_x;
 	float	new_y;
 
-	new_x = data->pl_pos.x + cos(data->pl_pos.player_angle_radian) * MOV_SPEED;
-	new_y = data->pl_pos.y + sin(data->pl_pos.player_angle_radian) * MOV_SPEED;
+	new_x = data->pl_pos.x + cos(data->pl_pos.player_angle_radian) 
+		* data->settings.mov_speed;
+	new_y = data->pl_pos.y + sin(data->pl_pos.player_angle_radian) 
+		* data->settings.mov_speed;
 	if (!is_wall(new_x, data->pl_pos.y, data))
 		data->pl_pos.x = new_x;
 	if (!is_wall(data->pl_pos.x, new_y, data))
@@ -63,8 +65,10 @@ void	move_backward(t_data *data)
 	float	new_x;
 	float	new_y;
 
-	new_x = data->pl_pos.x - cos(data->pl_pos.player_angle_radian) * MOV_SPEED;
-	new_y = data->pl_pos.y - sin(data->pl_pos.player_angle_radian) * MOV_SPEED;
+	new_x = data->pl_pos.x - cos(data->pl_pos.player_angle_radian) 
+		* data->settings.mov_speed;
+	new_y = data->pl_pos.y - sin(data->pl_pos.player_angle_radian) 
+		* data->settings.mov_speed;
 	if (!is_wall(new_x, data->pl_pos.y, data))
 		data->pl_pos.x = new_x;
 	if (!is_wall(data->pl_pos.x, new_y, data))
@@ -77,9 +81,9 @@ void	move_left(t_data *data)
 	float	new_y;
 
 	new_x = data->pl_pos.x - cos(data->pl_pos.player_angle_radian + M_PI / 2)
-		* MOV_SPEED;
+		* data->settings.mov_speed;
 	new_y = data->pl_pos.y - sin(data->pl_pos.player_angle_radian + M_PI / 2)
-		* MOV_SPEED;
+		* data->settings.mov_speed;
 	if (!is_wall(new_x, data->pl_pos.y, data))
 		data->pl_pos.x = new_x;
 	if (!is_wall(data->pl_pos.x, new_y, data))
@@ -92,9 +96,9 @@ void	move_right(t_data *data)
 	float	new_y;
 
 	new_x = data->pl_pos.x + cos(data->pl_pos.player_angle_radian + M_PI / 2)
-		* MOV_SPEED;
+		* data->settings.mov_speed;
 	new_y = data->pl_pos.y + sin(data->pl_pos.player_angle_radian + M_PI / 2)
-		* MOV_SPEED;
+		* data->settings.mov_speed;
 	if (!is_wall(new_x, data->pl_pos.y, data))
 		data->pl_pos.x = new_x;
 	if (!is_wall(data->pl_pos.x, new_y, data))

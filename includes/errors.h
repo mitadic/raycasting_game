@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:11 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/10 14:25:42 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/14 13:02:17 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@
 
 # define LEAKYMAP "Map not walled off"
 # define AIRPOCKETS "Map contains unreachable areas"
-# define UNRENDERABLE "Map contains unrenderable tiles, these don't work: \n" \
-"11111  11111\n" \
-"10 01  1000 \n" \
-"11111  11111"
+# define UNRENDERABLE "Map contains unrenderable tiles, these don't work: \n \
+11111  11111\n \
+10 01  1000 \n \
+11111  11111"
 # define DIRTYBOTTOM "Artefacts found beyond map's southern end"
 
 # define NOPL "Player position and orientation not specified"

@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:33:46 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/13 20:17:11 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:08:11 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ void	initialize_minimap(t_data *data)
 		}
 	}
 	if (data->map.max_x * SCALE_FACTOR > 200)
-		data->minimap.width = 200;
+		data->minimap.width = SCREEN_W / 4;
 	else
 		data->minimap.width = data->map.max_x * SCALE_FACTOR;
 	if (data->map.max_y * SCALE_FACTOR > 200)
-		data->minimap.height = 200;
+		data->minimap.height = SCREEN_H / 3;
 	else
 		data->minimap.height = data->map.max_y * SCALE_FACTOR;
 	data->minimap.img = mlx_new_image(data->mlx, data->minimap.width,

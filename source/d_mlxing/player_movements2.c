@@ -6,7 +6,7 @@
 /*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:10:30 by jasnguye          #+#    #+#             */
-/*   Updated: 2024/10/13 20:18:51 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:52:46 by jasnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /* data->pl_pos.player_angle_degree += 360; // Switch to positive val */
 void	rotate_left(t_data *data)
 {
-	data->pl_pos.player_angle_degree -= ROT_SPEED * 50;
+	data->pl_pos.player_angle_degree -= data->settings.rot_speed * 50;
 	if (data->pl_pos.player_angle_degree < -180)
 		data->pl_pos.player_angle_degree += 360;
 }
@@ -26,7 +26,7 @@ If turned R to W(beyond 179.999 deg)*/
 /*         data->pl_pos.player_angle_degree -= 360; // Switch to negative val */
 void	rotate_right(t_data *data)
 {
-	data->pl_pos.player_angle_degree += ROT_SPEED * 50;
+	data->pl_pos.player_angle_degree += data->settings.rot_speed * 50;
 	if (data->pl_pos.player_angle_degree >= 180)
 		data->pl_pos.player_angle_degree -= 360;
 }
