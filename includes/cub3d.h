@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jasnguye <jasnguye@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 13:55:08 by jasnguye         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:30:11 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,6 +339,5 @@ void	error_and_bail(t_data *data, char *err_msg, int exit_status);
 
 // freeing_protocol.c
 void	purge(t_data *data);
-void	handle_sigint(int sig);
 
 #endif
