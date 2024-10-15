@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 01:22:00 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/12 02:09:06 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/15 01:58:53 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	verify_texture_paths(t_data *data)
 			qc_flag = KO;
 	}
 	if (qc_flag == KO)
-		void_error(BADTXTPATH);
+		put_err_msg(BADTXTPATH);
 	return (qc_flag);
 }
 

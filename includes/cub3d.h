@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 20:42:33 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/15 01:59:09 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,7 +383,7 @@ In summary:
 	- error_and_bail() prints, frees and exits
 */
 
-void	void_error(char *err_msg);
+void	put_err_msg(char *err_msg);
 int		error(char *err_msg, int return_value);
 void	bail(t_data *data, int exit_status);
 void	error_and_bail(t_data *data, char *err_msg, int exit_status);
