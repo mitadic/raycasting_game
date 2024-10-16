@@ -1,0 +1,14 @@
+F 0,0,0
+C 0,0,0
+
+NO ./textures/tronlined0_128.xpm
+EA ./textures/tronlined1_128.xpm
+SO ./textures/tronlined2_128.xpm
+WE ./textures/tronlined3_128.xpm
+
+11
+1N
+
+    111
+    101
+    111
