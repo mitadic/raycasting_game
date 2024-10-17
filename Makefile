@@ -18,7 +18,8 @@ SRC = 		main.c \
 			$(INIT)init_nullify.c \
 			$(INIT)set_max_vector_values.c \
 			$(PARSING)dotcub_parsing_control.c \
-			$(PARSING)dotcub_parsing_extraction.c \
+			$(PARSING)dotcub_parsing_extraction_control.c \
+			$(PARSING)dotcub_parsing_extraction_utils.c \
 			$(PARSING)dotcub_parsing_getsingle_txtrgb.c \
 			$(PARSING)dotcub_parsing_rgb.c \
 			$(PARSING)dotcub_parsing_txt.c \

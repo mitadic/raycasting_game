@@ -246,9 +246,14 @@ int		set_max_vector_values(t_data *data, char *map_filename);
 
 int		parse_dotcub(t_data *data, char *map_filename);
 
-// dotcub_parsing_extraction.c
+// dotcub_parsing_extraction_control.c
 
 int		extract_dotcub_values(t_data *data, int fd);
+
+// dotcub_parsing_extraction_utils.c
+
+void	extract_chars_from_line(t_data *data, int y, char **line);
+int		calculate_line_len_without_final_endline(char *line);
 
 // dotcub_parsing_getsingle_txtrgb.c
 

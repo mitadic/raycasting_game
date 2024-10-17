@@ -137,6 +137,13 @@ def test_illegal_chars3():
     assert valgrind_issue == OK
     assert confirm_runtime_error_reported(stderr_printout) == OK
 
+def test_illegal_chars4():
+    stderr_printout, exit_status = run_valgrind_with_binary(TEST_FILES_BAD + "illegalchars4.cub")
+    valgrind_issue = parse_valgrind_output(stderr_printout)
+    assert exit_status > 0
+    assert valgrind_issue == OK
+    assert confirm_runtime_error_reported(stderr_printout) == OK
+
 def test_leaky():
     stderr_printout, exit_status = run_valgrind_with_binary(TEST_FILES_BAD + "leaky.cub")
     valgrind_issue = parse_valgrind_output(stderr_printout)

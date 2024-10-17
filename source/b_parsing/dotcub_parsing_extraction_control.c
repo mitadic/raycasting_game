@@ -23,10 +23,9 @@ void	finish_reading_the_file(char *line, int fd)
 	close(fd);
 }
 
-/* Captures the case where a line is shorter than max_x, stores ' ' */
+/* Captures the case where a line is shorter than max_x, extracts ' ' */
 static int	extract_map_values(t_data *data, int fd, char **line)
 {
-	int	x;
 	int	y;
 	int	map_end_flag;
 
@@ -35,14 +34,7 @@ static int	extract_map_values(t_data *data, int fd, char **line)
 	while (*line)
 	{
 		y += 1;
-		x = -1;
-		while (++x < data->map.max_x)
-		{
-			if (x < (int)(ft_strlen(*line) - ENDLINE))
-				data->map.vals[x][y] = (*line)[x];
-			else
-				data->map.vals[x][y] = ' ';
-		}
+		extract_chars_from_line(data, y, line);
 		free(*line);
 		*line = get_next_line(fd);
 		if (y > 0 && *line && (*line)[0] == '\n')

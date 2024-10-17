@@ -34,6 +34,7 @@ static int	is_map_start(char *line)
 static int	set_max_y_and_max_x(t_data *data, int fd)
 {
 	char	*line;
+	int		line_len;
 
 	line = get_next_line(fd);
 	if (!line)
@@ -49,8 +50,9 @@ static int	set_max_y_and_max_x(t_data *data, int fd)
 	while (line)
 	{
 		data->map.max_y += 1;
-		if ((int)(ft_strlen(line) - ENDLINE) > data->map.max_x)
-			data->map.max_x = ft_strlen(line) - ENDLINE;
+		line_len = calculate_line_len_without_final_endline(line);
+		if (line_len > data->map.max_x)
+			data->map.max_x = line_len;
 		free(line);
 		line = get_next_line(fd);
 	}
