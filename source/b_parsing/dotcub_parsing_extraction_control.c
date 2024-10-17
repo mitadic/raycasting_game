@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dotcub_parsing_extraction.c                        :+:      :+:    :+:   */
+/*   dotcub_parsing_extraction_control.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 01:19:59 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/12 02:41:33 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:43:33 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static int	extract_map_values(t_data *data, int fd, char **line)
 	while (*line)
 	{
 		y += 1;
-		extract_chars_from_line(data, y, line);
+		if (extract_chars_from_line(data, y, line) != OK)
+			return (error(ILLEGAL, KO));
 		free(*line);
 		*line = get_next_line(fd);
 		if (y > 0 && *line && (*line)[0] == '\n')

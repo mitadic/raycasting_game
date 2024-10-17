@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/15 01:59:09 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:46:09 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ int		extract_dotcub_values(t_data *data, int fd);
 
 // dotcub_parsing_extraction_utils.c
 
-void	extract_chars_from_line(t_data *data, int y, char **line);
+int		extract_chars_from_line(t_data *data, int y, char **line);
 int		calculate_line_len_without_final_endline(char *line);
 
 // dotcub_parsing_getsingle_txtrgb.c

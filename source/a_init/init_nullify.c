@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:19:16 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 20:51:03 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:58:15 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ static void	init_key_states(t_data *data)
 	data->key_state.right = 0;
 }
 
-static void init_mlx(t_data *data)
+static void	init_mlx(t_data *data)
 {
-    data->img_buff.img = NULL;
+	data->img_buff.img = NULL;
 	data->txt[0].img = NULL;
 	data->txt[1].img = NULL;
 	data->txt[2].img = NULL;
 	data->txt[3].img = NULL;
 	data->win = NULL;
 	data->mlx = NULL;
+	if (BONUS_ENABLED)
+		data->minimap.img = NULL;
 }
 
 static void	init_map_struct(t_data *data)
@@ -52,17 +54,17 @@ static void	init_map_struct(t_data *data)
 	}
 }
 
-static void set_rays_to_null(t_data *data)
+static void	set_rays_to_null(t_data *data)
 {
-    data->rays = NULL;
+	data->rays = NULL;
 }
 
 /* Control flow for setting to 'null' (invalid) all that needs setting */
-void    init_nullify(t_data *data)
+void	init_nullify(t_data *data)
 {
-    init_key_states(data);
-    init_map_struct(data);
-    init_mlx(data);
-    set_rays_to_null(data);
-    data->time.last_render.tv_sec = 0;
+	init_key_states(data);
+	init_map_struct(data);
+	init_mlx(data);
+	set_rays_to_null(data);
+	data->time.last_render.tv_sec = 0;
 }
