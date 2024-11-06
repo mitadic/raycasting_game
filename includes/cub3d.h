@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 13:59:22 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/17 15:46:09 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/11/06 21:48:37 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define SCREEN_W 800
 # define SCREEN_H 600
 # define PLAY_FPS 30
+# define ROT_SPEED_FEED 0.015
+# define MOV_SPEED_FEED 0.0125
 
 # ifdef BONUS
 #  define BONUS_ENABLED 1

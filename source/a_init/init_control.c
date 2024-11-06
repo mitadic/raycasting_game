@@ -6,7 +6,7 @@
 /*   By: mitadic <mitadic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:01:25 by mitadic           #+#    #+#             */
-/*   Updated: 2024/10/14 20:43:42 by mitadic          ###   ########.fr       */
+/*   Updated: 2024/11/06 20:19:45 by mitadic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	init_rays(t_data *data)
 static void	init_settings(t_data *data)
 {
 	data->settings.fov = M_PI / 3;
-	data->settings.rot_speed = 0.015 * MAX_FPS / PLAY_FPS;
-	data->settings.mov_speed = 0.0125 * MAX_FPS / PLAY_FPS;
+	data->settings.rot_speed = ROT_SPEED_FEED * MAX_FPS / PLAY_FPS;
+	data->settings.mov_speed = MOV_SPEED_FEED * MAX_FPS / PLAY_FPS;
 }
 
 /* control flow */
