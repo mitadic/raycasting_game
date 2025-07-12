@@ -4,10 +4,12 @@ venv/
 # cub3d
 cub3d
 cub3d_bonus
+en.subject.pdf
 
 # python
 *.pyc
 __pycache__/
+pyvenv.cfg
 
 # VSCode
 .vscode/
